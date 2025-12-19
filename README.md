@@ -29,3 +29,29 @@ Export SVG
 Adjust colors, height, flip horizontally
 
 Perfect for the wavy bottom part in your image.
+
+
+## 🎨 Haikei
+
+👉 https://app.haikei.app/
+
+Haikei is a powerful SVG art generator with:
+
+Waves
+
+Blobs
+
+Gradients
+
+Patterns
+
+## SVG Backgrounds
+
+👉 https://www.svgbackgrounds.com/
+
+Tons of prebuilt backgrounds
+
+Change colors & opacity
+
+Export SVG/CSS
+
