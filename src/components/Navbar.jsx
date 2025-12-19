@@ -21,7 +21,7 @@ const Navbar = ({ navItems }) => {
   }
 
   return (
-    <header className="glass sticky top-0 z-40">
+    <header className=" bg-[#1850a0] backdrop-blur-lg shadow-lg shadow-bottom-hard sticky top-0 z-40">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 md:px-8">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/60 p-1">
@@ -31,10 +31,10 @@ const Navbar = ({ navItems }) => {
               className="h-full w-full object-contain"
             />
           </div>
-          <div>
-            <p className="font-display text-xl">Dr. Jhon</p>
-            <p className="text-xs uppercase tracking-[0.25em] text-[var(--brand-accent)]">
-              Pediatrics
+          <div className='flex-col justify-center items-center'>
+            <p className="font-display text-xl">Dr. Sourav Banerjee</p>
+            <p className="text-xs uppercase tracking-[0.25em] text-[var(--brand-accent)] flex justify-start items-start ml-4">
+              Pediatrician & Neonatologist 
             </p>
           </div>
         </div>

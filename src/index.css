@@ -3,11 +3,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --paper: #e8f1ff;
-  --ink: #0b1220;
+  --paper: #1850a0;
+  --ink: #e9edf1;
   --muted: #475569;
   --line: rgba(15, 23, 42, 0.12);
-  --brand-accent: #09647a;
+  --brand-accent: #40b1b6;
   --brand-deep: #1d3b40;
   --font-sans: 'Inter', sans-serif;
   --font-display: 'Inter', sans-serif;
