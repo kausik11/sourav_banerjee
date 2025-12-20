@@ -1,16 +1,19 @@
 
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* blue- #1850a0 
+   green- #40B1B6*/
 :root {
-  --paper: #1850a0;
+  --paper: #f9f9fa;
   --ink: #e9edf1;
-  --muted: #475569;
+  --muted: #373837;
   --line: rgba(15, 23, 42, 0.12);
   --brand-accent: #40b1b6;
   --brand-deep: #1d3b40;
-  --font-sans: 'Inter', sans-serif;
-  --font-display: 'Inter', sans-serif;
+  --font-sans:  "Roboto", sans-serif;
+  --font-display:  "Roboto", sans-serif;
 }
 
 * {

@@ -21,7 +21,7 @@ const Navbar = ({ navItems }) => {
   }
 
   return (
-    <header className=" bg-[#1850a0] backdrop-blur-lg shadow-lg shadow-bottom-hard sticky top-0 z-40">
+    <header className=" backdrop-blur-[100px] shadow-lg shadow-bottom-hard sticky top-0 z-40">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 md:px-8">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/60 p-1">
@@ -32,8 +32,8 @@ const Navbar = ({ navItems }) => {
             />
           </div>
           <div className='flex-col justify-center items-center'>
-            <p className="font-display text-xl">Dr. Sourav Banerjee</p>
-            <p className="text-xs uppercase tracking-[0.25em] text-[var(--brand-accent)] flex justify-start items-start ml-4">
+            <p className="font-display text-xl text-[#1850a0] font-bold">Dr. Sourav Banerjee</p>
+            <p className="text-xs uppercase tracking-[0.25em] text-[var(--brand-accent)] flex justify-start items-start">
               Pediatrician & Neonatologist 
             </p>
           </div>
@@ -45,9 +45,9 @@ const Navbar = ({ navItems }) => {
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `border-b-2 bg-transparent pb-1 text-lg font-bold transition-all ${
+                `border-b-2 bg-transparent pb-1 text-[16px] font-medium transition-all ${
                   isActive
-                    ? 'scale-105 border-[var(--brand-accent)] text-[var(--brand-accent)]'
+                    ? 'scale-105 border-[var(--brand-accent)] text-[#1850a0]'
                     : 'border-transparent text-[var(--muted)]'
                 }`
               }
@@ -111,7 +111,7 @@ const Navbar = ({ navItems }) => {
                   key={item.to}
                   to={item.to}
                   className={({ isActive }) =>
-                    `border-b-2 bg-transparent pb-1 text-base font-bold transition-all ${
+                    `border-b-2 bg-transparent pb-1 text-sm transition-all ${
                       isActive
                         ? 'scale-105 border-[var(--brand-accent)] text-[var(--brand-accent)] shadow-[0_8px_24px_rgba(15,23,42,0.2)]'
                         : 'border-transparent hover:scale-105 hover:border-[var(--brand-accent)] hover:text-[var(--ink)] hover:shadow-[0_8px_24px_rgba(15,23,42,0.2)]'
