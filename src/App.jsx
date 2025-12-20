@@ -20,13 +20,13 @@ const navItems = [
 ]
 
 const AppLayout = () => (
-  <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)]">
+  <div className="min-h-screen">
     <Navbar navItems={navItems} />
 
     <main className="relative overflow-hidden">
-      <div className="particle particle-1" />
+      {/* <div className="particle particle-1" />
       <div className="particle particle-2" />
-      <div className="particle particle-3" />
+      <div className="particle particle-3" /> */}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/services" element={<ServicesPage />} />

@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 const Navbar = ({ navItems }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [theme, setTheme] = useState('light')
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const stored = localStorage.getItem('theme')
@@ -13,6 +14,16 @@ const Navbar = ({ navItems }) => {
     document.documentElement.setAttribute('data-theme', initial)
   }, [])
 
+  useEffect(()=>{
+    const handleScroll = ()=>{
+      const HeroHeight = document.getElementById('hero-video')?.offsetHeight || 0
+       setScrolled(window.scrollY > HeroHeight - 20)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  },[])
   const toggleTheme = () => {
     const next = theme === 'dark' ? 'light' : 'dark'
     setTheme(next)
@@ -21,10 +32,15 @@ const Navbar = ({ navItems }) => {
   }
 
   return (
-    <header className=" backdrop-blur-[100px] shadow-lg shadow-bottom-hard sticky top-0 z-40">
+    <header className={`sticky top-0 z-40 transition-all duration-500
+  ${scrolled
+    ? 'bg-[linear-gradient(160deg,#eaf2ff_0%,#dfe9ff_45%,#f6f8ff_100%)] shadow-lg'
+    : 'backdrop-blur-[100px] shadow-lg shadow-bottom-hard '}
+  `}>
+      
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 md:px-8">
         <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/60 p-1">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-[#1850a0] bg-white/60 p-1">
             <img
               src="/logo.png"
               alt="Pediatric Doctor"
@@ -33,7 +49,7 @@ const Navbar = ({ navItems }) => {
           </div>
           <div className='flex-col justify-center items-center'>
             <p className="font-display text-xl text-[#1850a0] font-bold">Dr. Sourav Banerjee</p>
-            <p className="text-xs uppercase tracking-[0.25em] text-[var(--brand-accent)] flex justify-start items-start">
+            <p className="max-w-170px font-bold text-[#40B1B6] md:max-w-none md:text-[13px]">
               Pediatrician & Neonatologist 
             </p>
           </div>
@@ -65,14 +81,14 @@ const Navbar = ({ navItems }) => {
           >
             Book Visit
           </NavLink>
-          <button
+          {/* <button
             type="button"
             onClick={toggleTheme}
             className="hidden items-center justify-center rounded-full border border-[var(--line)] px-3 py-2 text-xs uppercase tracking-[0.2em] text-[var(--ink)] transition hover:border-[var(--brand-accent)] md:inline-flex"
             aria-label="Toggle theme"
           >
             {theme === 'dark' ? 'Light' : 'Dark'}
-          </button>
+          </button> */}
           <button
             type="button"
             className="inline-flex items-center justify-center rounded-full border border-[var(--line)] p-2 text-[var(--ink)] md:hidden"
@@ -129,13 +145,13 @@ const Navbar = ({ navItems }) => {
               >
                 Book Visit
               </NavLink>
-              <button
+              {/* <button
                 type="button"
                 onClick={toggleTheme}
                 className="inline-flex items-center justify-center rounded-full border border-[var(--line)] px-4 py-2 text-xs uppercase tracking-[0.2em] text-[var(--ink)] transition hover:border-[var(--brand-accent)]"
               >
                 {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-              </button>
+              </button> */}
             </nav>
           </div>
         </div>

@@ -69,8 +69,8 @@ const HomePage = () => {
 
   return (
     <>
-      <section className="relative isolate overflow-hidden">
-        <div className="absolute inset-0">
+      <section id="hero-video" className="relative isolate overflow-hidden">
+        <div  className="absolute inset-0 h-screen">
           <video
             className="h-full w-full object-cover video-shadow"
             autoPlay
@@ -79,17 +79,27 @@ const HomePage = () => {
             playsInline
             poster="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1600&q=80"
           >
-            <source src="https://www.w3schools.com/howto/rain.mp4" />
+            <source src="../public/video.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-gradient-to-br from-[#1d3b40]/90 via-[#1d3b40]/70 to-[#e6b8a2]/50" />
+        <div className="absolute inset-0 bg-gradient-to-br 
+            from-[rgba(64,177,182,1)] 
+            via-[rgba(87,199,133,0.14)] 
+            to-[rgba(24,80,160,1)]" />
+
+          {/* <div className="absolute inset-0 video-overlay" /> */}
         </div>
 
         <div className="relative mx-auto flex min-h-[78vh] w-full max-w-6xl flex-col justify-center px-4 pb-16 pt-28 md:px-8">
           <animated.div style={heroSpring} className="max-w-2xl">
-            <p className="text-xs uppercase tracking-[0.3em] text-white/80">
+
+            
+              <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xm font-semibold text-[#40B1B6] mb-2">
+              <span className="h-3 w-3 rounded-full bg-[#1d4ed8]" />
               Child Health and Wellness
-            </p>
-            <h1 className="font-display text-4xl text-white md:text-6xl">
+            </span>
+
+            
+            <h1 className="font-display text-4xl text-[#0f438d] md:text-6xl">
               Gentle care for growing minds and joyful childhoods.
             </h1>
             <p className="mt-4 text-base text-white/80 md:text-lg">
@@ -128,7 +138,7 @@ const HomePage = () => {
             ))}
           </div>
 
-          <div className="absolute bottom-6 right-6 hidden max-w-sm rounded-2xl border border-white/20 bg-white/10 p-6 text-white shadow-xl backdrop-blur-lg md:block">
+          <div className="float-card max-w-sm absolute bottom-6 right-6 hidden max-w-sm rounded-2xl border border-white/20 bg-white/10 p-6 text-white shadow-xl backdrop-blur-lg md:block">
             <p className="text-xs uppercase tracking-[0.3em] text-white/70">
               OPD Address
             </p>
@@ -143,9 +153,9 @@ const HomePage = () => {
         </div>
       </section>
       <section className="particle-section relative overflow-hidden">
-        <div className="particle particle-1" />
+        {/* <div className="particle particle-1" />
         <div className="particle particle-2" />
-        <div className="particle particle-3" />
+        <div className="particle particle-3" /> */}
         <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 py-16 md:grid-cols-[1.2fr_0.8fr] md:items-center md:px-8">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-[#1d4ed8] shadow-soft">
@@ -200,7 +210,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">
+      {/* <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">
         <SectionHeader
           eyebrow="Approach"
           title="A pediatric journey built around trust"
@@ -230,8 +240,8 @@ const HomePage = () => {
             </div>
           ))}
         </div>
-      </section>
-      <section className="signature-section py-16">
+      </section> */}
+      {/* <section className="signature-section py-16">
         <div className="mx-auto w-full max-w-6xl px-4 md:px-8">
           <SectionHeader
             eyebrow="Signature Services"
@@ -261,7 +271,7 @@ const HomePage = () => {
             })}
           </div>
         </div>
-      </section>
+      </section> */}
       <section
         className="parallax relative py-20"
         style={{
@@ -283,7 +293,7 @@ const HomePage = () => {
           </p>
         </div>
       </section>
-      <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">
+      {/* <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">
         <SectionHeader
           eyebrow="Accolades"
           title="Recognitions that reflect care quality"
@@ -305,8 +315,8 @@ const HomePage = () => {
             </div>
           ))}
         </div>
-      </section>
-      <section className="bg-[#f8f1ea] py-16">
+      </section> */}
+      {/* <section className="bg-[#f8f1ea] py-16">
         <div className="mx-auto w-full max-w-6xl px-4 md:px-8">
           <SectionHeader
             eyebrow="Testimonials"
@@ -328,7 +338,7 @@ const HomePage = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
       <section ref={impactRef} className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">
         <SectionHeader
           eyebrow="Our Impact"
