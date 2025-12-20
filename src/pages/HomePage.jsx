@@ -93,13 +93,13 @@ const HomePage = () => {
           <animated.div style={heroSpring} className="max-w-2xl">
 
             
-              <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xm font-semibold text-[#40B1B6] mb-2">
+              <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-2 py-2 text-xm font-semibold text-[#1d4ed8] mb-2">
               <span className="h-3 w-3 rounded-full bg-[#1d4ed8]" />
               Child Health and Wellness
             </span>
 
             
-            <h1 className="font-display text-4xl text-[#0f438d] md:text-6xl">
+            <h1 className="font-display text-4xl text-black md:text-6xl">
               Gentle care for growing minds and joyful childhoods.
             </h1>
             <p className="mt-4 text-base text-white/80 md:text-lg">
@@ -150,6 +150,21 @@ const HomePage = () => {
             </p>
             <p className="mt-4 text-sm">Call: +91 98765 43210</p>
           </div>
+
+           <div className="float-card max-w-sm absolute bottom-50 right-6 hidden max-w-sm rounded-2xl border border-white/20 bg-white/10 p-6 text-white shadow-xl backdrop-blur-lg md:block">
+            <p className="text-xs uppercase tracking-[0.3em] text-white/70">
+              OPD Address
+            </p>
+            <p className="mt-2 font-display text-xl">
+              23 Harmony Lane, Lakeview Heights
+            </p>
+            <p className="mt-2 text-sm text-white/80">
+              Mon - Sat: 9:00 AM to 7:00 PM
+            </p>
+            <p className="mt-4 text-sm">Call: +91 98765 43210</p>
+          </div>
+
+          
         </div>
       </section>
       <section className="particle-section relative overflow-hidden">

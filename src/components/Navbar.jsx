@@ -17,7 +17,7 @@ const Navbar = ({ navItems }) => {
   useEffect(()=>{
     const handleScroll = ()=>{
       const HeroHeight = document.getElementById('hero-video')?.offsetHeight || 0
-       setScrolled(window.scrollY > HeroHeight - 20)
+       setScrolled(window.scrollY > HeroHeight - 300)
     }
     window.addEventListener("scroll", handleScroll)
     return () => {
@@ -34,13 +34,14 @@ const Navbar = ({ navItems }) => {
   return (
     <header className={`sticky top-0 z-40 transition-all duration-500
   ${scrolled
-    ? 'bg-[linear-gradient(160deg,#eaf2ff_0%,#dfe9ff_45%,#f6f8ff_100%)] shadow-lg'
-    : 'backdrop-blur-[100px] shadow-lg shadow-bottom-hard '}
+    ? 'bg-white backdrop-blur-[200px]  shadow-lg'
+    : 'bg-white/80 backdrop-blur-[200px] shadow-lg shadow-bottom-hard '
+    }
   `}>
       
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 md:px-8">
         <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-[#1850a0] bg-white/60 p-1">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border bg-white/60 p-1">
             <img
               src="/logo.png"
               alt="Pediatric Doctor"
