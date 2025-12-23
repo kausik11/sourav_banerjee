@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { animated, useSpring, useTrail } from '@react-spring/web'
 import { useSite } from '../context/SiteContext'
 import SectionHeader from '../components/SectionHeader'
+import Typed from 'typed.js'
+
 
 const HomePage = () => {
   const { services, testimonials, accolades, feedbacks } = useSite()
@@ -13,7 +15,8 @@ const HomePage = () => {
     awards: 0,
     satisfaction: 0,
   })
-  const [hasAnimated, setHasAnimated] = useState(false)
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const typedRef = useRef(null);
 
   const heroSpring = useSpring({
     from: { opacity: 0, transform: 'translate3d(0,20px,0)' },
@@ -67,6 +70,26 @@ const HomePage = () => {
     return () => observer.disconnect()
   }, [hasAnimated])
 
+  useEffect(()=>{
+    if(!typedRef.current) return;
+
+    const typed = new Typed(typedRef.current, {
+      strings: [  'Pediatrician.',
+      'Neonatologist.',
+      'Child Health Specialist.',
+      'here to care.'],
+      typeSpeed: 50,
+      backSpeed: 30,
+      backDelay: 1500,
+      loop: true,
+      smartBackspace: true,
+    })
+
+    return()=>{
+      typed.destroy()
+    }
+  },[])
+
   return (
     <>
       <section id="hero-video" className="relative isolate overflow-hidden">
@@ -77,15 +100,14 @@ const HomePage = () => {
             loop
             muted
             playsInline
-            poster="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1600&q=80"
+            // poster="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1600&q=80"
           >
             <source src="../public/video.mp4" type="video/mp4" />
           </video>
-        <div className="absolute inset-0 bg-gradient-to-br 
-            from-[rgba(64,177,182,1)] 
+        <div className="absolute bottom-30 inset-0 bg-gradient-to-br 
+            from-[rgba(24,80,160,1)] 
             via-[rgba(87,199,133,0.14)] 
-            to-[rgba(24,80,160,1)]" />
-
+            to-[rgba(64,177,182,1)]" />
           {/* <div className="absolute inset-0 video-overlay" /> */}
         </div>
 
@@ -93,16 +115,18 @@ const HomePage = () => {
           <animated.div style={heroSpring} className="max-w-2xl">
 
             
-              <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-2 py-2 text-xm font-semibold text-[#1d4ed8] mb-2">
+              {/* <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-2 py-2 text-xm font-semibold text-[#1d4ed8] mb-2">
               <span className="h-3 w-3 rounded-full bg-[#1d4ed8]" />
               Child Health and Wellness
-            </span>
+            </span> */}
 
             
-            <h1 className="font-display text-4xl text-black md:text-6xl">
-              Gentle care for growing minds and joyful childhoods.
+            <h1 className="font-display text-4xl text-[var(--paper)] md:text-6xl">
+              {/* Gentle care for growing minds and joyful childhoods. */}
+              Dr. sourav Banerjee is a{' '}
+              <span className="text-[var(--brand-black)]" ref={typedRef}></span>
             </h1>
-            <p className="mt-4 text-base text-white/80 md:text-lg">
+            <p className="mt-4 text-lg text-white/90 md:text-xl">
               Dr. Jhon combines evidence-based pediatrics with compassionate
               listening. From newborn care to teen wellness, every visit feels
               calm, clear, and reassuring.
@@ -110,26 +134,27 @@ const HomePage = () => {
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 to="/locations"
-                className="inline-flex items-center justify-center rounded-full bg-[var(--brand-accent)] px-6 py-3 text-xs uppercase tracking-[0.25em] text-white transition hover:bg-[#c76d5f]"
+                className="inline-flex items-center justify-center rounded-full bg-white/40 px-6 py-3 text-lg uppercase tracking-[0.25em]
+                font-bold text-white transition hover:bg-[var(--brand-accent)]"
               >
                 Book Appointment
               </Link>
-              <Link
+              {/* <Link
                 to="/services"
-                className="inline-flex items-center justify-center rounded-full border border-white/60 px-6 py-3 text-xs uppercase tracking-[0.25em] text-white transition hover:border-white"
+                className="inline-flex items-center justify-center rounded-full border border-white/60 bg-white/40 px-6 py-3 text-lg uppercase tracking-[0.25em] text-white transition hover:border-white"
               >
                 Explore Services
-              </Link>
+              </Link> */}
             </div>
           </animated.div>
 
-          <div className="mt-10 flex flex-wrap gap-6 text-white/90">
+          <div className="mt-10 flex flex-wrap gap-6 text-white/90 font-bold">
             {[
               { label: '15+ Years of Practice', value: '15+' },
               { label: '12k Happy Families', value: '12k' },
               { label: '98% Parent Satisfaction', value: '98%' },
             ].map((stat) => (
-              <div key={stat.label} className="min-w-[150px]">
+              <div key={stat.label} className="min-w-[150px] font-semibold">
                 <p className="font-display text-3xl">{stat.value}</p>
                 <p className="text-xs uppercase tracking-[0.2em] text-white/70">
                   {stat.label}
@@ -138,7 +163,8 @@ const HomePage = () => {
             ))}
           </div>
 
-          <div className="float-card max-w-sm absolute bottom-6 right-6 hidden max-w-sm rounded-2xl border border-white/20 bg-white/10 p-6 text-white shadow-xl backdrop-blur-lg md:block">
+         
+          <div className="float-card max-w-sm absolute bottom-0 right-6 hidden rounded-2xl border border-white/20 bg-white/10 p-6 text-white shadow-xl backdrop-blur-lg md:block">
             <p className="text-xs uppercase tracking-[0.3em] text-white/70">
               OPD Address
             </p>
@@ -155,6 +181,7 @@ const HomePage = () => {
             <p className="text-xs uppercase tracking-[0.3em] text-white/70">
               OPD Address
             </p>
+            {/* <p className="mt-2 font-display text-xl max-w-[260px] font-display text-xl leading-snug break-words"> */}
             <p className="mt-2 font-display text-xl">
               23 Harmony Lane, Lakeview Heights
             </p>
@@ -163,7 +190,10 @@ const HomePage = () => {
             </p>
             <p className="mt-4 text-sm">Call: +91 98765 43210</p>
           </div>
-
+ 
+           
+          
+          
           
         </div>
       </section>

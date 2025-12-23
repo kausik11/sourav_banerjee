@@ -12,8 +12,11 @@
   --line: rgba(15, 23, 42, 0.12);
   --brand-accent: #40b1b6;
   --brand-deep: #1d3b40;
+  --brand-blue: #1850a0;
+  --brand-black: #272B41;
   --font-sans:  "Roboto", sans-serif;
   --font-display:  "Roboto", sans-serif;
+  
 }
 
 * {

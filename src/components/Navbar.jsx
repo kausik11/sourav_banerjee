@@ -3,16 +3,16 @@ import { NavLink } from 'react-router-dom'
 
 const Navbar = ({ navItems }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [theme, setTheme] = useState('light')
+  // const [theme, setTheme] = useState('light')
   const [scrolled, setScrolled] = useState(false)
 
-  useEffect(() => {
-    const stored = localStorage.getItem('theme')
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    const initial = stored || (prefersDark ? 'dark' : 'light')
-    setTheme(initial)
-    document.documentElement.setAttribute('data-theme', initial)
-  }, [])
+  // useEffect(() => {
+  //   const stored = localStorage.getItem('theme')
+  //   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+  //   const initial = stored || (prefersDark ? 'dark' : 'light')
+  //   setTheme(initial)
+  //   document.documentElement.setAttribute('data-theme', initial)
+  // }, [])
 
   useEffect(()=>{
     const handleScroll = ()=>{
@@ -24,12 +24,12 @@ const Navbar = ({ navItems }) => {
       window.removeEventListener("scroll", handleScroll)
     }
   },[])
-  const toggleTheme = () => {
-    const next = theme === 'dark' ? 'light' : 'dark'
-    setTheme(next)
-    document.documentElement.setAttribute('data-theme', next)
-    localStorage.setItem('theme', next)
-  }
+  // const toggleTheme = () => {
+  //   const next = theme === 'dark' ? 'light' : 'dark'
+  //   setTheme(next)
+  //   document.documentElement.setAttribute('data-theme', next)
+  //   localStorage.setItem('theme', next)
+  // }
 
   return (
     <header className={`sticky top-0 z-40 transition-all duration-500
@@ -62,10 +62,11 @@ const Navbar = ({ navItems }) => {
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `border-b-2 bg-transparent pb-1 text-[16px] font-medium transition-all ${
+                `border-b-2 bg-transparent pb-1 text-[16px] font-semibold transition-all ${
                   isActive
-                    ? 'scale-105 border-[var(--brand-accent)] text-[#1850a0]'
-                    : 'border-transparent text-[var(--muted)]'
+                    ? 'scale-105 border-[var(--brand-accent)] text-[var(--brand-accent)]'
+                    : 'border-transparent text-[var(--muted)] hover:text-[var(--brand-accent)]'
+
                 }`
               }
               onClick={() => setIsOpen(false)}
@@ -75,10 +76,10 @@ const Navbar = ({ navItems }) => {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <NavLink
             to="/locations"
-            className="hidden rounded-full border border-[var(--brand-accent)] px-4 py-2 text-xs uppercase tracking-[0.2em] text-[var(--brand-accent)] transition hover:bg-[var(--brand-accent)] hover:text-white md:inline-flex"
+            className="hidden rounded-full border-2 border-[var(--brand-accent)] px-4 py-2 text-[14px] font-semibold  uppercase tracking-[0.2em] text-[var(--brand-accent)] transition hover:bg-[var(--brand-accent)] hover:text-white md:inline-flex"
           >
             Book Visit
           </NavLink>
@@ -92,7 +93,7 @@ const Navbar = ({ navItems }) => {
           </button> */}
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-full border border-[var(--line)] p-2 text-[var(--ink)] md:hidden"
+            className="inline-flex items-center justify-center rounded-full border border-[var(--brand-accent)] p-2 text-[var(--brand-accent)] md:hidden"
             aria-label="Toggle navigation"
             onClick={() => setIsOpen((prev) => !prev)}
           >
@@ -119,10 +120,15 @@ const Navbar = ({ navItems }) => {
         </div>
       </div>
 
-      {isOpen && (
-        <div className="md:hidden">
-          <div className="mx-auto w-full max-w-6xl px-4 pb-4">
-            <nav className="flex flex-col gap-3 rounded-2xl border border-[var(--line)] bg-white/30 p-4 text-sm uppercase tracking-[0.2em] text-[var(--muted)] shadow-soft">
+      <div
+        className={`md:hidden overflow-hidden transition-[max-height,opacity,transform] duration-300 ease-out ${
+          isOpen
+            ? 'max-h-[500px] opacity-100 translate-y-0 scale-100'
+            : 'max-h-0 opacity-0 -translate-y-2 scale-95 pointer-events-none'
+        }`}
+      >
+        <div className="mx-auto w-full max-w-6xl px-4 pb-4">
+          <nav className="flex flex-col gap-3 rounded-2xl border border-[var(--brand-accent)] bg-white/40 p-4 text-[14px] font-semibold tracking-[0.2em] text-[var(--brand-accent)] shadow-soft">
               {navItems.map((item) => (
                 <NavLink
                   key={item.to}
@@ -130,7 +136,7 @@ const Navbar = ({ navItems }) => {
                   className={({ isActive }) =>
                     `border-b-2 bg-transparent pb-1 text-sm transition-all ${
                       isActive
-                        ? 'scale-105 border-[var(--brand-accent)] text-[var(--brand-accent)] shadow-[0_8px_24px_rgba(15,23,42,0.2)]'
+                        ? 'scale-105 border-[var(--brand-accent)] text-[var(--brand-accent)] '
                         : 'border-transparent hover:scale-105 hover:border-[var(--brand-accent)] hover:text-[var(--ink)] hover:shadow-[0_8px_24px_rgba(15,23,42,0.2)]'
                     }`
                   }
@@ -153,10 +159,9 @@ const Navbar = ({ navItems }) => {
               >
                 {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
               </button> */}
-            </nav>
-          </div>
+          </nav>
         </div>
-      )}
+      </div>
     </header>
   )
 }
