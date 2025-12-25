@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { animated, useSpring, useTrail } from '@react-spring/web'
 import { useSite } from '../context/SiteContext'
 import SectionHeader from '../components/SectionHeader'
+import DoctorCentersSection from '../components/DoctorCentersSection'
+import { sampleDoctorCenters } from '../data/doctorCenters'
 import Typed from 'typed.js'
 
 
@@ -446,6 +448,12 @@ const HomePage = () => {
           ))}
         </div>
       </section>
+
+      <DoctorCentersSection
+        centers={sampleDoctorCenters}
+        heading="Get in Touch"
+        subtitle="We're here to answer your questions and provide the care you need."
+      />
     </>
   )
 }
