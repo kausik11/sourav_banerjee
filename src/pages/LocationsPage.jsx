@@ -1,5 +1,7 @@
 import React from 'react'
 import SectionHeader from '../components/SectionHeader'
+import DoctorCentersSection from '../components/DoctorCentersSection'
+import { sampleDoctorCenters } from '../data/doctorCenters'
 
 
 const LocationsPage = () => (
@@ -41,6 +43,12 @@ const LocationsPage = () => (
         ))}
       </div>
     </section>
+
+    <DoctorCentersSection
+      centers={sampleDoctorCenters}
+      heading="Get in Touch"
+      subtitle="Select a clinic center to view its live location on the map."
+    />
     
 
     <section className="bg-[#f8f1ea] py-16">
