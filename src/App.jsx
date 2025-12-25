@@ -8,6 +8,7 @@ import TipsPage from './pages/TipsPage'
 import FaqPage from './pages/FaqPage'
 import BlogsPage from './pages/BlogsPage'
 import BlogDetailPage from './pages/BlogDetailPage'
+import GalleryPage from './pages/GalleryPage'
 import Navbar from './components/Navbar'
 
 const navItems = [
@@ -15,13 +16,39 @@ const navItems = [
   { label: 'Services', to: '/services' },
   { label: 'Locations', to: '/locations' },
   { label: 'Tips & Advice', to: '/tips' },
+  { label: 'Gallery', to: '/gallery' },
   { label: 'Blogs', to: '/blogs' },
   { label: 'FAQs', to: '/faqs' },
 ]
 
 const AppLayout = () => (
-  <div className="min-h-screen">
+  <div className="min-h-screen relative overflow-hidden">
     <Navbar navItems={navItems} />
+
+    {/* <div className="global-rings" aria-hidden="true">
+      <span className="ring ring-blue" />
+      <span className="ring ring-teal" />
+      <span className="ring ring-orange" />
+      <span className="ring ring-green" />
+      <span className="ring ring-blue ring-lg" />
+      <span className="ring ring-teal ring-lg" />
+    </div> */}
+
+    <a
+      className="whatsapp-float"
+      href="https://wa.me/919876543210?text=I%20want%20to%20book%20an%20appointment"
+      target="_blank"
+      rel="noreferrer"
+      aria-label="Chat on WhatsApp"
+    >
+      <span className="whatsapp-tooltip">Contact me</span>
+      <svg viewBox="0 0 32 32" aria-hidden="true" className="whatsapp-icon">
+        <path
+          fill="currentColor"
+          d="M16 3C9.4 3 4 8.2 4 14.7c0 2.4.7 4.6 1.9 6.5L4 29l7-1.8c1.7.9 3.6 1.5 5.6 1.5 6.6 0 12-5.2 12-11.7S22.6 3 16 3zm6.9 16.1c-.3.9-1.7 1.7-2.4 1.8-.5.1-1.1.2-3.6-.7-3.1-1.1-5.1-4-5.2-4.2-.1-.2-1.3-1.7-1.3-3.2s.8-2.2 1.1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .5-.1.8.6.3.7 1 2.5 1.1 2.6.1.2.1.4 0 .6-.1.2-.2.4-.3.6-.2.2-.3.4-.5.6-.2.2-.3.4-.1.7.1.3.7 1.2 1.5 1.9 1 .9 1.8 1.2 2.1 1.4.3.1.5.1.7-.1.2-.2.8-.9 1-1.3.2-.3.4-.3.7-.2.3.1 1.7.8 2 1 .3.1.5.2.6.4.1.1.1.9-.2 1.8z"
+        />
+      </svg>
+    </a>
 
     <main className="relative overflow-hidden">
       {/* <div className="particle particle-1" />
@@ -32,6 +59,7 @@ const AppLayout = () => (
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/locations" element={<LocationsPage />} />
         <Route path="/tips" element={<TipsPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/blogs/:id" element={<BlogDetailPage />} />
         <Route path="/faqs" element={<FaqPage />} />

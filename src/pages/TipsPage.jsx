@@ -1,13 +1,148 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSite } from '../context/SiteContext'
 import SectionHeader from '../components/SectionHeader'
 
 
 const TipsPage = () => {
-  const { tips } = useSite()
+  const { tips, feedbacks } = useSite()
+  const [activeReview, setActiveReview] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveReview((prev) => (prev + 1) % feedbacks.length)
+    }, 4500)
+    return () => clearInterval(timer)
+  }, [feedbacks.length])
 
   return (
     <>
+      <section
+        className="parallax relative min-h-screen"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=1800&q=80')",
+        }}
+      >
+        <div className="absolute inset-0 bg-[rgba(15,52,104,0.78)]" />
+        <div className="relative mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center px-4 text-center text-white md:px-8">
+          <p className="text-xs uppercase tracking-[0.3em] text-white/70">
+            Newsletter
+          </p>
+          <h1 className="mt-4 font-display text-4xl md:text-6xl">
+            Subscribe for weekly pediatric tips.
+          </h1>
+          <p className="mt-4 max-w-2xl text-sm text-white/80 md:text-base">
+            Quick, parent-friendly updates on wellness, nutrition, and
+            developmental milestones.
+          </p>
+          <form className="mt-8 flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
+            <input
+              type="email"
+              required
+              placeholder="Enter your email"
+              className="w-full rounded-full border border-white/40 bg-white/10 px-5 py-3 text-sm text-white placeholder:text-white/60 focus:border-white focus:outline-none sm:max-w-sm"
+            />
+            <button
+              type="submit"
+              className="rounded-full bg-[var(--brand-accent)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-soft transition hover:bg-[#2c969c]"
+            >
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section
+        className="parallax relative min-h-screen"
+        style={{
+          backgroundImage: "url('/doctor_main.png')",
+          backgroundPosition: 'right center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'contain',
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(15,52,104,0.95)] via-[rgba(15,52,104,0.88)] to-transparent" />
+        <div className="relative mx-auto flex min-h-screen w-full max-w-6xl items-center px-4 md:px-8">
+          <div className="max-w-xl text-white">
+            <p className="text-xs uppercase tracking-[0.3em] text-white/70">
+              Doctor's Note
+            </p>
+            <h2 className="mt-4 font-display text-3xl md:text-5xl">
+              “Listening closely is the first step to healing.”
+            </h2>
+            <p className="mt-4 text-sm text-white/80 md:text-base">
+              “Every child deserves calm, thoughtful care. My goal is to guide
+              families with clarity, empathy, and science-backed advice so each
+              visit feels reassuring.”
+            </p>
+            <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
+              Dr. Sourav Banerjee
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative min-h-screen bg-[var(--brand-deep)] py-20 text-white">
+        <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center px-4 md:px-8">
+          <p className="text-xs uppercase tracking-[0.3em] text-white/70">
+            Feedback
+          </p>
+          <h2 className="mt-4 font-display text-3xl md:text-5xl">
+            What parents are saying
+          </h2>
+          <div className="mt-10 w-full max-w-3xl rounded-3xl border border-white/15 bg-white/10 p-8 text-center shadow-soft backdrop-blur">
+            <p className="text-lg md:text-xl">
+              “{feedbacks[activeReview].text}”
+            </p>
+            <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
+              {feedbacks[activeReview].name} · {feedbacks[activeReview].platform}
+            </p>
+            <p className="mt-2 text-sm text-white/70">
+              Rating {feedbacks[activeReview].rating}
+            </p>
+          </div>
+          <div className="mt-8 flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() =>
+                setActiveReview((prev) =>
+                  prev === 0 ? feedbacks.length - 1 : prev - 1,
+                )
+              }
+              className="rounded-full border border-white/30 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-white/10"
+              aria-label="Previous review"
+            >
+              Prev
+            </button>
+            <div className="flex items-center gap-2">
+              {feedbacks.map((_, index) => (
+                <button
+                  key={`review-dot-${index}`}
+                  type="button"
+                  onClick={() => setActiveReview(index)}
+                  className={`h-2.5 w-2.5 rounded-full transition ${
+                    activeReview === index
+                      ? 'bg-[var(--brand-accent)]'
+                      : 'bg-white/40'
+                  }`}
+                  aria-label={`Go to review ${index + 1}`}
+                />
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() =>
+                setActiveReview((prev) => (prev + 1) % feedbacks.length)
+              }
+              className="rounded-full border border-white/30 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-white/10"
+              aria-label="Next review"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </section>
+
       <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">
         <SectionHeader
           eyebrow="Tips & Advice"

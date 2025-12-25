@@ -6,6 +6,7 @@ import SectionHeader from '../components/SectionHeader'
 import DoctorCentersSection from '../components/DoctorCentersSection'
 import { sampleDoctorCenters } from '../data/doctorCenters'
 import Typed from 'typed.js'
+import doctorimage from "../../public/doctor_main.png"
 
 
 const HomePage = () => {
@@ -200,58 +201,62 @@ const HomePage = () => {
         </div>
       </section>
       <section className="particle-section relative overflow-hidden">
+          
         {/* <div className="particle particle-1" />
         <div className="particle particle-2" />
         <div className="particle particle-3" /> */}
         <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 py-16 md:grid-cols-[1.2fr_0.8fr] md:items-center md:px-8">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-[#1d4ed8] shadow-soft">
-              <span className="h-2 w-2 rounded-full bg-[#1d4ed8]" />
+            <span className="glow-badge inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-[var(--brand-blue)] shadow-soft">
+              <span className="h-2 w-2 rounded-full bg-[var(--brand-blue)]" />
               Pediatric Health Expert
             </span>
-            <h2 className="mt-6 font-display text-4xl text-[#0f172a] md:text-5xl">
-              Dr. Jhon
+            <h2 className="glow-title mt-6 font-display text-4xl font-bold text-[var(--brand-black)] md:text-5xl">
+              Dr. sourav Banerjee
             </h2>
-            <p className="mt-3 text-lg font-semibold text-[#1e3a8a]">
+            <p className="mt-3 text-lg font-semibold text-[var(--brand-blue)]">
               Pediatrics & Child Wellness
             </p>
-            <p className="mt-4 text-base text-[#334155]">
+            <p className="mt-4 text-base text-[var(--muted)]">
               Providing calm, personalized pediatric care with a focus on growth
               milestones, nutrition, and preventive health. Every visit is designed
               to keep parents informed and children comfortable.
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-3">
-              <span className="rounded-full border border-[#c7ddff] bg-white px-4 py-2 text-xs font-semibold text-[#1d4ed8]">
+              <span className="rounded-full border border-[var(--brand-blue)]/20 bg-white px-4 py-2 text-xs font-semibold text-[var(--brand-blue)]">
                 Top Rated
               </span>
-              <span className="rounded-full border border-[#c7ddff] bg-white px-4 py-2 text-xs font-semibold text-[#15803d]">
+              <span className="rounded-full border border-[var(--brand-accent)]/30 bg-white px-4 py-2 text-xs font-semibold text-[var(--brand-accent)]">
                 Board Certified
               </span>
             </div>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
-                to="/locations"
-                className="inline-flex items-center justify-center rounded-xl bg-[#1d4ed8] px-6 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-[#1e40af]"
+                to="/services"
+                className="inline-flex items-center justify-center rounded-xl border border-[var(--brand-blue)] px-6 py-3 text-sm font-semibold text-[var(--brand-blue)] transition hover:bg-[rgba(24,80,160,0.12)]"
               >
                 Book Appointment
               </Link>
               <Link
                 to="/services"
-                className="inline-flex items-center justify-center rounded-xl border border-[#1d4ed8] px-6 py-3 text-sm font-semibold text-[#1d4ed8] transition hover:bg-[#dbeafe]"
+                className="inline-flex items-center justify-center rounded-xl border border-[var(--brand-blue)] px-6 py-3 text-sm font-semibold text-[var(--brand-blue)] transition hover:bg-[rgba(24,80,160,0.12)]"
               >
-                                Learn More ?
+                Learn More ?
               </Link>
             </div>
           </div>
           <div className="flex justify-center md:justify-end">
-            <div className="float-card relative max-w-sm rounded-3xl bg-white p-6 shadow-soft">
+            <div
+              className="float-card relative max-w-sm rounded-3xl bg-white/80 bg-cover bg-center bg-no-repeat p-6 shadow-soft"
+              style={{ backgroundImage: "url('/large-triangles.png')" }}
+            >
               <img
-                src="https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=600&q=80"
+                src={doctorimage}
                 alt="Doctor portrait"
                 className="float-image w-full rounded-2xl object-cover"
               />
-              <div className="absolute -bottom-4 right-6 rounded-full bg-white px-4 py-2 text-xs font-semibold text-[#1d4ed8] shadow-soft">
-                Dr. Jhon
+              <div className="absolute -bottom-4 right-6 rounded-full bg-white px-4 py-2 text-xs font-semibold text-[var(--brand-blue)] shadow-soft">
+                Dr. Sourav Banerjee
               </div>
             </div>
           </div>
