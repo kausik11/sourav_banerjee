@@ -9,8 +9,10 @@ const SectionHeader = ({ eyebrow, title, subtitle, align = 'left' }) => {
       <p className="text-xs uppercase tracking-[0.3em] text-[var(--brand-accent)]">
         {eyebrow}
       </p>
-      <h2 className="font-display text-3xl md:text-4xl mt-3">{title}</h2>
-      <p className="mt-3 max-w-2xl text-sm md:text-base text-[var(--muted)]">
+      <h2 className="mt-3 font-display text-3xl text-slate-900 md:text-4xl">
+        {title}
+      </h2>
+      <p className="mt-3 max-w-2xl text-sm text-slate-600 md:text-base">
         {subtitle}
       </p>
     </div>

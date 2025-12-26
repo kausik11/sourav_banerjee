@@ -16,7 +16,7 @@ const FaqPage = () => {
 
   return (
     <>
-      <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">
+      <section className="mx-auto w-full max-w-6xl px-4 py-16 text-slate-900 md:px-8">
         <SectionHeader
           eyebrow="FAQs"
           title="Common child health concerns"
@@ -31,26 +31,26 @@ const FaqPage = () => {
                   key={item.question}
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                  className="w-full rounded-2xl border border-[var(--line)] bg-white p-6 text-left shadow-soft transition hover:border-[var(--brand-accent)]"
+                  className="w-full rounded-2xl border border-[var(--line)] bg-white p-6 text-left shadow-soft transition hover:border-[var(--brand-accent)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-accent)]"
                 >
                   <div className="flex items-center gap-4">
                     <img
                       src={faqImages[index % faqImages.length]}
                       alt=""
-                      className="h-12 w-12 rounded-xl object-cover"
+                      className="h-12 w-12 rounded-xl object-cover ring-2 ring-white"
                     />
                     <div className="flex-1">
-                      <h3 className="font-display text-lg">{item.question}</h3>
+                      <h3 className="font-display text-lg text-slate-900">{item.question}</h3>
                       <p className="mt-1 text-xs uppercase tracking-[0.3em] text-[var(--brand-accent)]">
                         Tap to {isOpen ? 'close' : 'open'}
                       </p>
                     </div>
                     <span className="text-2xl text-[var(--brand-accent)]">
-                      {isOpen ? '−' : '+'}
+                      {isOpen ? '-' : '+'}
                     </span>
                   </div>
                   {isOpen && (
-                    <p className="mt-4 text-sm text-[var(--muted)]">
+                    <p className="mt-4 text-sm text-slate-600">
                       {item.answer}
                     </p>
                   )}
@@ -59,14 +59,14 @@ const FaqPage = () => {
             })}
           </div>
 
-          <div className="rounded-2xl border border-[var(--line)] bg-[#fdf7f1] p-6 shadow-soft">
+          <div className="rounded-2xl border border-[var(--line)] bg-gradient-to-br from-[#fff4ea] via-[#fffaf4] to-[#f7f2ec] p-6 shadow-soft">
             <p className="text-xs uppercase tracking-[0.3em] text-[var(--brand-accent)]">
               Pediatric Focus
             </p>
-            <h3 className="mt-3 font-display text-2xl">
+            <h3 className="mt-3 font-display text-2xl text-slate-900">
               Calm answers for real-life worries
             </h3>
-            <p className="mt-3 text-sm text-[var(--muted)]">
+            <p className="mt-3 text-sm text-slate-600">
               These FAQs cover fever management, vaccination schedules, nutrition,
               and growth milestones. For urgent concerns, contact the clinic
               immediately.
