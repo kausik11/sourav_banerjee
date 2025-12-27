@@ -1,11 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import SectionHeader from '../components/SectionHeader'
 import DoctorCentersSection from '../components/DoctorCentersSection'
 import { sampleDoctorCenters } from '../data/doctorCenters'
 
 
-const LocationsPage = () => (
-  <>
+const LocationsPage = () => {
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.hash === '#send-message') {
+      const target = document.getElementById('send-message')
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }
+  }, [location.hash])
+
+  return (
+    <>
     <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">
       <SectionHeader
         eyebrow="Locations"
@@ -51,7 +64,7 @@ const LocationsPage = () => (
     />
     
 
-    <section className="bg-[#f8f1ea] py-16">
+    <section id="send-message" className="bg-[#f8f1ea] py-16">
       <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 md:grid-cols-[1.1fr_0.9fr] md:px-8">
         <div>
           <SectionHeader
@@ -118,7 +131,8 @@ const LocationsPage = () => (
         </div>
       </div>
     </section>
-  </>
-)
+    </>
+  )
+}
 
 export default LocationsPage

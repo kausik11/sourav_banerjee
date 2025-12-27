@@ -95,8 +95,11 @@ const HomePage = () => {
 
   return (
     <>
-      <section id="hero-video" className="relative isolate overflow-hidden">
-        <div  className="absolute inset-0 h-screen">
+      <section
+        id="hero-video"
+        className="relative isolate min-h-[100svh] overflow-hidden"
+      >
+        <div className="absolute inset-0 h-[100svh]">
           <video
             className="h-full w-full object-cover video-shadow"
             autoPlay
@@ -107,14 +110,14 @@ const HomePage = () => {
           >
             <source src="../public/video.mp4" type="video/mp4" />
           </video>
-        <div className="absolute bottom-30 inset-0 bg-gradient-to-br 
+        <div className="absolute inset-0 bg-gradient-to-br 
             from-[rgba(24,80,160,1)] 
             via-[rgba(87,199,133,0.14)] 
             to-[rgba(64,177,182,1)]" />
           {/* <div className="absolute inset-0 video-overlay" /> */}
         </div>
 
-        <div className="relative mx-auto flex min-h-[78vh] w-full max-w-6xl flex-col justify-center px-4 pb-16 pt-28 md:px-8">
+        <div className="relative mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col justify-center px-4 pb-16 pt-28 md:px-8">
           <animated.div style={heroSpring} className="max-w-2xl">
 
             

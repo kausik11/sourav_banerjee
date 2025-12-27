@@ -159,6 +159,96 @@ const data = {
       image:
         'https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=900&q=80',
     },
+    {
+      id: 'summer-heat-safety',
+      title: 'Summer heat safety tips for kids',
+      excerpt:
+        'Keep little ones cool with hydration, shade breaks, and smart outdoor timing.',
+      tag: 'Wellness',
+      date: '2024-11-20',
+      readTime: '4 min read',
+      content: [
+        'Plan outdoor play before 10 AM or after 4 PM to avoid peak heat.',
+        'Offer water often and add hydrating snacks like cucumber or watermelon.',
+        'Dress kids in breathable fabrics and wide-brim hats for shade.',
+        'Watch for signs of heat exhaustion like dizziness or unusual fatigue.',
+        'Call the clinic if symptoms do not improve with rest and fluids.',
+      ],
+      image:
+        'https://images.unsplash.com/photo-1501441858156-e505fb04bfbc?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      id: 'seasonal-allergy-playbook',
+      title: 'Seasonal allergy playbook',
+      excerpt:
+        'A gentle routine to manage itchy eyes, sneezing, and stuffy noses.',
+      tag: 'Allergies',
+      date: '2024-10-08',
+      readTime: '5 min read',
+      content: [
+        'Track symptoms to spot patterns tied to pollen-heavy days.',
+        'Shower and change clothes after outdoor play to reduce allergens.',
+        'Use a cool mist humidifier and keep bedroom windows closed.',
+        'Discuss safe medication options at your next visit.',
+        'Book a check-in if symptoms affect sleep or school focus.',
+      ],
+      image:
+        'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      id: 'calm-morning-routines',
+      title: 'Calm morning routines for busy families',
+      excerpt:
+        'Simple planning tricks that reduce stress before school.',
+      tag: 'Routine',
+      date: '2024-09-12',
+      readTime: '3 min read',
+      content: [
+        'Prep backpacks, uniforms, and lunches the night before.',
+        'Use a consistent wake-up time to avoid rushed mornings.',
+        'Create a short checklist kids can follow independently.',
+        'Keep breakfast simple with ready-to-go options.',
+        'Celebrate small wins to build positive habits.',
+      ],
+      image:
+        'https://images.unsplash.com/photo-1484820540004-14229fe36ca4?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      id: 'screen-time-balance',
+      title: 'Screen time balance without daily battles',
+      excerpt:
+        'Set boundaries kids can follow and parents can enforce.',
+      tag: 'Behavior',
+      date: '2024-08-21',
+      readTime: '4 min read',
+      content: [
+        'Create device-free zones like bedrooms and the dinner table.',
+        'Offer a clear daily limit and use timers to ease transitions.',
+        'Encourage tech breaks with movement or creative play.',
+        'Model healthy screen habits as a family.',
+        'Reach out if screen time affects sleep or mood.',
+      ],
+      image:
+        'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      id: 'first-day-school-nerves',
+      title: 'Helping kids with first-day-of-school nerves',
+      excerpt:
+        'Confidence-building steps to ease separation anxiety.',
+      tag: 'Emotions',
+      date: '2024-07-30',
+      readTime: '5 min read',
+      content: [
+        'Visit the school or classroom ahead of time if possible.',
+        'Practice the morning routine to reduce surprises.',
+        'Use calm, positive language about teachers and classmates.',
+        'Pack a small comfort item for younger kids.',
+        'Check in with teachers if anxiety continues.',
+      ],
+      image:
+        'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=900&q=80',
+    },
   ],
   feedbacks: [
     {
@@ -184,22 +274,62 @@ const data = {
     {
       question: 'How often should growth be monitored?',
       answer:
-        'Most children benefit from growth checks every 3 to 6 months depending on age.',
+        'Most children benefit from growth checks every 3 to 6 months depending on age.Most children benefit from growth checks every 3 to 6 months depending on age.Most children benefit from growth checks every 3 to 6 months depending on age.',
     },
     {
       question: 'Do you offer vaccination reminders?',
       answer:
-        'Yes, parents receive reminder texts and a printed schedule after visits.',
+        'Yes, parents receive reminder texts and a printed schedule after visits. Most children benefit from growth checks every 3 to 6 months depending on age. Most children benefit from growth checks every 3 to 6 months depending on age. Most children benefit from growth checks every 3 to 6 months depending on age.',
     },
     {
       question: 'What should I bring to the first visit?',
       answer:
-        'Bring previous medical records, vaccination card, and any specific concerns.',
+        'Bring previous medical records, vaccination card, and any specific concerns. Yes, parents receive reminder texts and a printed schedule after visits. Most children benefit from growth checks every 3 to 6 months depending on age. Most children benefit from growth checks every 3 to 6 months depending on age. Most children benefit from growth checks every 3 to 6 months depending on age.',
     },
     {
       question: 'How do you handle fever emergencies?',
       answer:
-        'We provide urgent slots each day and phone guidance when needed.',
+        'We provide urgent slots each day and phone guidance when needed. Yes, parents receive reminder texts and a printed schedule after visits. Most children benefit from growth checks every 3 to 6 months depending on age. Most children benefit from growth checks every 3 to 6 months depending on age. Most children benefit from growth checks every 3 to 6 months depending on age.',
+    },
+    {
+      question: 'What are the signs of dehydration in kids?',
+      answer:
+        'Look for fewer wet diapers, dry lips, and low energy. Offer small sips of water or oral rehydration solution and call if symptoms persist.',
+    },
+    {
+      question: 'When should toddlers stop using a bottle?',
+      answer:
+        'Most toddlers can transition off bottles between 12 and 18 months. We can help build a gentle plan that works for your routine.',
+    },
+    {
+      question: 'Is it normal for babies to spit up often?',
+      answer:
+        'Yes, mild spit-up is common in early months. Frequent discomfort, poor weight gain, or forceful vomiting should be reviewed with the clinic.',
+    },
+    {
+      question: 'How can we improve picky eating habits?',
+      answer:
+        'Offer small portions of new foods alongside familiar favorites and keep mealtimes calm. Consistency matters more than pressure.',
+    },
+    {
+      question: 'What is a safe fever range at home?',
+      answer:
+        'A mild fever can be monitored at home with fluids and rest. Call us for infants under 3 months or fevers above 102F.',
+    },
+    {
+      question: 'Do you help with sleep training guidance?',
+      answer:
+        'Yes, we share age-appropriate sleep routines and tips that fit your family schedule. We avoid one-size-fits-all plans.',
+    },
+    {
+      question: 'How early should vaccines start?',
+      answer:
+        'Vaccines begin at birth and continue on a schedule through early childhood. We review the plan at every visit.',
+    },
+    {
+      question: 'Can you advise on seasonal allergies?',
+      answer:
+        'Absolutely. We can evaluate symptoms, recommend safe medications, and share prevention tips for pollen-heavy weeks.',
     },
   ],
 }

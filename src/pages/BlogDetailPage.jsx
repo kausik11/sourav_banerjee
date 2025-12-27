@@ -109,7 +109,7 @@ const BlogDetailPage = () => {
 
   return (
     <>
-      <section className="mx-auto w-full max-w-6xl px-4 pb-10 pt-16 md:px-8">
+      <section className="mx-auto w-full max-w-6xl px-4 pb-4 pt-16 md:px-8">
         <Link
           to="/blogs"
           className="text-xs uppercase tracking-[0.3em] text-[var(--brand-accent)]"
@@ -118,16 +118,18 @@ const BlogDetailPage = () => {
         </Link>
         <div className="mt-6 grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
           <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-[var(--brand-accent)]">
+            <p className="inline-flex items-center rounded-full border border-white/80 bg-[var(--brand-accent)] px-3 py-1 text-xs uppercase tracking-[0.1em] text-white shadow-sm">
               {blog.tag}
             </p>
-            <h1 className="mt-4 font-display text-4xl md:text-5xl">
+            <h1 className="mt-4 font-display text-3xl text-[var(--brand-blue)] md:text-4xl">
               {blog.title}
             </h1>
             <p className="mt-3 text-sm text-[var(--muted)]">
-              {blog.date} • {blog.readTime}
+              {blog.date} | {blog.readTime}
             </p>
-            <p className="mt-6 text-base text-[var(--muted)]">{blog.excerpt}</p>
+            <p className="mt-6 text-sm text-[var(--muted)] leading-relaxed">
+              {blog.excerpt}
+            </p>
             <div className="mt-6 flex flex-wrap items-center gap-4">
               <button
                 type="button"
@@ -161,12 +163,12 @@ const BlogDetailPage = () => {
               alt={blog.title}
               className="h-56 w-full rounded-xl object-cover"
             />
-            <p className="mt-6 text-sm text-[var(--muted)]">
+            <p className="mt-6 text-sm text-[var(--muted)] leading-relaxed">
               Pediatric guidance curated by Dr. Jhon. Share this with caregivers
               who need clarity and reassurance.
             </p>
             <div className="mt-6 rounded-xl bg-[#fdf7f1] p-4 text-sm text-[var(--muted)]">
-              <p className="font-display text-lg text-[var(--ink)]">
+              <p className="font-display text-lg text-[var(--brand-blue)]">
                 Quick Clinic Tip
               </p>
               <p className="mt-2">
@@ -180,8 +182,10 @@ const BlogDetailPage = () => {
       <section className="mx-auto w-full max-w-6xl px-4 pb-12 md:px-8">
         <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
           <div className="rounded-2xl border border-[var(--line)] bg-white p-6 shadow-soft">
-            <h2 className="font-display text-2xl">Article details</h2>
-            <div className="mt-4 space-y-4 text-sm text-[var(--muted)]">
+            <h2 className="font-display text-2xl text-[var(--brand-blue)]">
+              Article details
+            </h2>
+            <div className="mt-4 space-y-4 text-sm text-[var(--muted)] leading-relaxed">
               {blog.content.map((paragraph, index) => (
                 <p key={`${blog.id}-p-${index}`}>{paragraph}</p>
               ))}
@@ -189,7 +193,9 @@ const BlogDetailPage = () => {
           </div>
           <div className="space-y-6">
             <div className="rounded-2xl border border-[var(--line)] bg-[#fdf7f1] p-6 shadow-soft">
-              <h3 className="font-display text-xl">Most recent blogs</h3>
+              <h3 className="font-display text-xl text-[var(--brand-blue)]">
+                Most recent blogs
+              </h3>
               <div className="mt-4 space-y-4">
                 {recentBlogs.map((item) => (
                   <Link
@@ -203,7 +209,7 @@ const BlogDetailPage = () => {
                       className="h-16 w-16 rounded-xl object-cover"
                     />
                     <div>
-                      <p className="text-xs uppercase tracking-[0.3em] text-[var(--brand-accent)]">
+                      <p className="text-xs uppercase tracking-[0.1em] text-[var(--brand-accent)]">
                         {item.tag}
                       </p>
                       <p className="font-display text-base">{item.title}</p>
@@ -214,7 +220,9 @@ const BlogDetailPage = () => {
               </div>
             </div>
             <div className="rounded-2xl border border-[var(--line)] bg-white p-6 shadow-soft">
-              <h3 className="font-display text-xl">Related blogs</h3>
+              <h3 className="font-display text-xl text-[var(--brand-blue)]">
+                Related blogs
+              </h3>
               <div className="mt-4 space-y-4">
                 {relatedBlogs.map((item) => (
                   <Link
@@ -228,7 +236,7 @@ const BlogDetailPage = () => {
                       className="h-16 w-16 rounded-xl object-cover"
                     />
                     <div>
-                      <p className="text-xs uppercase tracking-[0.3em] text-[var(--brand-accent)]">
+                      <p className="text-xs uppercase tracking-[0.1em] text-[var(--brand-accent)]">
                         {item.tag}
                       </p>
                       <p className="font-display text-base">{item.title}</p>
@@ -294,7 +302,7 @@ const BlogDetailPage = () => {
                 key={item.id}
                 className="rounded-2xl border border-[var(--line)] bg-white p-6 shadow-soft"
               >
-                <p className="text-xs uppercase tracking-[0.3em] text-[var(--brand-accent)]">
+                <p className="text-xs uppercase tracking-[0.1em] text-[var(--brand-accent)]">
                   {new Date(item.date).toLocaleDateString()}
                 </p>
                 <p className="mt-2 font-display text-lg">{item.name}</p>
