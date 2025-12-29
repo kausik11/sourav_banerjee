@@ -47,7 +47,7 @@ const LocationsPage = () => {
             key={location.title}
             className="rounded-2xl border border-[var(--line)] bg-white/90 p-6 shadow-soft"
           >
-            <h3 className="font-display text-xl">{location.title}</h3>
+            <h3 className="font-display text-xl text-[var(--brand-blue)]">{location.title}</h3>
             <p className="mt-3 text-sm text-[var(--muted)]">
               {location.address}
             </p>
@@ -64,7 +64,7 @@ const LocationsPage = () => {
     />
     
 
-    <section id="send-message" className="bg-[#f8f1ea] py-16">
+    <section id="send-message" className=" py-16">
       <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 md:grid-cols-[1.1fr_0.9fr] md:px-8">
         <div>
           <SectionHeader
@@ -72,7 +72,10 @@ const LocationsPage = () => {
             title="Send a message"
             subtitle="Share your concern and we will respond with available appointment slots."
           />
-          <form className="rounded-2xl border border-[var(--line)] bg-white p-6 shadow-soft">
+          <form className="rounded-xl border border-[var(--line)] 
+           px-4 py-3 text-sm text-slate-800 
+           placeholder:text-slate-400 
+           outline-none focus:border-[var(--brand-accent)]">
             <div className="grid gap-4 md:grid-cols-2">
               <input
                 className="rounded-xl border border-[var(--line)] px-4 py-3 text-sm outline-none focus:border-[var(--brand-accent)]"
@@ -112,7 +115,7 @@ const LocationsPage = () => {
           <p className="text-xs uppercase tracking-[0.3em] text-[var(--brand-accent)]">
             Clinic Map
           </p>
-          <h3 className="mt-3 font-display text-xl">Central Location</h3>
+          <h3 className="mt-3 font-display text-xl text-[var(--brand-blue)]">Central Location</h3>
           <p className="mt-3 text-sm text-[var(--muted)]">
             23 Harmony Lane, Lakeview Heights
           </p>
@@ -121,7 +124,7 @@ const LocationsPage = () => {
             src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"
             alt="Clinic location"
           />
-          <div className="mt-6 rounded-xl bg-[#fdf7f1] p-4 text-sm text-[var(--muted)]">
+          <div className="mt-6 rounded-xl p-4 text-sm text-[var(--muted)]">
             <p className="font-display text-lg text-[var(--ink)]">
               Appointment Desk
             </p>

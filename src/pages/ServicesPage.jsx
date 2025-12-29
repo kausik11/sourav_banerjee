@@ -35,7 +35,7 @@ const ServicesPage = () => {
                   alt={service.title}
                   className="h-40 w-full rounded-xl object-cover"
                 />
-                <h3 className="mt-4 font-display text-xl">{service.title}</h3>
+                <h3 className="mt-4 font-display text-xl text-[var(--brand-blue)]">{service.title}</h3>
                 <p className="mt-3 text-sm text-[var(--muted)]">
                   {service.description}
                 </p>

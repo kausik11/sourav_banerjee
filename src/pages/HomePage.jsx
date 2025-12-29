@@ -5,8 +5,24 @@ import { useSite } from '../context/SiteContext'
 import SectionHeader from '../components/SectionHeader'
 import DoctorCentersSection from '../components/DoctorCentersSection'
 import { sampleDoctorCenters } from '../data/doctorCenters'
+import { FaAward, FaHeartbeat, FaSmile, FaUserMd } from 'react-icons/fa'
 import Typed from 'typed.js'
-import doctorimage from "../../public/doctor_main.png"
+// import doctorimage from "../../public/doctor_main.png"
+import doctorImage from "../assets/S_banerjee_main.jpeg"
+import cert1 from "../assets/certificate (1).jpeg"
+import cert2 from "../assets/certificate (2).jpeg"
+import cert3 from "../assets/certificate (3).jpeg"
+import cert4 from "../assets/certificate (4).jpeg"
+import cert5 from "../assets/certificate (5).jpeg"
+import cert6 from "../assets/certificate (6).jpeg"
+import cert7 from "../assets/certificate (7).jpeg"
+import cert8 from "../assets/certificate (8).jpeg"
+import cert9 from "../assets/certificate (9).jpeg"
+import cert10 from "../assets/certificate (10).jpeg"
+import cert11 from "../assets/certificate (12).jpeg"
+import cert12 from "../assets/certificate (13).jpeg"
+import homeConference from "../assets/home_conference.jpeg"
+
 
 
 const HomePage = () => {
@@ -20,6 +36,58 @@ const HomePage = () => {
   })
   const [hasAnimated, setHasAnimated] = useState(false);
   const typedRef = useRef(null);
+  const certificateImages = [
+    cert1,
+    cert2,
+    cert3,
+    cert4,
+    cert5,
+    cert6,
+    cert7,
+    cert8,
+    cert9,
+    cert10,
+    cert11,
+    cert12,
+  ];
+  const awardsSlides = certificateImages.map((image, index) => ({
+    image,
+    year: `20${24 - (index % 5)}`,
+    title: `Certificate of Excellence ${index + 1}`,
+    description:
+      'Recognized for outstanding pediatric care, clinical excellence, and patient-first service.',
+  }));
+  const [awardIndex, setAwardIndex] = useState(0);
+  const handlePrevAward = () =>
+    setAwardIndex((prev) => (prev - 1 + awardsSlides.length) % awardsSlides.length);
+  const handleNextAward = () =>
+    setAwardIndex((prev) => (prev + 1) % awardsSlides.length);
+  const addressCards = [
+    {
+      label: 'OPD Address',
+      address: '23 Harmony Lane, Lakeview Heights',
+      hours: 'Mon - Sat: 9:00 AM to 7:00 PM',
+      phone: '+91 98765 43210',
+    },
+    {
+      label: 'Clinic Address',
+      address: '15 Riverbend Road, Greenfield Park',
+      hours: 'Mon - Fri: 10:00 AM to 6:00 PM',
+      phone: '+91 98765 98765',
+    },
+    {
+      label: 'Consulting Room',
+      address: '8 Sunrise Plaza, Maple District',
+      hours: 'Tue - Sun: 8:30 AM to 2:00 PM',
+      phone: '+91 91234 56789',
+    },
+    {
+      label: 'Weekend OPD',
+      address: '45 Willow Street, Northview',
+      hours: 'Sat - Sun: 9:00 AM to 5:00 PM',
+      phone: '+91 99887 66554',
+    },
+  ];
 
   const heroSpring = useSpring({
     from: { opacity: 0, transform: 'translate3d(0,20px,0)' },
@@ -117,7 +185,7 @@ const HomePage = () => {
           {/* <div className="absolute inset-0 video-overlay" /> */}
         </div>
 
-        <div className="relative mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col justify-center px-4 pb-16 pt-28 md:px-8">
+        <div className="relative mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col justify-center px-4 pb-16 pt-28 md:px-8">
           <animated.div style={heroSpring} className="max-w-2xl">
 
             
@@ -169,34 +237,23 @@ const HomePage = () => {
             ))}
           </div>
 
-         
-          <div className="float-card max-w-sm absolute bottom-0 right-6 hidden rounded-2xl border border-white/20 bg-white/10 p-6 text-white shadow-xl backdrop-blur-lg md:block">
-            <p className="text-xs uppercase tracking-[0.3em] text-white/70">
-              OPD Address
-            </p>
-            <p className="mt-2 font-display text-xl">
-              23 Harmony Lane, Lakeview Heights
-            </p>
-            <p className="mt-2 text-sm text-white/80">
-              Mon - Sat: 9:00 AM to 7:00 PM
-            </p>
-            <p className="mt-4 text-sm">Call: +91 98765 43210</p>
+          <div className="mt-10 w-full lg:mt-0">
+            <div className="grid gap-4 sm:grid-cols-2 lg:absolute lg:bottom-6 lg:right-0 lg:w-[520px]">
+              {addressCards.map((card) => (
+                <div
+                  key={card.address}
+                  className="float-card rounded-2xl border border-white/20 bg-white p-5 text-slate-900 shadow-xl backdrop-blur-lg lg:bg-white/10 lg:text-white"
+                >
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-500 lg:text-white/70">
+                    {card.label}
+                  </p>
+                  <p className="mt-2 font-display text-lg">{card.address}</p>
+                  <p className="mt-2 text-sm text-slate-600 lg:text-white/80">{card.hours}</p>
+                  <p className="mt-3 text-sm text-slate-700 lg:text-white">Call: {card.phone}</p>
+                </div>
+              ))}
+            </div>
           </div>
-
-           <div className="float-card max-w-sm absolute bottom-50 right-6 hidden max-w-sm rounded-2xl border border-white/20 bg-white/10 p-6 text-white shadow-xl backdrop-blur-lg md:block">
-            <p className="text-xs uppercase tracking-[0.3em] text-white/70">
-              OPD Address
-            </p>
-            {/* <p className="mt-2 font-display text-xl max-w-[260px] font-display text-xl leading-snug break-words"> */}
-            <p className="mt-2 font-display text-xl">
-              23 Harmony Lane, Lakeview Heights
-            </p>
-            <p className="mt-2 text-sm text-white/80">
-              Mon - Sat: 9:00 AM to 7:00 PM
-            </p>
-            <p className="mt-4 text-sm">Call: +91 98765 43210</p>
-          </div>
- 
            
           
           
@@ -210,14 +267,20 @@ const HomePage = () => {
         <div className="particle particle-3" /> */}
         <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 py-16 md:grid-cols-[1.2fr_0.8fr] md:items-center md:px-8">
           <div>
-            <span className="glow-badge inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-[var(--brand-blue)] shadow-soft">
-              <span className="h-2 w-2 rounded-full bg-[var(--brand-blue)]" />
+       <span className="inline-flex items-center gap-2 rounded-full 
+                 bg-white px-4 py-2 text-xs font-semibold uppercase 
+                 tracking-[0.15em] text-[var(--brand-blue)] 
+                 border-2 border-[var(--brand-blue)]/60 
+                 shadow-[0_6px_20px_rgba(0,0,0,0.08)]
+                 font-semibold text-sm">
+
+              <span className="h-2 w-2 rounded-full bg-[var(--brand-blue)] " />
               Pediatric Health Expert
             </span>
-            <h2 className="glow-title mt-6 font-display text-4xl font-bold text-[var(--brand-black)] md:text-5xl">
+            <h2 className=" mt-6 font-display text-4xl font-bold text-[var(--brand-blue)] md:text-5xl">
               Dr. sourav Banerjee
             </h2>
-            <p className="mt-3 text-lg font-semibold text-[var(--brand-blue)]">
+            <p className="mt-3 text-lg font-semibold text-[var(--brand-accent)]">
               Pediatrics & Child Wellness
             </p>
             <p className="mt-4 text-base text-[var(--muted)]">
@@ -248,20 +311,20 @@ const HomePage = () => {
               </Link>
             </div>
           </div>
-          <div className="flex justify-center md:justify-end">
-            <div
-              className="float-card relative max-w-sm rounded-3xl bg-white/80 bg-cover bg-center bg-no-repeat p-6 shadow-soft"
-              style={{ backgroundImage: "url('/large-triangles.png')" }}
-            >
+          <div className="flex justify-center md:justify-end relative">
+            {/* <div
+              className="float-card relative max-w-sm rounded-3xl bg-[var(--brand-accent)] bg-cover bg-center bg-no-repeat p-6 shadow-soft"
+              // style={{ backgroundImage: "url('/large-triangles.png')" }}
+            > */}
               <img
-                src={doctorimage}
+                src={doctorImage}
                 alt="Doctor portrait"
-                className="float-image w-full rounded-2xl object-cover"
+                className="float-image w-full rounded-2xl object-cover border-6 border-[var(--brand-accent)]"
               />
-              <div className="absolute -bottom-4 right-6 rounded-full bg-white px-4 py-2 text-xs font-semibold text-[var(--brand-blue)] shadow-soft">
+              <div className="absolute -bottom-4 right-6 rounded-full bg-white px-4 py-2 text-xs font-semibold text-[var(--brand-blue)] shadow-lg">
                 Dr. Sourav Banerjee
               </div>
-            </div>
+            {/* </div> */}
           </div>
         </div>
       </section>
@@ -327,12 +390,11 @@ const HomePage = () => {
           </div>
         </div>
       </section> */}
-      <section
-        className="parallax relative py-20"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1475776408506-9a5371e7a068?auto=format&fit=crop&w=1600&q=80')",
-        }}
+      {/* <section
+       className="parallax relative bg-contain bg-center bg-no-repeat py-20"
+  style={{
+    backgroundImage: `url(${homeConference})`,
+  }}
       >
         <div className="absolute inset-0 bg-[#1b2a2e]/70" />
         <div className="relative mx-auto w-full max-w-4xl px-4 text-center text-white md:px-8">
@@ -347,7 +409,27 @@ const HomePage = () => {
             explanations to ease anxiety and build confidence.
           </p>
         </div>
-      </section>
+      </section> */}
+      <section
+  className="parallax relative bg-auto bg-center bg-no-repeat py-20"
+  style={{
+    backgroundImage: `url(${homeConference})`,
+  }}
+>
+  <div className="absolute inset-0 bg-[#1b2a2e]/70" />
+  <div className="relative mx-auto w-full max-w-4xl px-4 text-center text-white md:px-8">
+    <p className="text-xs uppercase tracking-[0.3em] text-white/70 pb-20">
+      Care Philosophy
+    </p>
+    <h2 className="font-display text-4xl md:text-5xl pb-20">
+      A calm, comforting experience for every child.
+    </h2>
+    <p className="mt-4 text-sm text-white/80 md:text-base">
+      The clinic blends warm interiors, playful cues, and child-friendly
+      explanations to ease anxiety and build confidence.
+    </p>
+  </div>
+</section>
       {/* <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">
         <SectionHeader
           eyebrow="Accolades"
@@ -403,34 +485,123 @@ const HomePage = () => {
         />
         <div className="grid gap-6 text-center md:grid-cols-4">
           <div className="rounded-2xl border border-[var(--line)] bg-white/80 p-6 shadow-soft">
-            <p className="font-display text-4xl">
+            <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--brand-accent)]/10 text-[var(--brand-accent)]">
+              <FaHeartbeat className="text-xl" aria-hidden="true" />
+            </div>
+            <p className="font-display text-2xl text-[var(--brand-blue)] font-semibold">
               {impactCounts.patients}+
             </p>
-            <p className="mt-2 text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
+            <p className="mt-2 text-xs uppercase tracking-[0.1em] text-[var(--muted)] font-semibold">
               Patients Treated
             </p>
           </div>
           <div className="rounded-2xl border border-[var(--line)] bg-white/80 p-6 shadow-soft">
-            <p className="font-display text-4xl">
+            <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--brand-accent)]/10 text-[var(--brand-accent)]">
+              <FaUserMd className="text-xl" aria-hidden="true" />
+            </div>
+            <p className="font-display text-2xl text-[var(--brand-blue)] font-semibold">
               {impactCounts.experience}+
             </p>
-            <p className="mt-2 text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
+            <p className="mt-2 text-xs uppercase tracking-[0.1em] text-[var(--muted)] font-semibold">
               Overall Experience
             </p>
           </div>
           <div className="rounded-2xl border border-[var(--line)] bg-white/80 p-6 shadow-soft">
-            <p className="font-display text-4xl">{impactCounts.awards}</p>
-            <p className="mt-2 text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
+            <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--brand-accent)]/10 text-[var(--brand-accent)]">
+              <FaAward className="text-xl" aria-hidden="true" />
+            </div>
+            <p className="font-display text-2xl text-[var(--brand-blue)] font-semibold">{impactCounts.awards}</p>
+            <p className="mt-2 text-xs uppercase tracking-[0.1em] text-[var(--muted)] font-semibold">
               Awards Received
             </p>
           </div>
           <div className="rounded-2xl border border-[var(--line)] bg-white/80 p-6 shadow-soft">
-            <p className="font-display text-4xl">
+            <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--brand-accent)]/10 text-[var(--brand-accent)]">
+              <FaSmile className="text-xl" aria-hidden="true" />
+            </div>
+            <p className="font-display text-2xl text-[var(--brand-blue)] font-semibold">
               {impactCounts.satisfaction}%
             </p>
-            <p className="mt-2 text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
+            <p className="mt-2 text-xs uppercase tracking-[0.1em] text-[var(--muted)] font-semibold">
               Patient Satisfaction
             </p>
+          </div>
+        </div>
+      </section>
+      <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">
+        <SectionHeader
+          eyebrow="Awards & Recognition"
+          title="Honors that reflect care quality"
+          subtitle="Selected awards and milestones celebrating excellence in pediatric care."
+          align="center"
+        />
+        <div className="relative overflow-hidden rounded-3xl border border-[var(--line)] bg-white/80 shadow-soft">
+          <div
+            className="flex transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${awardIndex * 100}%)` }}
+          >
+            {awardsSlides.map((item) => (
+              <div
+                key={`${item.title}-${item.year}`}
+                className="min-w-full p-6 md:p-10"
+              >
+                <div className="grid gap-6 md:grid-cols-[1.1fr_1fr] md:items-center">
+                  <div className="relative overflow-hidden rounded-2xl">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="h-56 w-full object-contain md:h-72"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.3em] text-[var(--brand-accent)]">
+                      {item.year}
+                    </p>
+                    <h3 className="mt-3 font-display text-2xl">{item.title}</h3>
+                    <p className="mt-3 text-sm text-[var(--muted)]">
+                      {item.description}
+                    </p>
+                    <p className="mt-4 text-sm text-[var(--muted)]">
+                      Every recognition marks the trust families place in the
+                      clinic, and the care team&apos;s commitment to clear
+                      guidance and follow-through.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="flex items-center justify-between px-6 pb-6 md:px-10">
+            <button
+              type="button"
+              onClick={handlePrevAward}
+              className="rounded-full border border-[var(--line)] px-4 py-2 text-xs uppercase tracking-[0.25em] text-[var(--brand-blue)] transition hover:bg-[rgba(24,80,160,0.08)]"
+            >
+              Prev
+            </button>
+            <div className="flex items-center gap-2">
+              {awardsSlides.map((_, index) => (
+                <button
+                  key={`award-dot-${index}`}
+                  type="button"
+                  onClick={() => setAwardIndex(index)}
+                  className={`h-2 w-2 rounded-full ${
+                    index === awardIndex
+                      ? 'bg-[var(--brand-accent)]'
+                      : 'bg-[var(--line)]'
+                  }`}
+                  aria-label={`Go to award ${index + 1}`}
+                />
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={handleNextAward}
+              className="rounded-full border border-[var(--line)] px-4 py-2 text-xs uppercase tracking-[0.25em] text-[var(--brand-blue)] transition hover:bg-[rgba(24,80,160,0.08)]"
+            >
+              Next
+            </button>
           </div>
         </div>
       </section>

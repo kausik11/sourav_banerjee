@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSite } from '../context/SiteContext'
 import SectionHeader from '../components/SectionHeader'
+import paralaxDoctor from "../assets/paralax_doctor.jpeg"
 
 
 const TipsPage = () => {
@@ -53,9 +54,9 @@ const TipsPage = () => {
       </section>
 
       <section
-        className="parallax relative min-h-screen"
+        className="parallax relative min-h-screen bg-no-repeat"
         style={{
-          backgroundImage: "url('/doctor_main.png')",
+          backgroundImage: `url(${paralaxDoctor})`,
           backgroundPosition: 'right center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'contain',
