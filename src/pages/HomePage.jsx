@@ -22,6 +22,7 @@ import cert10 from "../assets/certificate (10).jpeg"
 import cert11 from "../assets/certificate (12).jpeg"
 import cert12 from "../assets/certificate (13).jpeg"
 import homeConference from "../assets/home_conference.jpeg"
+import video4 from "../../public/video.mp4"
 
 
 
@@ -176,7 +177,7 @@ const HomePage = () => {
             playsInline
             // poster="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1600&q=80"
           >
-            <source src="../public/video.mp4" type="video/mp4" />
+            <source src={video4} type="video/mp4" />
           </video>
         <div className="absolute inset-0 bg-gradient-to-br 
             from-[rgba(24,80,160,1)] 
