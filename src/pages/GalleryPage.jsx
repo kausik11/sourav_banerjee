@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import SectionHeader from '../components/SectionHeader'
+import { useSite } from '../context/SiteContext'
 
 const galleryItems = [
   {
@@ -89,12 +90,24 @@ const filterChips = [
 const PAGE_SIZE = 6
 
 const GalleryPage = () => {
+  const { gallery } = useSite()
   const [activeItem, setActiveItem] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
+  const [activeTag, setActiveTag] = useState('All')
 
-  const totalPages = Math.ceil(galleryItems.length / PAGE_SIZE)
+  const sourceItems = gallery.length ? gallery : galleryItems
+
+  const filteredItems = useMemo(() => {
+    if (activeTag === 'All') return sourceItems
+    const normalized = activeTag.toLowerCase()
+    return sourceItems.filter((item) =>
+      (item.tag || '').toLowerCase() === normalized
+    )
+  }, [activeTag, sourceItems])
+
+  const totalPages = Math.max(1, Math.ceil(filteredItems.length / PAGE_SIZE))
   const pageStart = (currentPage - 1) * PAGE_SIZE
-  const pageItems = galleryItems.slice(pageStart, pageStart + PAGE_SIZE)
+  const pageItems = filteredItems.slice(pageStart, pageStart + PAGE_SIZE)
 
   return (
     <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">
@@ -108,8 +121,20 @@ const GalleryPage = () => {
         {filterChips.map((chip) => (
           <span
             key={chip}
+            role="button"
+            tabIndex={0}
+            onClick={() => {
+              setActiveTag(chip)
+              setCurrentPage(1)
+            }}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                setActiveTag(chip)
+                setCurrentPage(1)
+              }
+            }}
             className={`rounded-full border px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] ${
-              chip === 'All'
+              chip === activeTag
                 ? 'border-[var(--brand-blue)] bg-[var(--brand-blue)] text-white shadow-soft'
                 : 'border-[var(--brand-accent)] text-[var(--brand-accent)]'
             }`}
@@ -163,8 +188,8 @@ const GalleryPage = () => {
 
       <div className="mt-10 flex flex-wrap items-center justify-between gap-4 text-sm text-[var(--muted)]">
         <span>
-          Showing {pageStart + 1}-{Math.min(pageStart + PAGE_SIZE, galleryItems.length)} of{' '}
-          {galleryItems.length}
+          Showing {pageStart + 1}-{Math.min(pageStart + PAGE_SIZE, filteredItems.length)} of{' '}
+          {filteredItems.length}
         </span>
         <div className="flex items-center gap-2">
           <button

@@ -28,6 +28,7 @@ import video4 from "../../public/video.mp4"
 
 const HomePage = () => {
   const { services, testimonials, accolades, feedbacks } = useSite()
+  console.log("feedback", feedbacks);
   const impactRef = useRef(null)
   const [impactCounts, setImpactCounts] = useState({
     patients: 0,
@@ -622,6 +623,14 @@ const HomePage = () => {
                 <span>{item.rating}</span>
                 <span>{item.platform}</span>
               </div>
+              {item.imageUrl && (
+                <img
+                  src={item.imageUrl}
+                  alt={item.name}
+                  className="mt-4 h-14 w-14 rounded-full object-cover"
+                  loading="lazy"
+                />
+              )}
               <p className="mt-4 text-sm text-[var(--muted)]">"{item.text}"</p>
               <p className="mt-4 font-display text-lg">{item.name}</p>
             </div>

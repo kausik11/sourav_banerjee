@@ -1,10 +1,11 @@
 import React from 'react'
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom'
-import { SiteProvider } from './context/SiteContext'
+import { SiteProvider, useSite } from './context/SiteContext'
 import HomePage from './pages/HomePage'
 import ServicesPage from './pages/ServicesPage'
 import LocationsPage from './pages/LocationsPage'
 import TipsPage from './pages/TipsPage'
+import TipsDetailPage from './pages/TipsDetailPage'
 import FaqPage from './pages/FaqPage'
 import BlogsPage from './pages/BlogsPage'
 import BlogDetailPage from './pages/BlogDetailPage'
@@ -21,8 +22,19 @@ const navItems = [
   { label: 'FAQs', to: '/faqs' },
 ]
 
-const AppLayout = () => (
-  <div className="min-h-screen relative overflow-hidden">
+const AppLayout = () => {
+  const { loading } = useSite()
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--brand-deep)]">
+        <div className="spinner" aria-label="Loading" />
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen relative overflow-hidden">
     <Navbar navItems={navItems} />
 
     {/* <div className="global-rings" aria-hidden="true">
@@ -59,6 +71,7 @@ const AppLayout = () => (
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/locations" element={<LocationsPage />} />
         <Route path="/tips" element={<TipsPage />} />
+        <Route path="/tips/:id" element={<TipsDetailPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/blogs/:id" element={<BlogDetailPage />} />
@@ -160,8 +173,9 @@ const AppLayout = () => (
         </div>
       </div>
     </footer>
-  </div>
-)
+    </div>
+  )
+}
 
 const App = () => (
   <SiteProvider>

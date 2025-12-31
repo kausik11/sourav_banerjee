@@ -15,18 +15,6 @@ const setFavorites = (ids) => {
   localStorage.setItem('favoriteBlogs', JSON.stringify(ids))
 }
 
-const getComments = (id) => {
-  try {
-    return JSON.parse(localStorage.getItem(`comments_${id}`) || '[]')
-  } catch {
-    return []
-  }
-}
-
-const setComments = (id, comments) => {
-  localStorage.setItem(`comments_${id}`, JSON.stringify(comments))
-}
-
 const BlogDetailPage = () => {
   const { id } = useParams()
   const { blogs } = useSite()
@@ -34,7 +22,9 @@ const BlogDetailPage = () => {
   const [favorites, setFavoriteState] = useState([])
   const [comments, setCommentState] = useState([])
   const [name, setName] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
   const [message, setMessage] = useState('')
+  const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000'
 
   useEffect(() => {
     setFavoriteState(getFavorites())
@@ -42,7 +32,7 @@ const BlogDetailPage = () => {
 
   useEffect(() => {
     if (blog) {
-      setCommentState(getComments(blog.id))
+      setCommentState(blog.comments || [])
     }
   }, [blog])
 
@@ -89,22 +79,34 @@ const BlogDetailPage = () => {
     setFavorites(next)
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    if (!name.trim() || !message.trim()) return
-    const nextComments = [
-      ...comments,
-      {
-        id: crypto.randomUUID(),
-        name: name.trim(),
-        message: message.trim(),
-        date: new Date().toISOString(),
-      },
-    ]
-    setCommentState(nextComments)
-    setComments(blog.id, nextComments)
-    setName('')
-    setMessage('')
+    if (!name.trim() || !message.trim() || !phoneNumber.trim()) return
+    if (!blog?.id) return
+
+    try {
+      const response = await fetch(`${API_BASE}/api/blogs/${blog.id}/comments`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          comment: message.trim(),
+          name: name.trim(),
+          phoneNumber: phoneNumber.trim(),
+        }),
+      })
+
+      if (!response.ok) {
+        return
+      }
+
+      const updated = await response.json()
+      setCommentState(updated.comments || [])
+      setName('')
+      setPhoneNumber('')
+      setMessage('')
+    } catch {
+      // Keep form data on error.
+    }
   }
 
   return (
@@ -186,9 +188,17 @@ const BlogDetailPage = () => {
               Article details
             </h2>
             <div className="mt-4 space-y-4 text-sm text-[var(--muted)] leading-relaxed">
-              {blog.content.map((paragraph, index) => (
-                <p key={`${blog.id}-p-${index}`}>{paragraph}</p>
-              ))}
+              {blog.descriptionHtml ? (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: blog.descriptionHtml,
+                  }}
+                />
+              ) : (
+                blog.content.map((paragraph, index) => (
+                  <p key={`${blog.id}-p-${index}`}>{paragraph}</p>
+                ))
+              )}
             </div>
           </div>
           <div className="space-y-6">
@@ -273,8 +283,10 @@ const BlogDetailPage = () => {
               />
               <input
                 className="rounded-xl border border-[var(--line)] px-4 py-3 text-sm outline-none focus:border-[var(--brand-accent)]"
-                placeholder="Email (optional)"
-                type="email"
+                placeholder="Phone number"
+                type="tel"
+                value={phoneNumber}
+                onChange={(event) => setPhoneNumber(event.target.value)}
               />
             </div>
             <textarea
@@ -297,17 +309,26 @@ const BlogDetailPage = () => {
                 No comments yet. Be the first to share a thought.
               </div>
             )}
-            {comments.map((item) => (
+            {comments.map((item, index) => (
               <div
-                key={item.id}
+                key={item._id || item.id || `${item.name}-${index}`}
                 className="rounded-2xl border border-[var(--line)] bg-white p-6 shadow-soft"
               >
                 <p className="text-xs uppercase tracking-[0.1em] text-[var(--brand-accent)]">
-                  {new Date(item.date).toLocaleDateString()}
+                  {item.createdAt
+                    ? new Date(item.createdAt).toLocaleDateString()
+                    : item.date
+                      ? new Date(item.date).toLocaleDateString()
+                      : 'Just now'}
                 </p>
                 <p className="mt-2 font-display text-lg">{item.name}</p>
+                {item.phoneNumber && (
+                  <p className="mt-1 text-xs uppercase tracking-[0.1em] text-[var(--muted)]">
+                    {item.phoneNumber}
+                  </p>
+                )}
                 <p className="mt-2 text-sm text-[var(--muted)]">
-                  {item.message}
+                  {item.comment || item.message}
                 </p>
               </div>
             ))}

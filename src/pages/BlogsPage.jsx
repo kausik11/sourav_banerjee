@@ -5,6 +5,7 @@ import SectionHeader from '../components/SectionHeader'
 
 const BlogsPage = () => {
   const { blogs } = useSite()
+  console.log("blogs", blogs);
   const [page, setPage] = useState(1)
   const pageSize = 6
 
