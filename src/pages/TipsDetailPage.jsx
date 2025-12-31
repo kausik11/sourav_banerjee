@@ -54,9 +54,16 @@ const TipsDetailPage = () => {
             <h1 className="mt-4 font-display text-3xl text-[var(--brand-blue)] md:text-4xl">
               {tip.title}
             </h1>
-            <p className="mt-6 text-sm text-[var(--muted)] leading-relaxed">
-              {tip.text}
-            </p>
+            {tip.textHtml ? (
+              <div
+                className="mt-6 text-sm text-[var(--muted)] leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: tip.textHtml }}
+              />
+            ) : (
+              <p className="mt-6 text-sm text-[var(--muted)] leading-relaxed">
+                {tip.text}
+              </p>
+            )}
           </div>
           <div className="rounded-2xl border border-[var(--line)] bg-white/90 p-6 shadow-soft">
             {tip.image ? (

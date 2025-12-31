@@ -153,7 +153,8 @@ export const SiteProvider = ({ children }) => {
           next.tips = tipsData.map((item) => ({
             id: item._id,
             title: item.title || 'Tip',
-            text: item.text || '',
+            text: stripHtml(item.text || ''),
+            textHtml: item.text || '',
             image: item.imageUrl || '',
           }))
         }
