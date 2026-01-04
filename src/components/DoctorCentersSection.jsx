@@ -194,7 +194,7 @@ const DoctorCentersSection = ({
           id={mapPanelId}
           role="tabpanel"
           aria-label="Selected clinic location map"
-          className="overflow-hidden rounded-2xl border border-[var(--line)] bg-white/90 shadow-soft"
+          className="overflow-hidden rounded-2xl border border-[var(--line)] bg-white/90 shadow-soft md:self-center"
         >
           {activeCenter ? (
             <iframe

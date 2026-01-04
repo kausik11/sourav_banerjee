@@ -4,15 +4,12 @@ import { useSite } from '../context/SiteContext'
 import SectionHeader from '../components/SectionHeader'
 
 
-const faqImages = [
-  'https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?auto=format&fit=crop&w=600&q=80',
-  'https://images.unsplash.com/photo-1503455637927-730bce8583c0?auto=format&fit=crop&w=600&q=80',
-  'https://images.unsplash.com/photo-1504151932400-72d4384f04b3?auto=format&fit=crop&w=600&q=80',
-  'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80',
-]
+const stripHtml = (value) =>
+  value ? value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() : ''
 
 const FaqPage = () => {
   const { faqs } = useSite()
+  console.log("faqs",faqs);
   const [openKey, setOpenKey] = useState(null)
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(1)
@@ -26,7 +23,9 @@ const FaqPage = () => {
 
     const tokens = normalizedQuery.split(/\s+/).filter(Boolean)
     return faqs.filter((item) => {
-      const haystack = `${item.question} ${item.answer}`.toLowerCase()
+      const tags = Array.isArray(item.tags) ? item.tags.join(' ') : ''
+      const metadata = Array.isArray(item.metadata) ? item.metadata.join(' ') : ''
+      const haystack = `${item.title} ${item.question} ${item.answer} ${tags} ${metadata}`.toLowerCase()
       return tokens.every((token) => haystack.includes(token))
     })
   }, [faqs, query])
@@ -72,7 +71,7 @@ const FaqPage = () => {
         </div>
         <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-4">
-            {pagedFaqs.map((item, index) => {
+            {pagedFaqs.map((item) => {
               const isOpen = openKey === item.question
               return (
                 <div
@@ -82,16 +81,28 @@ const FaqPage = () => {
                   <button
                     type="button"
                     onClick={() => setOpenKey(isOpen ? null : item.question)}
-                    className="flex w-full items-center gap-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-accent)]"
+                    className="flex w-full min-w-0 items-center gap-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-accent)]"
                     aria-expanded={isOpen}
                   >
-                    <img
-                      src={faqImages[index % faqImages.length]}
-                      alt=""
-                      className="h-12 w-12 rounded-xl object-cover ring-2 ring-white"
-                    />
-                    <div className="flex-1">
-                      <h3 className="font-display text-lg text-slate-900">{item.question}</h3>
+                    {item.imageUrl ? (
+                      <img
+                        src={item.imageUrl}
+                        alt={item.title || item.question}
+                        className="h-12 w-12 rounded-xl object-cover ring-2 ring-white"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="h-12 w-12 rounded-xl bg-[var(--line)]" />
+                    )}
+                    <div className="min-w-0 flex-1">
+                      {item.title ? (
+                        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand-accent)]">
+                          {item.title}
+                        </p>
+                      ) : null}
+                      <h3 className="mt-1 break-words whitespace-normal font-display text-lg text-slate-900">
+                        {stripHtml(item.question)}
+                      </h3>
                       <p className="mt-1 text-sm font-semibold uppercase tracking-[0.1em] text-[var(--brand-blue)]">
                         Tap to {isOpen ? 'close' : 'open'}
                       </p>
@@ -110,15 +121,73 @@ const FaqPage = () => {
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <p className="mt-4 text-sm text-slate-600">
-                        {item.answer}
-                      </p>
-                      <Link
-                        to="/locations#send-message"
-                        className="mt-4 inline-flex items-center justify-center rounded-full bg-[var(--brand-accent)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-accent)]"
-                      >
-                        Book an appointment
-                      </Link>
+                      <div className="mt-4 space-y-3 text-sm text-slate-600">
+                        <div>
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--brand-blue)]">
+                            Answer
+                          </p>
+                          <p className="mt-1 break-words">
+                            {stripHtml(item.answer)}
+                          </p>
+                        </div>
+                        {Array.isArray(item.tags) && item.tags.length > 0 ? (
+                          <div>
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--brand-blue)]">
+                              Tags
+                            </p>
+                            <div className="mt-2 flex flex-wrap gap-2">
+                              {item.tags.map((tag) => (
+                                <span
+                                  key={`${item.question}-tag-${tag}`}
+                                  className="rounded-full border border-[var(--line)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--brand-blue)]"
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        ) : null}
+                        {/* {Array.isArray(item.metadata) && item.metadata.length > 0 ? (
+                          <div>
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--brand-blue)]">
+                              Metadata
+                            </p>
+                            <p className="mt-1 text-xs text-[var(--muted)]">
+                              {item.metadata.join(' • ')}
+                            </p>
+                          </div>
+                        ) : null} */}
+                        {/* {item.link ? (
+                          <div>
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--brand-blue)]">
+                              Link
+                            </p>
+                            <p className="mt-1 text-xs text-[var(--muted)] break-all">
+                              {item.link}
+                            </p>
+                          </div>
+                        ) : null} */}
+                      </div>
+                      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                        {item.link ? (
+                          <a
+                            href={item.link}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand-accent)] transition hover:brightness-110"
+                          >
+                            Learn more
+                          </a>
+                        ) : (
+                          <span />
+                        )}
+                        <Link
+                          to="/locations#send-message"
+                          className="inline-flex items-center justify-center rounded-full bg-[var(--brand-accent)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-accent)]"
+                        >
+                          Book an appointment
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>

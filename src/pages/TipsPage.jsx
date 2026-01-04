@@ -64,29 +64,26 @@ const TipsPage = () => {
       </section>
 
       <section
-        className="parallax relative min-h-screen bg-no-repeat"
+        className="parallax doctor-note relative min-h-screen min-w-screen"
         style={{
           backgroundImage: `url(${paralaxDoctor})`,
-          backgroundPosition: 'right center',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'contain',
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(15,52,104,0.95)] via-[rgba(15,52,104,0.88)] to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(10,31,61,0.92)] via-[rgba(15,52,104,0.78)] to-[rgba(15,52,104,0.1)]" />
         <div className="relative mx-auto flex min-h-screen w-full max-w-6xl items-center px-4 md:px-8">
           <div className="max-w-xl text-white">
-            <p className="text-xs uppercase tracking-[0.3em] text-white/70">
+            <p className="text-xs uppercase tracking-[0.3em] text-white/80">
               Doctor's Note
             </p>
-            <h2 className="mt-4 font-display text-3xl md:text-5xl">
+            <h2 className="mt-4 font-display text-3xl drop-shadow md:text-5xl">
               "Listening closely is the first step to healing."
             </h2>
-            <p className="mt-4 text-sm text-white/80 md:text-base">
+            <p className="mt-4 text-sm text-white/85 md:text-base">
               "Every child deserves calm, thoughtful care. My goal is to guide
               families with clarity, empathy, and science-backed advice so each
               visit feels reassuring."
             </p>
-            <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
+            <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-white/80">
               Dr. Sourav Banerjee
             </p>
           </div>
@@ -183,7 +180,7 @@ const TipsPage = () => {
                 alt={item.title}
                 className="h-36 w-full rounded-xl object-cover"
               />
-              <h3 className="mt-4 font-display text-lg">{item.title}</h3>
+              <h3 className="mt-4 font-display text-lg text-[var(--brand-blue)]">{item.title}</h3>
               <p className="mt-2 text-sm text-[var(--muted)]">{item.text}</p>
               <span className="mt-4 inline-flex text-xs uppercase tracking-[0.2em] text-[var(--brand-accent)]">
                 Read tip

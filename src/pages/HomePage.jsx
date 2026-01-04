@@ -64,30 +64,49 @@ const HomePage = () => {
     setAwardIndex((prev) => (prev - 1 + awardsSlides.length) % awardsSlides.length);
   const handleNextAward = () =>
     setAwardIndex((prev) => (prev + 1) % awardsSlides.length);
+  const [feedbackIndex, setFeedbackIndex] = useState(0);
+  const handlePrevFeedback = () =>
+    setFeedbackIndex((prev) =>
+      feedbacks.length ? (prev - 1 + feedbacks.length) % feedbacks.length : 0
+    );
+  const handleNextFeedback = () =>
+    setFeedbackIndex((prev) =>
+      feedbacks.length ? (prev + 1) % feedbacks.length : 0
+    );
+  const getVisibleFeedbacks = () => {
+    if (feedbacks.length <= 3) return feedbacks
+    return [
+      feedbacks[feedbackIndex % feedbacks.length],
+      feedbacks[(feedbackIndex + 1) % feedbacks.length],
+      feedbacks[(feedbackIndex + 2) % feedbacks.length],
+    ]
+  }
+  const renderHours = (hours) => {
+    if (!hours) return null
+    return hours.split(/<br\s*\/?>/i).map((line, index) => (
+      <span key={`${line}-${index}`} className="block">
+        {line.trim()}
+      </span>
+    ))
+  }
   const addressCards = [
     {
       label: 'OPD Address',
-      address: '23 Harmony Lane, Lakeview Heights',
-      hours: 'Mon - Sat: 9:00 AM to 7:00 PM',
-      phone: '+91 98765 43210',
+      address: 'Olivia Nursing Home',
+      hours: 'Everyday 10:00 AM <br/> Tue, Thu 7:30 PM',
+      phone: '+91 85850 85136',
+    },
+    {
+      label: 'OPD Address',
+      address: 'Theism Dumdum Cantonment',
+      hours: 'Mon, Wed, Fri, Sat 11:00 AM <br/> Tue, Thu 6:30 PM',
+      phone: '+91 92308 12012',
     },
     {
       label: 'Clinic Address',
-      address: '15 Riverbend Road, Greenfield Park',
-      hours: 'Mon - Fri: 10:00 AM to 6:00 PM',
-      phone: '+91 98765 98765',
-    },
-    {
-      label: 'Consulting Room',
-      address: '8 Sunrise Plaza, Maple District',
-      hours: 'Tue - Sun: 8:30 AM to 2:00 PM',
-      phone: '+91 91234 56789',
-    },
-    {
-      label: 'Weekend OPD',
-      address: '45 Willow Street, Northview',
-      hours: 'Sat - Sun: 9:00 AM to 5:00 PM',
-      phone: '+91 99887 66554',
+      address: 'Habra, Erina Market',
+      hours: 'Mon, Wed, Fri, Sat 2:30 PM',
+      phone: '+91 75858 58989',
     },
   ];
 
@@ -111,11 +130,11 @@ const HomePage = () => {
           if (!entry.isIntersecting || hasAnimated) return
           setHasAnimated(true)
           const start = performance.now()
-          const duration = 1400
+          const duration = 2400
           const targets = {
             patients: 5000,
             experience: 13,
-            awards: 5,
+            awards: 25,
             satisfaction: 98,
           }
 
@@ -136,7 +155,7 @@ const HomePage = () => {
           requestAnimationFrame(tick)
         })
       },
-      { threshold: 0.3 },
+      { threshold: 0.8 },
     )
 
     observer.observe(impactRef.current)
@@ -163,13 +182,27 @@ const HomePage = () => {
     }
   },[])
 
+  useEffect(() => {
+    if (feedbacks.length <= 1) return
+    const intervalId = setInterval(() => {
+      setFeedbackIndex((prev) => (prev + 1) % feedbacks.length)
+    }, 3000)
+    return () => clearInterval(intervalId)
+  }, [feedbacks.length])
+
+  useEffect(() => {
+    if (feedbackIndex >= feedbacks.length && feedbacks.length > 0) {
+      setFeedbackIndex(0)
+    }
+  }, [feedbackIndex, feedbacks.length])
+
   return (
     <>
       <section
         id="hero-video"
         className="relative isolate min-h-[100svh] overflow-hidden"
       >
-        <div className="absolute inset-0 h-[100svh]">
+        <div className="absolute inset-0">
           <video
             className="h-full w-full object-cover video-shadow"
             autoPlay
@@ -180,10 +213,13 @@ const HomePage = () => {
           >
             <source src={video4} type="video/mp4" />
           </video>
-        <div className="absolute inset-0 bg-gradient-to-br 
-            from-[rgba(24,80,160,1)] 
-            via-[rgba(87,199,133,0.14)] 
-            to-[rgba(64,177,182,1)]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              'linear-gradient(135deg, rgba(27, 214, 222,0.5) 0%, rgba(64,177,192,0.35) 55%, rgba(64,177,182,0.8) 100%)',
+          }}
+        />
           {/* <div className="absolute inset-0 video-overlay" /> */}
         </div>
 
@@ -197,10 +233,10 @@ const HomePage = () => {
             </span> */}
 
             
-            <h1 className="font-display text-4xl text-[var(--paper)] md:text-6xl">
+            <h1 className="font-display text-4xl text-[var(--paper)] leading-tight md:text-6xl">
               {/* Gentle care for growing minds and joyful childhoods. */}
               Dr. sourav Banerjee is a{' '}
-              <span className="text-[var(--brand-black)]" ref={typedRef}></span>
+              <span className="text-[var(--brand-black)] drop-shadow" ref={typedRef}></span>
             </h1>
             <p className="mt-4 text-lg text-white/90 md:text-xl">
               Dr. Jhon combines evidence-based pediatrics with compassionate
@@ -241,17 +277,27 @@ const HomePage = () => {
 
           <div className="mt-10 w-full lg:mt-0">
             <div className="grid gap-4 sm:grid-cols-2 lg:absolute lg:bottom-6 lg:right-0 lg:w-[520px]">
-              {addressCards.map((card) => (
+              {addressCards.map((card, index) => (
                 <div
                   key={card.address}
-                  className="float-card rounded-2xl border border-white/20 bg-white p-5 text-slate-900 shadow-xl backdrop-blur-lg lg:bg-white/10 lg:text-white"
+                  className={`float-card w-full rounded-2xl border border-white/20 bg-white p-5 text-slate-900 shadow-xl backdrop-blur-lg lg:bg-white/10 lg:text-white ${
+                    addressCards.length % 2 === 1 && index === addressCards.length - 1
+                      ? 'sm:col-span-2'
+                      : ''
+                  }`}
                 >
                   <p className="text-xs uppercase tracking-[0.3em] text-slate-500 lg:text-white/70">
                     {card.label}
                   </p>
                   <p className="mt-2 font-display text-lg">{card.address}</p>
-                  <p className="mt-2 text-sm text-slate-600 lg:text-white/80">{card.hours}</p>
-                  <p className="mt-3 text-sm text-slate-700 lg:text-white">Call: {card.phone}</p>
+                  <p className="mt-2 text-sm text-slate-600 lg:text-white/80">
+                    {renderHours(card.hours)}
+                  </p>
+                  {card.phone ? (
+                    <p className="mt-3 text-sm text-slate-700 lg:text-white">
+                      Call: {card.phone}
+                    </p>
+                  ) : null}
                 </div>
               ))}
             </div>
@@ -412,21 +458,21 @@ const HomePage = () => {
           </p>
         </div>
       </section> */}
-      <section
+<section
   className="parallax relative bg-auto bg-center bg-no-repeat py-20"
   style={{
     backgroundImage: `url(${homeConference})`,
   }}
 >
-  <div className="absolute inset-0 bg-[#1b2a2e]/70" />
-  <div className="relative mx-auto w-full max-w-4xl px-4 text-center text-white md:px-8">
-    <p className="text-xs uppercase tracking-[0.3em] text-white/70 pb-20">
+  <div className="absolute inset-0 bg-[#0f172a]/70" />
+  <div className="relative mx-auto w-full max-w-4xl px-4 text-center md:px-8">
+    <p className="text-xl uppercase tracking-[0.3em] text-[var(--brand-accent)]">
       Care Philosophy
     </p>
-    <h2 className="font-display text-4xl md:text-5xl pb-20">
-      A calm, comforting experience for every child.
+    <h2 className="mt-6 font-display text-3xl text-white drop-shadow md:text-5xl">
+      A calm, comforting experience for every child
     </h2>
-    <p className="mt-4 text-sm text-white/80 md:text-base">
+    <p className="mt-5 text-base text-white/85 md:text-lg">
       The clinic blends warm interiors, playful cues, and child-friendly
       explanations to ease anxiety and build confidence.
     </p>
@@ -557,10 +603,10 @@ const HomePage = () => {
                     />
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-[0.3em] text-[var(--brand-accent)]">
+                    <p className="text-base uppercase tracking-[0.3em] text-[var(--brand-accent)]">
                       {item.year}
                     </p>
-                    <h3 className="mt-3 font-display text-2xl">{item.title}</h3>
+                    <h3 className="mt-3 font-display text-2xl text-[var(--brand-blue)]">{item.title}</h3>
                     <p className="mt-3 text-sm text-[var(--muted)]">
                       {item.description}
                     </p>
@@ -612,30 +658,75 @@ const HomePage = () => {
           eyebrow="Google Feedback"
           title="What families say online"
           subtitle="A snapshot of public reviews, highlighting compassion, clarity, and consistent follow-ups."
+          align="center"
         />
-        <div className="grid gap-6 md:grid-cols-3">
-          {feedbacks.map((item) => (
-            <div
-              key={item.name}
-              className="rounded-2xl border border-[var(--line)] bg-white/80 p-6 shadow-soft"
-            >
-              <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-[var(--brand-accent)]">
-                <span>{item.rating}</span>
-                <span>{item.platform}</span>
-              </div>
-              {item.imageUrl && (
-                <img
-                  src={item.imageUrl}
-                  alt={item.name}
-                  className="mt-4 h-14 w-14 rounded-full object-cover"
-                  loading="lazy"
-                />
-              )}
-              <p className="mt-4 text-sm text-[var(--muted)]">"{item.text}"</p>
-              <p className="mt-4 font-display text-lg">{item.name}</p>
+        {feedbacks.length > 0 ? (
+          <>
+            <div className="grid gap-6 md:grid-cols-3">
+              {getVisibleFeedbacks().map((item, index) => (
+                <div
+                  key={`${item.name}-${index}`}
+                  className="rounded-2xl border border-[var(--line)] bg-white/80 p-6 text-center shadow-soft transition-transform duration-500 ease-out hover:-translate-y-1"
+                >
+                  <div className="flex items-center justify-center gap-6 text-sm uppercase tracking-[0.3em] text-[var(--brand-accent)]">
+                    <span className="inline-flex items-center gap-0 text-sm">
+                      <span aria-hidden="true">★</span>
+                      {item.rating}
+                    </span>
+                    <span>{item.platform}</span>
+                  </div>
+                  {item.imageUrl ? (
+                    <img
+                      src={item.imageUrl}
+                      alt={item.name}
+                      className="mx-auto mt-5 h-16 w-16 rounded-full object-cover"
+                      loading="lazy"
+                    />
+                  ) : null}
+                  <p className="mt-5 text-base text-[var(--muted)]">
+                    "{item.text}"
+                  </p>
+                  <p className="mt-4 font-display text-lg text-[var(--brand-blue)]">{item.name}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+            <div className="mt-6 flex items-center justify-between">
+              <button
+                type="button"
+                onClick={handlePrevFeedback}
+                className="rounded-full border border-[var(--line)] px-4 py-2 text-xs uppercase tracking-[0.25em] text-[var(--brand-blue)] transition hover:bg-[rgba(24,80,160,0.08)]"
+              >
+                Prev
+              </button>
+              <div className="flex items-center gap-2">
+                {feedbacks.map((_, index) => (
+                  <button
+                    key={`feedback-dot-${index}`}
+                    type="button"
+                    onClick={() => setFeedbackIndex(index)}
+                    className={`h-2 w-2 rounded-full ${
+                      index === feedbackIndex
+                        ? 'bg-[var(--brand-accent)]'
+                        : 'bg-[var(--line)]'
+                    }`}
+                    aria-label={`Go to feedback ${index + 1}`}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={handleNextFeedback}
+                className="rounded-full border border-[var(--line)] px-4 py-2 text-xs uppercase tracking-[0.25em] text-[var(--brand-blue)] transition hover:bg-[rgba(24,80,160,0.08)]"
+              >
+                Next
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="rounded-2xl border border-dashed border-[var(--line)] bg-white/70 p-8 text-center text-sm text-[var(--muted)]">
+            Reviews will appear here once they are published.
+          </div>
+        )}
       </section>
 
       <DoctorCentersSection

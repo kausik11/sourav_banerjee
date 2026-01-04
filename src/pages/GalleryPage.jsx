@@ -135,7 +135,7 @@ const GalleryPage = () => {
             }}
             className={`rounded-full border px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] ${
               chip === activeTag
-                ? 'border-[var(--brand-blue)] bg-[var(--brand-blue)] text-white shadow-soft'
+                ? 'border-[var(--brand-blue)] bg-[rgba(24,80,160,0.12)] text-[var(--brand-blue)] shadow-soft'
                 : 'border-[var(--brand-accent)] text-[var(--brand-accent)]'
             }`}
           >

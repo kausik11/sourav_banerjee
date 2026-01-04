@@ -1,24 +1,35 @@
 export const sampleDoctorCenters = [
   {
-    id: 'dum-dum',
-    centerName: 'Dum Dum Clinic Center',
-    address: 'Dum Dum, Kolkata',
-    city: 'Kolkata',
+    id: 'olivia-nursing-home',
+    centerName: 'Olivia Nursing Home',
+    address: 'Olivia Nursing Home',
+    city: 'Dum Dum',
     state: 'West Bengal',
     phone: '+91 8910107011',
     email: 'ppp.obgy@gmail.com',
     googleMapEmbedUrl:
-      'https://www.google.com/maps?q=Dum%20Dum%2C%20Kolkata%2C%20West%20Bengal%2C%20India&output=embed',
+      'https://www.google.com/maps?q=Olivia%20Nursing%20Home%2C%20Dum%20Dum%2C%20West%20Bengal%2C%20India&output=embed',
   },
   {
-    id: 'kalyani',
-    centerName: 'Kalyani Clinic Center',
-    address: 'Kalyani, Nadia',
-    city: 'Kalyani',
+    id: 'theism-dumdum',
+    centerName: 'Theism Dumdum Cantonment',
+    address: 'Theism Dumdum Cantonment',
+    city: 'Dum Dum',
     state: 'West Bengal',
     phone: '+91 8910107011',
-    email: 'ppp.dnb.in.mumbai@gmail.com',
+    email: 'ppp.obgy@gmail.com',
     googleMapEmbedUrl:
-      'https://www.google.com/maps?q=Kalyani%2C%20Nadia%2C%20West%20Bengal%2C%20India&output=embed',
+      'https://www.google.com/maps?q=Theism%20Dumdum%20Cantonment%2C%20Dum%20Dum%2C%20West%20Bengal%2C%20India&output=embed',
+  },
+  {
+    id: 'srikrishna-doctor-chamber',
+    centerName: 'Srikrishna Doctor Chamber',
+    address: 'Habra, Erina Market',
+    city: 'Habra',
+    state: 'West Bengal',
+    phone: '+91 8910107011',
+    email: 'ppp.obgy@gmail.com',
+    googleMapEmbedUrl:
+      'https://www.google.com/maps?q=Erina%20Market%2C%20Habra%2C%20West%20Bengal%2C%20India&output=embed',
   },
 ]

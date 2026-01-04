@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useSite } from '../context/SiteContext'
 import SectionHeader from '../components/SectionHeader'
+import { API_BASE } from '../utils/api'
 
 const getFavorites = () => {
   try {
@@ -24,8 +25,6 @@ const BlogDetailPage = () => {
   const [name, setName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [message, setMessage] = useState('')
-  const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000'
-
   useEffect(() => {
     setFavoriteState(getFavorites())
   }, [])
@@ -222,7 +221,7 @@ const BlogDetailPage = () => {
                       <p className="text-xs uppercase tracking-[0.1em] text-[var(--brand-accent)]">
                         {item.tag}
                       </p>
-                      <p className="font-display text-base">{item.title}</p>
+                      <p className="font-display text-base text-[var(--brand-blue)]">{item.title}</p>
                       <p className="text-xs text-[var(--muted)]">{item.date}</p>
                     </div>
                   </Link>
@@ -249,7 +248,7 @@ const BlogDetailPage = () => {
                       <p className="text-xs uppercase tracking-[0.1em] text-[var(--brand-accent)]">
                         {item.tag}
                       </p>
-                      <p className="font-display text-base">{item.title}</p>
+                      <p className="font-display text-base text-[var(--brand-blue)]">{item.title}</p>
                       <p className="text-xs text-[var(--muted)]">
                         {item.readTime}
                       </p>
@@ -262,7 +261,7 @@ const BlogDetailPage = () => {
         </div>
       </section>
 
-      <section className="bg-[#f8f1ea] py-16">
+      <section className="py-16">
         <div className="mx-auto w-full max-w-6xl px-4 md:px-8">
           <SectionHeader
             eyebrow="Comments"
@@ -271,18 +270,18 @@ const BlogDetailPage = () => {
           />
           <form
             onSubmit={handleSubmit}
-            className="rounded-2xl border border-[var(--line)] bg-white p-6 shadow-soft"
+            className="rounded-2xl border border-[var(--line)] bg-white/90 p-6 shadow-soft md:p-8"
           >
             <div className="grid gap-4 md:grid-cols-2">
               <input
-                className="rounded-xl border border-[var(--line)] px-4 py-3 text-sm outline-none focus:border-[var(--brand-accent)]"
+                className="rounded-xl border border-[var(--line)] bg-white px-4 py-3 text-sm text-[var(--brand-black)] placeholder:text-[var(--muted)] outline-none transition focus:border-[var(--brand-accent)]"
                 placeholder="Your name"
                 type="text"
                 value={name}
                 onChange={(event) => setName(event.target.value)}
               />
               <input
-                className="rounded-xl border border-[var(--line)] px-4 py-3 text-sm outline-none focus:border-[var(--brand-accent)]"
+                className="rounded-xl border border-[var(--line)] bg-white px-4 py-3 text-sm text-[var(--brand-black)] placeholder:text-[var(--muted)] outline-none transition focus:border-[var(--brand-accent)]"
                 placeholder="Phone number"
                 type="tel"
                 value={phoneNumber}
@@ -290,7 +289,7 @@ const BlogDetailPage = () => {
               />
             </div>
             <textarea
-              className="mt-4 h-32 w-full rounded-xl border border-[var(--line)] px-4 py-3 text-sm outline-none focus:border-[var(--brand-accent)]"
+              className="mt-4 h-32 w-full rounded-xl border border-[var(--line)] bg-white px-4 py-3 text-sm text-[var(--brand-black)] placeholder:text-[var(--muted)] outline-none transition focus:border-[var(--brand-accent)]"
               placeholder="Write your comment"
               value={message}
               onChange={(event) => setMessage(event.target.value)}
@@ -321,12 +320,12 @@ const BlogDetailPage = () => {
                       ? new Date(item.date).toLocaleDateString()
                       : 'Just now'}
                 </p>
-                <p className="mt-2 font-display text-lg">{item.name}</p>
-                {item.phoneNumber && (
+                <p className="mt-2 font-display text-lg text-[var(--brand-blue)]">{item.name}</p>
+                {/* {item.phoneNumber && (
                   <p className="mt-1 text-xs uppercase tracking-[0.1em] text-[var(--muted)]">
                     {item.phoneNumber}
                   </p>
-                )}
+                )} */}
                 <p className="mt-2 text-sm text-[var(--muted)]">
                   {item.comment || item.message}
                 </p>

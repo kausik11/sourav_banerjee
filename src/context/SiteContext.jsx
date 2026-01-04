@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import axios from 'axios'
+import { API_BASE } from '../utils/api'
 
 const SiteContext = createContext(null)
 
@@ -34,8 +35,6 @@ export const SiteProvider = ({ children }) => {
   useEffect(() => {
     let isMounted = true
     const controller = new AbortController()
-    const API_BASE = import.meta.env.VITE_API_BASE || 'https://s-backend-two.vercel.app'
-
     const api = axios.create({
       baseURL: API_BASE,
     })
@@ -112,8 +111,14 @@ export const SiteProvider = ({ children }) => {
 
         if (faqsData) {
           next.faqs = faqsData.map((item) => ({
+            id: item._id,
+            title: item.title || '',
             question: item.question || '',
             answer: item.answer || '',
+            tags: Array.isArray(item.tags) ? item.tags : [],
+            metadata: Array.isArray(item.metadata) ? item.metadata : [],
+            link: item.link || '',
+            imageUrl: item.imageUrl || '',
           }))
         }
 

@@ -35,8 +35,11 @@ const ServicesPage = () => {
                   alt={service.title}
                   className="h-40 w-full rounded-xl object-cover"
                 />
-                <h3 className="mt-4 font-display text-xl text-[var(--brand-blue)]">{service.title}</h3>
-                <p className="mt-3 text-sm text-[var(--muted)]">
+                <h3 className="mt-4 font-display text-xl text-[var(--brand-blue)] leading-snug break-words">
+                  {service.title}
+                </h3>
+
+                <p className="mt-3 text-sm md:text-base text-[var(--muted)] leading-relaxed line-clamp-2 md:line-clamp-3">
                   {service.description}
                 </p>
               </animated.div>
