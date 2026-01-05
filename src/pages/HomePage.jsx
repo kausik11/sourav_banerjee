@@ -65,6 +65,31 @@ const HomePage = () => {
   const handleNextAward = () =>
     setAwardIndex((prev) => (prev + 1) % awardsSlides.length);
   const [feedbackIndex, setFeedbackIndex] = useState(0);
+  const videoSlides = [
+    {
+      id: 'doctube',
+      title: 'Doctor’s Message on Child Wellness',
+      label: 'Video Spotlight',
+      description:
+        'A short talk focused on everyday pediatric care, growth milestones, and parent guidance.',
+      embedUrl: 'https://www.youtube.com/embed/wdbU2jfkZsI?si=rrvaOOpPjodRIjaI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin',
+     
+    },
+    {
+      id: 'facebook',
+      title: 'Clinic Visit & Care Highlights',
+      label: 'Clinic Tour',
+      description:
+        'A quick look at the clinic experience and how we keep visits calm and child-friendly.',
+      embedUrl:
+        'https://doctube.com/v/bw1L3r',
+    },
+  ]
+  const [videoIndex, setVideoIndex] = useState(0)
+  const handlePrevVideo = () =>
+    setVideoIndex((prev) => (prev - 1 + videoSlides.length) % videoSlides.length)
+  const handleNextVideo = () =>
+    setVideoIndex((prev) => (prev + 1) % videoSlides.length)
   const handlePrevFeedback = () =>
     setFeedbackIndex((prev) =>
       feedbacks.length ? (prev - 1 + feedbacks.length) % feedbacks.length : 0
@@ -653,6 +678,76 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+      <section className="bg-white/80 py-16">
+        <div className="mx-auto w-full max-w-6xl px-4 md:px-8">
+          <SectionHeader
+            eyebrow="Video Gallery"
+            title="Watch Dr. Sourav in action"
+            subtitle="Short clips that explain care routines, clinic visits, and family-friendly guidance."
+            align="center"
+          />
+          <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+            <div>
+              <div className="relative overflow-hidden rounded-3xl border border-[var(--line)] bg-white shadow-soft">
+                <div className="relative pb-[56.25%]">
+                  <iframe
+                    key={videoSlides[videoIndex].id}
+                    src={videoSlides[videoIndex].embedUrl}
+                    title={videoSlides[videoIndex].title}
+                    className="absolute inset-0 h-full w-full"
+                    allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+                <div className="flex items-center gap-2">
+                  {videoSlides.map((slide, index) => (
+                    <button
+                      key={slide.id}
+                      type="button"
+                      onClick={() => setVideoIndex(index)}
+                      aria-label={`Show ${slide.title}`}
+                      className={`h-2.5 w-2.5 rounded-full transition ${
+                        index === videoIndex
+                          ? 'bg-[var(--brand-accent)]'
+                          : 'bg-[var(--line)]'
+                      }`}
+                    />
+                  ))}
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <button
+                    type="button"
+                    onClick={handlePrevVideo}
+                    className="rounded-full border border-[var(--line)] px-4 py-2 text-[var(--brand-blue)] transition hover:border-[var(--brand-blue)]"
+                  >
+                    Prev
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleNextVideo}
+                    className="rounded-full border border-[var(--line)] px-4 py-2 text-[var(--brand-blue)] transition hover:border-[var(--brand-blue)]"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-3xl border border-[var(--line)] bg-white/90 p-6 shadow-soft">
+              <p className="text-xs uppercase tracking-[0.3em] text-[var(--brand-accent)]">
+                {videoSlides[videoIndex].label}
+              </p>
+              <h3 className="mt-4 font-display text-2xl text-[var(--brand-blue)]">
+                {videoSlides[videoIndex].title}
+              </h3>
+              <p className="mt-3 text-sm text-[var(--muted)]">
+                {videoSlides[videoIndex].description}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">
         <SectionHeader
           eyebrow="Google Feedback"
@@ -727,6 +822,16 @@ const HomePage = () => {
             Reviews will appear here once they are published.
           </div>
         )}
+        <div className="mt-8 flex justify-center bg-var[--brand-accent] s transition">
+          <a
+            href="https://www.google.com/search?sca_esv=2bc7513dd8de01bf&sxsrf=AE3TifPyKUZnZgv15xnzS-iJprPjpgFsUw:1767630835801&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-E85QoNXJfnuO6OoJJUCsMc3Y5HynQSm1N_fXM8pjvQNN2FMhAw-Htrgfx4Y3uaGofQzaAD-HDl-Y5gC07342Wr_azM3nQ9gRgoiAr32nSo8jjrJQZXFQwW6vAPEUcv9zin_DHDxEp8vWzM4pTwWFiEUYo2q9IOK-l75AAQfc48wOL3HIXrfNZBp9RmWOHO6oC0DF3h3KOdDvflYqkqrQYVr7Fkj8e1Fax8fjUjfIDU1MwDFS0w%3D%3D&q=Dr.+Sourav+Banerjee+,+MD+%28pediatrics%29+Newborn+%26+Child+Specialist.+Consultant+pediatrician+in+North+24+Parganas+%26+Kolkata+Reviews&sa=X&ved=2ahUKEwilpL-A6vSRAxXRRmcHHaL_HWYQ0bkNegQIIxAD&biw=1536&bih=699&dpr=1.25#lrd=0x39f89fb85d26bdd1:0x5cd37c76dffcbe1d,3,,,,"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center rounded-full bg-[var(--brand-accent)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.25em] text-white "
+          >
+            Leave a Google Review
+          </a>
+        </div>
       </section>
 
       <DoctorCentersSection

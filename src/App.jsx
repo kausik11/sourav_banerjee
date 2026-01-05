@@ -1,6 +1,8 @@
 import React from 'react'
+import { FaFacebookF, FaGoogle, FaInstagram, FaLinkedinIn } from 'react-icons/fa'
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom'
 import { SiteProvider, useSite } from './context/SiteContext'
+import { sampleDoctorCenters } from './data/doctorCenters'
 import HomePage from './pages/HomePage'
 import ServicesPage from './pages/ServicesPage'
 import LocationsPage from './pages/LocationsPage'
@@ -11,6 +13,7 @@ import BlogsPage from './pages/BlogsPage'
 import BlogDetailPage from './pages/BlogDetailPage'
 import GalleryPage from './pages/GalleryPage'
 import Navbar from './components/Navbar'
+import logo from '../public/logo.png'
 
 const navItems = [
   { label: 'Home', to: '/' },
@@ -85,11 +88,11 @@ const AppLayout = () => {
           <div>
             <div className="flex items-center gap-3">
               <img
-                src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=facearea&w=120&h=120&q=80"
+                src={logo}
                 alt="Dr. Jhon"
                 className="h-11 w-11 rounded-full border border-white/30 object-cover"
               />
-              <p className="text-lg font-semibold text-white">Dr. Jhon</p>
+              <p className="text-lg font-semibold text-white">Dr. Sourav Banerjee</p>
             </div>
             <p className="mt-4 text-sm text-white/70">
               Providing exceptional pediatric care with personalized guidance
@@ -103,7 +106,7 @@ const AppLayout = () => {
             <ul className="mt-4 space-y-2 text-sm text-white/70">
               <li>
                 <NavLink to="/" className="hover:text-white">
-                  About Dr. Jhon
+                  About Dr. Sourav
                 </NavLink>
               </li>
               <li>
@@ -118,7 +121,7 @@ const AppLayout = () => {
               </li>
               <li>
                 <NavLink to="/locations" className="hover:text-white">
-                  Insurance Information
+                  Tips & Advice
                 </NavLink>
               </li>
               <li>
@@ -130,41 +133,106 @@ const AppLayout = () => {
           </div>
 
           <div>
-            <p className="text-sm font-semibold text-white">Our Services</p>
+            <p className="text-sm font-semibold text-white">Doctor Address</p>
             <div className="mt-3 h-px w-16 bg-white/30" />
-            <ul className="mt-4 space-y-2 text-sm text-white/70">
-              <li>Newborn Care</li>
-              <li>Immunization Planning</li>
-              <li>Nutrition Guidance</li>
-              <li>Allergy Management</li>
-              <li>Adolescent Wellness</li>
-            </ul>
+            <div className="mt-4 grid gap-6 text-sm text-white/70 md:grid-cols-[1fr_1.1fr]">
+              <div className="space-y-3">
+                <p className="leading-relaxed">
+                  Dr. Sourav Banerjee Clinic
+                  <br />
+                  214 Lakeview Avenue
+                  <br />
+                  Kolkata, WB 700029
+                </p>
+                <a
+                  href="https://maps.google.com/?q=214+Lakeview+Avenue+Kolkata+WB+700029"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 text-white/80 transition hover:text-white"
+                >
+                  <span>Get Directions</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+                <div className="space-y-1 text-white/80">
+                  <p>Call: +91 98765 43210</p>
+                  <p>Email: care@drsouravclinic.com</p>
+                </div>
+                <div className="flex items-center gap-3 text-white/70">
+                  <a
+                    href="https://www.facebook.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Facebook"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-white/80 transition hover:border-white hover:text-white"
+                  >
+                    <FaFacebookF className="h-4 w-4" />
+                  </a>
+                  <a
+                    href="https://workspace.google.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Google Workspace"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-white/80 transition hover:border-white hover:text-white"
+                  >
+                    <FaGoogle className="h-4 w-4" />
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="LinkedIn"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-white/80 transition hover:border-white hover:text-white"
+                  >
+                    <FaLinkedinIn className="h-4 w-4" />
+                  </a>
+                  <a
+                    href="https://www.instagram.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Instagram"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-white/80 transition hover:border-white hover:text-white"
+                  >
+                    <FaInstagram className="h-4 w-4" />
+                  </a>
+                </div>
+              </div>
+    
+            </div>
           </div>
 
           <div>
-            <p className="text-sm font-semibold text-white">Office Hours</p>
+            <p className="text-sm font-semibold text-white">Newsletter</p>
             <div className="mt-3 h-px w-16 bg-white/30" />
-            <div className="mt-4 space-y-3 text-sm text-white/70">
-              <div className="flex items-start justify-between gap-4">
-                <span>Monday - Saturday</span>
-                <span className="text-white">8:00 AM - 10:00 PM</span>
-              </div>
-              <div className="flex items-start justify-between gap-4">
-                <span>Sunday</span>
-                <span className="text-white">Closed</span>
-              </div>
-            </div>
-            <NavLink
-              to="/locations"
-              className="mt-6 inline-flex items-center justify-center rounded-lg bg-[#2563eb] px-4 py-2 text-sm font-semibold text-white shadow-soft transition hover:bg-[#1d4ed8]"
-            >
-              Book Appointment
-            </NavLink>
+            <p className="mt-4 text-sm text-white/70">
+              Get clinic updates, pediatric tips, and new service alerts.
+            </p>
+            <form className="mt-4 space-y-3">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="w-full rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm text-white placeholder:text-white/50 focus:border-white focus:outline-none"
+                aria-label="Email address"
+              />
+              <button
+                type="submit"
+                className="w-full rounded-lg bg-white px-4 py-2 text-sm font-semibold text-[var(--brand-blue)] transition hover:bg-white/90"
+              >
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/20 pt-6 text-xs text-white/60 md:flex-row">
-          <p>© 2025 Dr. Jhon Pediatrics Clinic. All rights reserved.</p>
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/20 pt-6 text-sm text-white/60 md:flex-row">
+          <p>© 2026 Dr. Sourav Banerjee Clinic. All rights reserved.maintained by   <a
+      href="https://www.linkedin.com/in/kausik-saha-fsd"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-white hover:underline"
+    >
+      Kausik
+    </a>
+          </p>
           <div className="flex flex-wrap items-center gap-4">
             <span>Privacy Policy</span>
             <span>Terms of Service</span>
