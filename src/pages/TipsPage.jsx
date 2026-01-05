@@ -3,10 +3,16 @@ import { Link } from 'react-router-dom'
 import { useSite } from '../context/SiteContext'
 import SectionHeader from '../components/SectionHeader'
 import paralaxDoctor from "../assets/paralax_doctor.jpeg"
+import { API_BASE } from '../utils/api'
 
 const TipsPage = () => {
   const { tips, feedbacks } = useSite()
   const [activeReview, setActiveReview] = useState(0)
+  const [newsletterEmail, setNewsletterEmail] = useState('')
+  const [newsletterStatus, setNewsletterStatus] = useState({
+    type: 'idle',
+    message: '',
+  })
   const hasFeedbacks = feedbacks.length > 0
   const activeFeedback = hasFeedbacks
     ? feedbacks[activeReview]
@@ -24,6 +30,41 @@ const TipsPage = () => {
     }, 4500)
     return () => clearInterval(timer)
   }, [feedbacks.length])
+
+  const handleNewsletterSubmit = async (event) => {
+    event.preventDefault()
+    const trimmedEmail = newsletterEmail.trim()
+
+    if (!trimmedEmail) {
+      setNewsletterStatus({ type: 'error', message: 'Please enter an email.' })
+      return
+    }
+
+    try {
+      setNewsletterStatus({ type: 'loading', message: 'Subscribing...' })
+      const response = await fetch(`${API_BASE}/api/newsletter`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: trimmedEmail }),
+      })
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data?.message || 'Subscription failed.')
+      }
+
+      setNewsletterEmail('')
+      setNewsletterStatus({
+        type: 'success',
+        message: 'Thanks for subscribing!',
+      })
+    } catch (error) {
+      setNewsletterStatus({
+        type: 'error',
+        message: error?.message || 'Subscription failed.',
+      })
+    }
+  }
 
   return (
     <>
@@ -46,20 +87,39 @@ const TipsPage = () => {
             Quick, parent-friendly updates on wellness, nutrition, and
             developmental milestones.
           </p>
-          <form className="mt-8 flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
+          <form
+            className="mt-8 flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-center"
+            onSubmit={handleNewsletterSubmit}
+          >
             <input
               type="email"
               required
               placeholder="Enter your email"
               className="w-full rounded-full border border-white/40 bg-white/10 px-5 py-3 text-sm text-white placeholder:text-white/60 focus:border-white focus:outline-none sm:max-w-sm"
+              value={newsletterEmail}
+              onChange={(event) => setNewsletterEmail(event.target.value)}
             />
             <button
               type="submit"
-              className="rounded-full bg-[var(--brand-accent)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-soft transition hover:bg-[#2c969c]"
+              className="rounded-full bg-[var(--brand-accent)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-soft transition hover:bg-[#2c969c] disabled:cursor-not-allowed disabled:opacity-70"
+              disabled={newsletterStatus.type === 'loading'}
             >
-              Subscribe
+              {newsletterStatus.type === 'loading' ? 'Subscribing...' : 'Subscribe'}
             </button>
           </form>
+          {newsletterStatus.message ? (
+            <p
+              className={`mt-4 text-lg ${
+                newsletterStatus.type === 'error'
+                  ? 'text-red-200'
+                  : 'text-emerald-200'
+              }`}
+              role="status"
+              aria-live="polite"
+            >
+              {newsletterStatus.message}
+            </p>
+          ) : null}
         </div>
       </section>
 
@@ -90,7 +150,7 @@ const TipsPage = () => {
         </div>
       </section>
 
-      <section className="relative min-h-screen bg-[var(--brand-deep)] py-20 text-white">
+      {/* <section className="relative min-h-screen bg-[var(--brand-deep)] py-20 text-white">
         <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center px-4 md:px-8">
           <p className="text-xs uppercase tracking-[0.3em] text-white/70">
             Feedback
@@ -160,7 +220,7 @@ const TipsPage = () => {
             </div>
           )}
         </div>
-      </section>
+      </section> */}
 
       <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">
         <SectionHeader

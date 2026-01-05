@@ -210,7 +210,7 @@ const GalleryPage = () => {
                 onClick={() => setCurrentPage(page)}
                 className={`h-10 w-10 rounded-full border text-sm font-semibold transition ${
                   isActive
-                    ? 'border-[var(--brand-blue)] bg-[var(--brand-blue)] text-white shadow-soft'
+                    ? 'border-[var(--brand-blue)] bg-[var(--brand-accent)] text-black'
                     : 'border-[var(--brand-accent)] text-[var(--brand-accent)] hover:bg-[var(--brand-accent)] hover:text-white'
                 }`}
                 aria-current={isActive ? 'page' : undefined}

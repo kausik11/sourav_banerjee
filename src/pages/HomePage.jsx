@@ -5,7 +5,16 @@ import { useSite } from '../context/SiteContext'
 import SectionHeader from '../components/SectionHeader'
 import DoctorCentersSection from '../components/DoctorCentersSection'
 import { sampleDoctorCenters } from '../data/doctorCenters'
-import { FaAward, FaHeartbeat, FaSmile, FaUserMd } from 'react-icons/fa'
+import {
+  FaAward,
+  FaFacebookF,
+  FaGoogle,
+  FaHeartbeat,
+  FaInstagram,
+  FaLinkedinIn,
+  FaSmile,
+  FaUserMd,
+} from 'react-icons/fa'
 import Typed from 'typed.js'
 // import doctorimage from "../../public/doctor_main.png"
 import doctorImage from "../assets/S_banerjee_main.jpeg"
@@ -382,6 +391,44 @@ const HomePage = () => {
               >
                 Learn More ?
               </Link>
+            </div>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <a
+                href="https://www.facebook.com/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Facebook"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--brand-blue)]/30 text-[var(--brand-blue)] transition hover:border-[var(--brand-blue)] hover:bg-[rgba(24,80,160,0.08)]"
+              >
+                <FaFacebookF className="h-4 w-4" />
+              </a>
+              <a
+                href="https://workspace.google.com/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Google Workspace"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--brand-blue)]/30 text-[var(--brand-blue)] transition hover:border-[var(--brand-blue)] hover:bg-[rgba(24,80,160,0.08)]"
+              >
+                <FaGoogle className="h-4 w-4" />
+              </a>
+              <a
+                href="https://www.linkedin.com/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--brand-blue)]/30 text-[var(--brand-blue)] transition hover:border-[var(--brand-blue)] hover:bg-[rgba(24,80,160,0.08)]"
+              >
+                <FaLinkedinIn className="h-4 w-4" />
+              </a>
+              <a
+                href="https://www.instagram.com/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--brand-blue)]/30 text-[var(--brand-blue)] transition hover:border-[var(--brand-blue)] hover:bg-[rgba(24,80,160,0.08)]"
+              >
+                <FaInstagram className="h-4 w-4" />
+              </a>
             </div>
           </div>
           <div className="flex justify-center md:justify-end relative">

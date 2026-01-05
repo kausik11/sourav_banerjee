@@ -4,6 +4,7 @@ import SectionHeader from '../components/SectionHeader'
 import DoctorCentersSection from '../components/DoctorCentersSection'
 import { sampleDoctorCenters } from '../data/doctorCenters'
 import { API_BASE } from '../utils/api'
+import contact from "../assets/Contact.jpeg"
 
 
 const LocationsPage = () => {
@@ -235,12 +236,12 @@ const LocationsPage = () => {
             23 Harmony Lane, Lakeview Heights
           </p>
           <img
-            className="mt-6 h-56 w-full rounded-xl object-cover"
-            src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"
+            className="mt-6 h-56 w-full rounded-xl object-cover border border-[var(--brand-blue)]"
+            src={contact}
             alt="Clinic location"
           />
           <div className="mt-6 rounded-xl p-4 text-sm text-[var(--muted)]">
-            <p className="font-display text-lg text-[var(--ink)]">
+            <p className="font-display text-lg text-[var(--brand-blue)]">
               Appointment Desk
             </p>
             <p className="mt-2">+91 98765 43210</p>

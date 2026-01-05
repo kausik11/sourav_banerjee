@@ -224,7 +224,7 @@ const AppLayout = () => {
         </div>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/20 pt-6 text-sm text-white/60 md:flex-row">
-          <p>© 2026 Dr. Sourav Banerjee Clinic. All rights reserved.maintained by   <a
+          <p>© 2026 Dr. Sourav Banerjee Clinic. All rights reserved.Proudly maintained by   <a
       href="https://www.linkedin.com/in/kausik-saha-fsd"
       target="_blank"
       rel="noopener noreferrer"
