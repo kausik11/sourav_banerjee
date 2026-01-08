@@ -1,6 +1,6 @@
 
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 
 
@@ -17,6 +17,7 @@
   --brand-black: #272B41;
   --font-sans:  "Roboto", sans-serif;
   --font-display:  "Roboto", sans-serif;
+  --font-signature: "Homemade Apple", "Brush Script MT", cursive;
   --text-color:#757575;
     
 }
@@ -82,6 +83,13 @@ body {
 .font-display {
   font-family: var(--font-display);
   letter-spacing: 0.01em;
+}
+
+.font-signature {
+  font-family: var(--font-signature);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 .glass {
@@ -303,6 +311,97 @@ body {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.booking-banner {
+  background: linear-gradient(120deg, rgba(24, 80, 160, 0.95), rgba(64, 177, 182, 0.9));
+  color: #ffffff;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.booking-label {
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.booking-number {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.booking-number:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
+}
+
+.booking-cta {
+  font-weight: 700;
+  background: rgba(15, 23, 42, 0.2);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.booking-float {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  z-index: 50;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 12px 16px;
+  border-radius: 18px;
+  background: #1850a0;
+  color: #ffffff;
+  box-shadow: 0 18px 40px rgba(24, 80, 160, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  animation: bookingPulse 2.2s ease-in-out infinite;
+}
+
+.booking-float-label {
+  font-size: 10px;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+.booking-float-number {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+
+@keyframes bookingPulse {
+  0%,
+  100% {
+    transform: translateY(0);
+    box-shadow: 0 18px 40px rgba(24, 80, 160, 0.4);
+  }
+  50% {
+    transform: translateY(-4px);
+    box-shadow: 0 26px 54px rgba(24, 80, 160, 0.5);
+  }
+}
+
+@media (max-width: 768px) {
+  .booking-number {
+    letter-spacing: 0.16em;
+    font-size: 0.9rem;
+  }
+
+  .booking-float {
+    left: 16px;
+    bottom: 16px;
+    padding: 10px 14px;
   }
 }
 

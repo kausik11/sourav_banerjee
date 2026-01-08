@@ -7,11 +7,7 @@ import DoctorCentersSection from '../components/DoctorCentersSection'
 import { sampleDoctorCenters } from '../data/doctorCenters'
 import {
   FaAward,
-  FaFacebookF,
-  FaGoogle,
   FaHeartbeat,
-  FaInstagram,
-  FaLinkedinIn,
   FaSmile,
   FaUserMd,
 } from 'react-icons/fa'
@@ -39,6 +35,7 @@ const HomePage = () => {
   const { services, testimonials, accolades, feedbacks } = useSite()
   console.log("feedback", feedbacks);
   const impactRef = useRef(null)
+  const [aboutOpenIndex, setAboutOpenIndex] = useState(0)
   const [impactCounts, setImpactCounts] = useState({
     patients: 0,
     experience: 0,
@@ -47,6 +44,8 @@ const HomePage = () => {
   })
   const [hasAnimated, setHasAnimated] = useState(false);
   const typedRef = useRef(null);
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [bookingCard, setBookingCard] = useState(null);
   const certificateImages = [
     cert1,
     cert2,
@@ -99,6 +98,33 @@ const HomePage = () => {
     setVideoIndex((prev) => (prev - 1 + videoSlides.length) % videoSlides.length)
   const handleNextVideo = () =>
     setVideoIndex((prev) => (prev + 1) % videoSlides.length)
+  const aboutItems = [
+    {
+      title: 'Short Bio',
+      content:
+        'Known for calm, family-first care, Dr. Banerjee focuses on clear guidance, growth tracking, and preventive health.',
+    },
+    {
+      title: 'Academic Qualifications',
+      content:
+        'MD, MRCPCH, Post CCT with specialized training in pediatric care and child wellness.',
+    },
+    {
+      title: 'Skill Certification',
+      content:
+        'Certified in pediatric nutrition, developmental screening, and child-friendly clinical practice.',
+    },
+    {
+      title: 'Membership',
+      content:
+        'Member of leading pediatric associations with a commitment to evidence-based care.',
+    },
+    {
+      title: 'Previous Appointments: Abroad and India',
+      content:
+        'Clinical experience across India and abroad, bringing global best practices to local care.',
+    },
+  ]
   const handlePrevFeedback = () =>
     setFeedbackIndex((prev) =>
       feedbacks.length ? (prev - 1 + feedbacks.length) % feedbacks.length : 0
@@ -107,6 +133,18 @@ const HomePage = () => {
     setFeedbackIndex((prev) =>
       feedbacks.length ? (prev + 1) % feedbacks.length : 0
     );
+  const openBookingModal = (card) => {
+    setBookingCard(card);
+    setBookingOpen(true);
+  };
+  const closeBookingModal = () => {
+    setBookingOpen(false);
+    setBookingCard(null);
+  };
+  const handleBookingSubmit = (event) => {
+    event.preventDefault();
+    closeBookingModal();
+  };
   const getVisibleFeedbacks = () => {
     if (feedbacks.length <= 3) return feedbacks
     return [
@@ -332,6 +370,13 @@ const HomePage = () => {
                       Call: {card.phone}
                     </p>
                   ) : null}
+                  <button
+                    type="button"
+                    onClick={() => openBookingModal(card)}
+                    className="mt-4 inline-flex items-center justify-center rounded-full border border-[var(--brand-accent)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white bg-[var(--brand-accent)] transition hover:bg-[var(--brand-accent)] hover:text-white"
+                  >
+                    Book Appointment
+                  </button>
                 </div>
               ))}
             </div>
@@ -342,109 +387,176 @@ const HomePage = () => {
           
         </div>
       </section>
+      {bookingOpen ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4">
+          <div className="w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--brand-accent)]">
+                  Book Appointment
+                </p>
+                <h3 className="mt-2 font-display text-2xl text-[var(--brand-blue)]">
+                  {bookingCard?.address || 'Clinic Consultation'}
+                </h3>
+                {bookingCard?.hours ? (
+                  <p className="mt-1 text-sm text-[var(--muted)]">
+                    {bookingCard.hours.replace(/<br\s*\/?>/gi, ' | ')}
+                  </p>
+                ) : null}
+              </div>
+              <button
+                type="button"
+                onClick={closeBookingModal}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--brand-blue)]/20 text-[var(--brand-blue)] transition hover:bg-[var(--brand-blue)] hover:text-white"
+                aria-label="Close booking form"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+                  <path
+                    d="M6 6l12 12M18 6l-12 12"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </button>
+            </div>
+            <form className="mt-6 space-y-4" onSubmit={handleBookingSubmit}>
+              <div>
+                <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand-blue)]">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Enter your name"
+                  className="mt-2 w-full rounded-xl border border-[var(--brand-blue)]/15 px-4 py-3 text-sm text-slate-900 focus:border-[var(--brand-accent)] focus:outline-none"
+                />
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div>
+                  <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand-blue)]">
+                    Phone
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    placeholder="Your number"
+                    className="mt-2 w-full rounded-xl border border-[var(--brand-blue)]/15 px-4 py-3 text-sm text-slate-900 focus:border-[var(--brand-accent)] focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand-blue)]">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="Your email"
+                    className="mt-2 w-full rounded-xl border border-[var(--brand-blue)]/15 px-4 py-3 text-sm text-slate-900 focus:border-[var(--brand-accent)] focus:outline-none"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand-blue)]">
+                  Message
+                </label>
+                <textarea
+                  rows="3"
+                  placeholder="Share your concern"
+                  className="mt-2 w-full rounded-xl border border-[var(--brand-blue)]/15 px-4 py-3 text-sm text-slate-900 focus:border-[var(--brand-accent)] focus:outline-none"
+                />
+              </div>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                {bookingCard?.phone ? (
+                  <a
+                    href={`tel:${bookingCard.phone.replace(/\s/g, '')}`}
+                    className="text-sm font-semibold text-[var(--brand-blue)]"
+                  >
+                    Call: {bookingCard.phone}
+                  </a>
+                ) : null}
+                <button
+                  type="submit"
+                  className="inline-flex items-center justify-center rounded-full bg-[var(--brand-accent)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-[var(--brand-blue)]"
+                >
+                  Send Request
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      ) : null}
       <section className="particle-section relative overflow-hidden">
-          
         {/* <div className="particle particle-1" />
         <div className="particle particle-2" />
         <div className="particle particle-3" /> */}
-        <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 py-16 md:grid-cols-[1.2fr_0.8fr] md:items-center md:px-8">
-          <div>
-       <span className="inline-flex items-center gap-2 rounded-full 
-                 bg-white px-4 py-2 text-xs font-semibold uppercase 
-                 tracking-[0.15em] text-[var(--brand-blue)] 
-                 border-2 border-[var(--brand-blue)]/60 
-                 shadow-[0_6px_20px_rgba(0,0,0,0.08)]
-                 font-semibold text-sm">
-
-              <span className="h-2 w-2 rounded-full bg-[var(--brand-blue)] " />
-              Pediatric Health Expert
-            </span>
-            <h2 className=" mt-6 font-display text-4xl font-bold text-[var(--brand-blue)] md:text-5xl">
-              Dr. sourav Banerjee
-            </h2>
-            <p className="mt-3 text-lg font-semibold text-[var(--brand-accent)]">
-              Pediatrics & Child Wellness
-            </p>
-            <p className="mt-4 text-base text-[var(--muted)]">
-              Providing calm, personalized pediatric care with a focus on growth
-              milestones, nutrition, and preventive health. Every visit is designed
-              to keep parents informed and children comfortable.
-            </p>
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <span className="rounded-full border border-[var(--brand-blue)]/20 bg-white px-4 py-2 text-xs font-semibold text-[var(--brand-blue)]">
-                Top Rated
-              </span>
-              <span className="rounded-full border border-[var(--brand-accent)]/30 bg-white px-4 py-2 text-xs font-semibold text-[var(--brand-accent)]">
-                Board Certified
-              </span>
+        <div className="mx-auto grid w-full max-w-6xl gap-14 px-4 py-16 md:grid-cols-[1.1fr_0.9fr] md:items-start md:px-8">
+          <div className="space-y-9">
+            {/* <span className="inline-flex items-center rounded-full bg-[var(--brand-accent)]/15 px-6 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-[var(--brand-blue)]">
+              About Me
+            </span> */}
+             <SectionHeader
+          eyebrow="About Me"
+          title="Delivering dedicated, individual care for better health"
+          subtitle="Our team of dedicated professionals is committed to providing exceptional care and support on your journey to parenthood
+"
+          align="center"
+        />
+            <div className="space-y-4">
+              {aboutItems.map((item, index) => {
+                const isOpen = aboutOpenIndex === index
+                return (
+                  <div key={item.title} className="border-b border-[var(--brand-blue)]/20 pb-3">
+                    <button
+                      type="button"
+                      onClick={() => setAboutOpenIndex(isOpen ? -1 : index)}
+                      className="flex w-full items-center justify-between py-2 text-left text-base font-semibold tracking-[0.01em] text-[var(--brand-blue)]"
+                      aria-expanded={isOpen}
+                      aria-controls={`about-panel-${index}`}
+                    >
+                      <span>{item.title}</span>
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full border border-[var(--brand-blue)]/30">
+                        <svg
+                          viewBox="0 0 24 24"
+                          className={`h-3 w-3 text-[var(--brand-blue)] transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                      </span>
+                    </button>
+                    <div
+                      id={`about-panel-${index}`}
+                      className={`overflow-hidden text-sm leading-relaxed text-[var(--muted)] transition-all duration-300 ${isOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'}`}
+                    >
+                      <p className="pb-3">{item.content}</p>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                to="/services"
-                className="inline-flex items-center justify-center rounded-xl border border-[var(--brand-blue)] px-6 py-3 text-sm font-semibold text-[var(--brand-blue)] transition hover:bg-[rgba(24,80,160,0.12)]"
-              >
-                Book Appointment
-              </Link>
-              <Link
-                to="/services"
-                className="inline-flex items-center justify-center rounded-xl border border-[var(--brand-blue)] px-6 py-3 text-sm font-semibold text-[var(--brand-blue)] transition hover:bg-[rgba(24,80,160,0.12)]"
-              >
-                Learn More ?
-              </Link>
-            </div>
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <a
-                href="https://www.facebook.com/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Facebook"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--brand-blue)]/30 text-[var(--brand-blue)] transition hover:border-[var(--brand-blue)] hover:bg-[rgba(24,80,160,0.08)]"
-              >
-                <FaFacebookF className="h-4 w-4" />
-              </a>
-              <a
-                href="https://workspace.google.com/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Google Workspace"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--brand-blue)]/30 text-[var(--brand-blue)] transition hover:border-[var(--brand-blue)] hover:bg-[rgba(24,80,160,0.08)]"
-              >
-                <FaGoogle className="h-4 w-4" />
-              </a>
-              <a
-                href="https://www.linkedin.com/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="LinkedIn"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--brand-blue)]/30 text-[var(--brand-blue)] transition hover:border-[var(--brand-blue)] hover:bg-[rgba(24,80,160,0.08)]"
-              >
-                <FaLinkedinIn className="h-4 w-4" />
-              </a>
-              <a
-                href="https://www.instagram.com/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Instagram"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--brand-blue)]/30 text-[var(--brand-blue)] transition hover:border-[var(--brand-blue)] hover:bg-[rgba(24,80,160,0.08)]"
-              >
-                <FaInstagram className="h-4 w-4" />
-              </a>
+            <div className="pt-2">
+              <p className="font-signature text-3xl font-medium leading-none text-[var(--brand-blue)] md:text-4xl">
+                Dr. Sourav Banerjee
+              </p>
+              <p className="mt-1 text-sm font-semibold text-[var(--brand-accent)]">
+                MD, MRCPCH, Post CCT
+              </p>
             </div>
           </div>
-          <div className="flex justify-center md:justify-end relative">
-            {/* <div
-              className="float-card relative max-w-sm rounded-3xl bg-[var(--brand-accent)] bg-cover bg-center bg-no-repeat p-6 shadow-soft"
-              // style={{ backgroundImage: "url('/large-triangles.png')" }}
-            > */}
+          <div className="flex justify-center md:justify-end">
+            <div className="relative w-full max-w-md">
+              <div className="pointer-events-none absolute -left-6 top-6 h-[94%] w-[94%] rounded-[2.6rem] bg-[var(--brand-accent)]/20 shadow-[0_30px_60px_rgba(12,45,90,0.12)] rotate-[-4deg]" />
+              <div className="pointer-events-none absolute -right-3 -top-4 h-[86%] w-[86%] rounded-[2.5rem] border border-[var(--brand-blue)]/10 bg-white/70" />
               <img
                 src={doctorImage}
                 alt="Doctor portrait"
-                className="float-image w-full rounded-2xl object-cover border-6 border-[var(--brand-accent)]"
+                className="relative w-full rounded-[2.5rem] object-cover shadow-[0_18px_50px_rgba(15,23,42,0.2)]"
               />
-              <div className="absolute -bottom-4 right-6 rounded-full bg-white px-4 py-2 text-xs font-semibold text-[var(--brand-blue)] shadow-lg">
-                Dr. Sourav Banerjee
-              </div>
-            {/* </div> */}
+            </div>
           </div>
         </div>
       </section>

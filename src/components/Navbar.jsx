@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { FaPhoneAlt } from 'react-icons/fa'
 
-const Navbar = ({ navItems }) => {
+const Navbar = ({ navItems, bookingNumber, bookingTel }) => {
   const [isOpen, setIsOpen] = useState(false)
   // const [theme, setTheme] = useState('light')
   const [scrolled, setScrolled] = useState(false)
@@ -38,7 +39,20 @@ const Navbar = ({ navItems }) => {
     : 'bg-white/80 backdrop-blur-[200px] shadow-lg shadow-bottom-hard '
     }
   `}>
-      
+      {bookingNumber ? (
+        <div className="booking-banner">
+          <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-2 text-xs md:px-8 md:text-sm">
+            <span className="booking-label">General Booking</span>
+            <a href={bookingTel} className="booking-number">
+              {bookingNumber}
+            </a>
+            <a href={bookingTel} className="booking-cta inline-flex items-center gap-2">
+              Call Now
+              <FaPhoneAlt className="h-3 w-3" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      ) : null}
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 md:px-8">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border bg-white/60 p-1">

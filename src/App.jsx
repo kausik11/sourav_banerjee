@@ -27,6 +27,9 @@ const navItems = [
 
 const AppLayout = () => {
   const { loading } = useSite()
+  const bookingNumber = '8906491957'
+  const bookingTel = `tel:+91${bookingNumber}`
+  const bookingWhatsapp = `https://wa.me/91${bookingNumber}?text=I%20want%20to%20book%20an%20appointment`
 
   if (loading) {
     return (
@@ -38,7 +41,7 @@ const AppLayout = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-    <Navbar navItems={navItems} />
+    <Navbar navItems={navItems} bookingNumber={bookingNumber} bookingTel={bookingTel} />
 
     {/* <div className="global-rings" aria-hidden="true">
       <span className="ring ring-blue" />
@@ -51,7 +54,7 @@ const AppLayout = () => {
 
     <a
       className="whatsapp-float"
-      href="https://wa.me/919876543210?text=I%20want%20to%20book%20an%20appointment"
+      href={bookingWhatsapp}
       target="_blank"
       rel="noreferrer"
       aria-label="Chat on WhatsApp"
@@ -63,6 +66,14 @@ const AppLayout = () => {
           d="M16 3C9.4 3 4 8.2 4 14.7c0 2.4.7 4.6 1.9 6.5L4 29l7-1.8c1.7.9 3.6 1.5 5.6 1.5 6.6 0 12-5.2 12-11.7S22.6 3 16 3zm6.9 16.1c-.3.9-1.7 1.7-2.4 1.8-.5.1-1.1.2-3.6-.7-3.1-1.1-5.1-4-5.2-4.2-.1-.2-1.3-1.7-1.3-3.2s.8-2.2 1.1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .5-.1.8.6.3.7 1 2.5 1.1 2.6.1.2.1.4 0 .6-.1.2-.2.4-.3.6-.2.2-.3.4-.5.6-.2.2-.3.4-.1.7.1.3.7 1.2 1.5 1.9 1 .9 1.8 1.2 2.1 1.4.3.1.5.1.7-.1.2-.2.8-.9 1-1.3.2-.3.4-.3.7-.2.3.1 1.7.8 2 1 .3.1.5.2.6.4.1.1.1.9-.2 1.8z"
         />
       </svg>
+    </a>
+    <a
+      className="booking-float"
+      href={bookingTel}
+      aria-label={`Call ${bookingNumber} to book`}
+    >
+      <span className="booking-float-label">Call For Booking</span>
+      <span className="booking-float-number">{bookingNumber}</span>
     </a>
 
     <main className="relative overflow-hidden">
@@ -154,7 +165,7 @@ const AppLayout = () => {
                   <span aria-hidden="true">→</span>
                 </a>
                 <div className="space-y-1 text-white/80">
-                  <p>Call: +91 98765 43210</p>
+                  <p>Call: +91 {bookingNumber}</p>
                   <p>Email: care@drsouravclinic.com</p>
                 </div>
                 <div className="flex items-center gap-3 text-white/70">
