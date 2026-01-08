@@ -11,11 +11,11 @@ const LocationsPage = () => {
   const location = useLocation()
   const [formData, setFormData] = useState({
     fullName: '',
-    email: '',
+    // email: '',
     phoneNumber: '',
     location: 'kolkata',
-    description: '',
-    image: null,
+    // description: '',
+    // image: null,
   })
   const [submitState, setSubmitState] = useState({
     status: 'idle',
@@ -158,7 +158,7 @@ const LocationsPage = () => {
                 onChange={handleInputChange}
                 required
               />
-              <input
+              {/* <input
                 className="rounded-xl border border-[var(--line)] px-4 py-3 text-sm outline-none focus:border-[var(--brand-accent)]"
                 placeholder="Email"
                 type="email"
@@ -166,7 +166,7 @@ const LocationsPage = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-              />
+              /> */}
               <input
                 className="rounded-xl border border-[var(--line)] px-4 py-3 text-sm outline-none focus:border-[var(--brand-accent)]"
                 placeholder="Phone"
@@ -188,14 +188,14 @@ const LocationsPage = () => {
                 <option value="bardhaman">Bardhaman</option>
               </select>
             </div>
-            <textarea
+            {/* <textarea
               className="mt-4 h-32 w-full rounded-xl border border-[var(--line)] px-4 py-3 text-sm outline-none focus:border-[var(--brand-accent)]"
               placeholder="Message"
               name="description"
               value={formData.description}
               onChange={handleInputChange}
-            />
-            <div className="mt-4">
+            /> */}
+            {/* <div className="mt-4">
               <label className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
                 Optional image
               </label>
@@ -205,7 +205,7 @@ const LocationsPage = () => {
                 accept="image/*"
                 onChange={handleFileChange}
               />
-            </div>
+            </div> */}
             <button
               type="submit"
               className="mt-5 inline-flex rounded-full bg-[var(--brand-accent)] px-6 py-3 text-xs uppercase tracking-[0.25em] text-white transition hover:bg-[#c76d5f] disabled:cursor-not-allowed disabled:opacity-70"

@@ -246,9 +246,9 @@ const GalleryPage = () => {
               type="button"
               onClick={() => setActiveItem(null)}
               aria-label="Close image preview"
-              className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-[var(--brand-blue)] text-white shadow-soft"
+              className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-[var(--brand-accent)] text-var(--brand-black)"
             >
-              <span className="text-lg leading-none">✕</span>
+              <span className="text-lg text-black leading-none">✕</span>
             </button>
             <img
               src={activeItem.image}

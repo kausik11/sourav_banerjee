@@ -92,6 +92,32 @@ body {
   letter-spacing: 0.02em;
 }
 
+.service-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(64, 177, 182, 0.12), rgba(64, 177, 182, 0.02));
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.service-card::after {
+  content: '';
+  position: absolute;
+  inset: 18% -40% auto auto;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(64, 177, 182, 0.35), rgba(64, 177, 182, 0));
+  transform: rotate(18deg);
+  pointer-events: none;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 28px 60px rgba(15, 23, 42, 0.18),
+    0 0 0 1px rgba(64, 177, 182, 0.25);
+}
+
 .glass {
   background: rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(22px);
@@ -360,12 +386,14 @@ body {
   gap: 4px;
   padding: 12px 16px;
   border-radius: 18px;
-  background: #1850a0;
+  background: linear-gradient(135deg, #d90429, #ff4d6d);
   color: #ffffff;
-  box-shadow: 0 18px 40px rgba(24, 80, 160, 0.4);
+  box-shadow:
+    0 18px 40px rgba(217, 4, 41, 0.45),
+    0 0 0 6px rgba(255, 77, 109, 0.12);
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  animation: bookingPulse 2.2s ease-in-out infinite;
+  animation: bookingHeartbeat 1.6s ease-in-out infinite;
 }
 
 .booking-float-label {
@@ -378,17 +406,30 @@ body {
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.22em;
+  text-shadow: 0 0 14px rgba(255, 184, 195, 0.8);
 }
 
-@keyframes bookingPulse {
+@keyframes bookingHeartbeat {
   0%,
+  18%,
+  36%,
   100% {
-    transform: translateY(0);
-    box-shadow: 0 18px 40px rgba(24, 80, 160, 0.4);
+    transform: scale(1);
+    box-shadow:
+      0 18px 40px rgba(217, 4, 41, 0.45),
+      0 0 0 6px rgba(255, 77, 109, 0.12);
   }
-  50% {
-    transform: translateY(-4px);
-    box-shadow: 0 26px 54px rgba(24, 80, 160, 0.5);
+  12% {
+    transform: scale(1.06);
+    box-shadow:
+      0 22px 48px rgba(217, 4, 41, 0.55),
+      0 0 0 12px rgba(255, 77, 109, 0.2);
+  }
+  24% {
+    transform: scale(1.02);
+    box-shadow:
+      0 20px 44px rgba(217, 4, 41, 0.5),
+      0 0 0 10px rgba(255, 77, 109, 0.16);
   }
 }
 

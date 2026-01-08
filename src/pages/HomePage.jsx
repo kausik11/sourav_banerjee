@@ -133,6 +133,34 @@ const HomePage = () => {
     setFeedbackIndex((prev) =>
       feedbacks.length ? (prev + 1) % feedbacks.length : 0
     );
+  const startImpactAnimation = () => {
+    if (hasAnimated) return
+    setHasAnimated(true)
+    const start = performance.now()
+    const duration = 2400
+    const targets = {
+      patients: 5000,
+      experience: 13,
+      awards: 25,
+      satisfaction: 98,
+    }
+
+    const tick = (now) => {
+      const progress = Math.min((now - start) / duration, 1)
+      const eased = 1 - Math.pow(1 - progress, 3)
+      setImpactCounts({
+        patients: Math.floor(targets.patients * eased),
+        experience: Math.floor(targets.experience * eased),
+        awards: Math.floor(targets.awards * eased),
+        satisfaction: Math.floor(targets.satisfaction * eased),
+      })
+      if (progress < 1) {
+        requestAnimationFrame(tick)
+      }
+    }
+
+    requestAnimationFrame(tick)
+  }
   const openBookingModal = (card) => {
     setBookingCard(card);
     setBookingOpen(true);
@@ -195,39 +223,23 @@ const HomePage = () => {
 
   useEffect(() => {
     if (!impactRef.current || hasAnimated) return
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+      startImpactAnimation()
+      return
+    }
 
+    const isMobile = window.innerWidth < 768
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting || hasAnimated) return
-          setHasAnimated(true)
-          const start = performance.now()
-          const duration = 2400
-          const targets = {
-            patients: 5000,
-            experience: 13,
-            awards: 25,
-            satisfaction: 98,
-          }
-
-          const tick = (now) => {
-            const progress = Math.min((now - start) / duration, 1)
-            const eased = 1 - Math.pow(1 - progress, 3)
-            setImpactCounts({
-              patients: Math.floor(targets.patients * eased),
-              experience: Math.floor(targets.experience * eased),
-              awards: Math.floor(targets.awards * eased),
-              satisfaction: Math.floor(targets.satisfaction * eased),
-            })
-            if (progress < 1) {
-              requestAnimationFrame(tick)
-            }
-          }
-
-          requestAnimationFrame(tick)
+          startImpactAnimation()
         })
       },
-      { threshold: 0.8 },
+      {
+        threshold: isMobile ? 0.35 : 0.7,
+        rootMargin: isMobile ? '0px 0px -20% 0px' : '0px',
+      },
     )
 
     observer.observe(impactRef.current)
@@ -332,7 +344,7 @@ const HomePage = () => {
             </div>
           </animated.div>
 
-          <div className="mt-10 flex flex-wrap gap-6 text-white/90 font-bold">
+          {/* <div className="mt-10 flex flex-wrap gap-6 text-white/90 font-bold">
             {[
               { label: '15+ Years of Practice', value: '15+' },
               { label: '12k Happy Families', value: '12k' },
@@ -345,28 +357,24 @@ const HomePage = () => {
                 </p>
               </div>
             ))}
-          </div>
+          </div> */}
 
-          <div className="mt-10 w-full lg:mt-0">
-            <div className="grid gap-4 sm:grid-cols-2 lg:absolute lg:bottom-6 lg:right-0 lg:w-[520px]">
+          <div className="relative z-10 mt-10 w-full md:mt-12 lg:mt-16">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {addressCards.map((card, index) => (
                 <div
                   key={card.address}
-                  className={`float-card w-full rounded-2xl border border-white/20 bg-white p-5 text-slate-900 shadow-xl backdrop-blur-lg lg:bg-white/10 lg:text-white ${
-                    addressCards.length % 2 === 1 && index === addressCards.length - 1
-                      ? 'sm:col-span-2'
-                      : ''
-                  }`}
+                  className="w-full rounded-2xl border border-white/20 bg-white/95 p-5 text-slate-900 shadow-xl backdrop-blur-lg"
                 >
-                  <p className="text-xs uppercase tracking-[0.3em] text-slate-500 lg:text-white/70">
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-500 lg:text-slate-600">
                     {card.label}
                   </p>
                   <p className="mt-2 font-display text-lg">{card.address}</p>
-                  <p className="mt-2 text-sm text-slate-600 lg:text-white/80">
+                  <p className="mt-2 text-sm text-slate-600">
                     {renderHours(card.hours)}
                   </p>
                   {card.phone ? (
-                    <p className="mt-3 text-sm text-slate-700 lg:text-white">
+                    <p className="mt-3 text-sm text-slate-700">
                       Call: {card.phone}
                     </p>
                   ) : null}
@@ -558,6 +566,40 @@ const HomePage = () => {
               />
             </div>
           </div>
+        </div>
+      </section>
+      <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">
+        <SectionHeader
+          eyebrow="Our Services"
+          title="Care tailored to every child"
+          subtitle="From routine checkups to specialized pediatric guidance, each visit is designed to support healthy growth."
+          align="center"
+        />
+        <div className="grid gap-6 md:grid-cols-3">
+          {(services?.length ? services : [
+            {
+              title: 'Newborn & Infant Care',
+              description: 'Growth tracking, feeding support, and early developmental guidance.',
+            },
+            {
+              title: 'Immunizations',
+              description: 'Complete vaccination schedules with gentle, child-friendly care.',
+            },
+            {
+              title: 'Nutrition & Wellness',
+              description: 'Personalized nutrition plans and lifestyle coaching for families.',
+            },
+          ]).map((service) => (
+            <div
+              key={service.title}
+              className="service-card rounded-2xl border border-[var(--line)] bg-white/90 p-6"
+            >
+              <h3 className="font-display text-xl text-[var(--brand-blue)]">{service.title}</h3>
+              <p className="mt-3 text-sm text-[var(--muted)]">
+                {service.description}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
       {/* <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">

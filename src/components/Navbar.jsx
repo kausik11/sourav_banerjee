@@ -48,7 +48,7 @@ const Navbar = ({ navItems, bookingNumber, bookingTel }) => {
             </a>
             <a href={bookingTel} className="booking-cta inline-flex items-center gap-2">
               Call Now
-              <FaPhoneAlt className="h-3 w-3" aria-hidden="true" />
+              <FaPhoneAlt className="h-6 w-6 sm:h-4 sm:w-4" aria-hidden="true" />
             </a>
           </div>
         </div>
