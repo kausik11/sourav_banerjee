@@ -5,6 +5,7 @@ import { useSite } from '../context/SiteContext'
 import SectionHeader from '../components/SectionHeader'
 import DoctorCentersSection from '../components/DoctorCentersSection'
 import { sampleDoctorCenters } from '../data/doctorCenters'
+import { API_BASE } from '../utils/api'
 import {
   FaAward,
   FaHeartbeat,
@@ -33,7 +34,6 @@ import video4 from "../../public/video.mp4"
 
 const HomePage = () => {
   const { services, testimonials, accolades, feedbacks } = useSite()
-  console.log("feedback", feedbacks);
   const impactRef = useRef(null)
   const [aboutOpenIndex, setAboutOpenIndex] = useState(0)
   const [impactCounts, setImpactCounts] = useState({
@@ -46,6 +46,16 @@ const HomePage = () => {
   const typedRef = useRef(null);
   const [bookingOpen, setBookingOpen] = useState(false);
   const [bookingCard, setBookingCard] = useState(null);
+  const [bookingForm, setBookingForm] = useState({
+    fullName: '',
+    phoneNumber: '',
+    email: '',
+    chamberName: '',
+    description: '',
+  })
+  const [bookingSubmitting, setBookingSubmitting] = useState(false)
+  const [bookingError, setBookingError] = useState('')
+  const [bookingSuccess, setBookingSuccess] = useState('')
   const certificateImages = [
     cert1,
     cert2,
@@ -73,6 +83,7 @@ const HomePage = () => {
   const handleNextAward = () =>
     setAwardIndex((prev) => (prev + 1) % awardsSlides.length);
   const [feedbackIndex, setFeedbackIndex] = useState(0);
+  const [chambers, setChambers] = useState([])
   const videoSlides = [
     {
       id: 'doctube',
@@ -120,7 +131,7 @@ const HomePage = () => {
         'Member of leading pediatric associations with a commitment to evidence-based care.',
     },
     {
-      title: 'Previous Appointments: Abroad and India',
+      title: 'Previous Appointments In India',
       content:
         'Clinical experience across India and abroad, bringing global best practices to local care.',
     },
@@ -164,14 +175,54 @@ const HomePage = () => {
   const openBookingModal = (card) => {
     setBookingCard(card);
     setBookingOpen(true);
+    setBookingForm((prev) => ({
+      ...prev,
+      chamberName: card?.address || '',
+    }))
+    setBookingError('')
+    setBookingSuccess('')
   };
   const closeBookingModal = () => {
     setBookingOpen(false);
     setBookingCard(null);
   };
-  const handleBookingSubmit = (event) => {
+  const handleBookingSubmit = async (event) => {
     event.preventDefault();
-    closeBookingModal();
+    setBookingSubmitting(true)
+    setBookingError('')
+    setBookingSuccess('')
+    try {
+      const response = await fetch(`${API_BASE}/api/callbacks`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: bookingForm.fullName,
+          phoneNumber: bookingForm.phoneNumber,
+          email: bookingForm.email,
+          chamberName: bookingForm.chamberName || bookingCard?.address || '',
+          description: bookingForm.description,
+        }),
+      })
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}))
+        throw new Error(data?.message || 'Failed to send request')
+      }
+      setBookingSuccess('Request sent successfully.')
+      setBookingForm({
+        fullName: '',
+        phoneNumber: '',
+        email: '',
+        chamberName: bookingCard?.address || '',
+        description: '',
+      })
+      setTimeout(() => {
+        closeBookingModal()
+      }, 600)
+    } catch (error) {
+      setBookingError(error.message || 'Failed to send request')
+    } finally {
+      setBookingSubmitting(false)
+    }
   };
   const getVisibleFeedbacks = () => {
     if (feedbacks.length <= 3) return feedbacks
@@ -189,26 +240,14 @@ const HomePage = () => {
       </span>
     ))
   }
-  const addressCards = [
-    {
-      label: 'OPD Address',
-      address: 'Olivia Nursing Home',
-      hours: 'Everyday 10:00 AM <br/> Tue, Thu 7:30 PM',
-      phone: '+91 85850 85136',
-    },
-    {
-      label: 'OPD Address',
-      address: 'Theism Dumdum Cantonment',
-      hours: 'Mon, Wed, Fri, Sat 11:00 AM <br/> Tue, Thu 6:30 PM',
-      phone: '+91 92308 12012',
-    },
-    {
-      label: 'Clinic Address',
-      address: 'Habra, Erina Market',
-      hours: 'Mon, Wed, Fri, Sat 2:30 PM',
-      phone: '+91 75858 58989',
-    },
-  ];
+  const addressCards = chambers.map((chamber) => ({
+    label: 'OPD Address',
+    address: chamber.name || '',
+    hours: Array.isArray(chamber.timings)
+      ? chamber.timings.join(' <br/> ')
+      : '',
+    phone: chamber.contact || '',
+  }))
 
   const heroSpring = useSpring({
     from: { opacity: 0, transform: 'translate3d(0,20px,0)' },
@@ -245,6 +284,26 @@ const HomePage = () => {
     observer.observe(impactRef.current)
     return () => observer.disconnect()
   }, [hasAnimated])
+
+  useEffect(() => {
+    const controller = new AbortController()
+    const loadChambers = async () => {
+      try {
+        const response = await fetch(`${API_BASE}/api/chambers`, {
+          signal: controller.signal,
+        })
+        if (!response.ok) return
+        const data = await response.json()
+        setChambers(Array.isArray(data) ? data : [])
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          setChambers([])
+        }
+      }
+    }
+    loadChambers()
+    return () => controller.abort()
+  }, [])
 
   useEffect(()=>{
     if(!typedRef.current) return;
@@ -437,6 +496,13 @@ const HomePage = () => {
                   type="text"
                   required
                   placeholder="Enter your name"
+                  value={bookingForm.fullName}
+                  onChange={(event) =>
+                    setBookingForm((prev) => ({
+                      ...prev,
+                      fullName: event.target.value,
+                    }))
+                  }
                   className="mt-2 w-full rounded-xl border border-[var(--brand-blue)]/15 px-4 py-3 text-sm text-slate-900 focus:border-[var(--brand-accent)] focus:outline-none"
                 />
               </div>
@@ -449,6 +515,13 @@ const HomePage = () => {
                     type="tel"
                     required
                     placeholder="Your number"
+                    value={bookingForm.phoneNumber}
+                    onChange={(event) =>
+                      setBookingForm((prev) => ({
+                        ...prev,
+                        phoneNumber: event.target.value,
+                      }))
+                    }
                     className="mt-2 w-full rounded-xl border border-[var(--brand-blue)]/15 px-4 py-3 text-sm text-slate-900 focus:border-[var(--brand-accent)] focus:outline-none"
                   />
                 </div>
@@ -459,9 +532,40 @@ const HomePage = () => {
                   <input
                     type="email"
                     placeholder="Your email"
+                    required
+                    value={bookingForm.email}
+                    onChange={(event) =>
+                      setBookingForm((prev) => ({
+                        ...prev,
+                        email: event.target.value,
+                      }))
+                    }
                     className="mt-2 w-full rounded-xl border border-[var(--brand-blue)]/15 px-4 py-3 text-sm text-slate-900 focus:border-[var(--brand-accent)] focus:outline-none"
                   />
                 </div>
+              </div>
+              <div>
+                <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand-blue)]">
+                  Chamber Name
+                </label>
+                <select
+                  required
+                  value={bookingForm.chamberName}
+                  onChange={(event) =>
+                    setBookingForm((prev) => ({
+                      ...prev,
+                      chamberName: event.target.value,
+                    }))
+                  }
+                  className="mt-2 w-full rounded-xl border border-[var(--brand-blue)]/15 px-4 py-3 text-sm text-slate-900 focus:border-[var(--brand-accent)] focus:outline-none"
+                >
+                  <option value="">Select a chamber</option>
+                  {chambers.map((chamber) => (
+                    <option key={chamber._id} value={chamber.name}>
+                      {chamber.name}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div>
                 <label className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand-blue)]">
@@ -470,9 +574,22 @@ const HomePage = () => {
                 <textarea
                   rows="3"
                   placeholder="Share your concern"
+                  value={bookingForm.description}
+                  onChange={(event) =>
+                    setBookingForm((prev) => ({
+                      ...prev,
+                      description: event.target.value,
+                    }))
+                  }
                   className="mt-2 w-full rounded-xl border border-[var(--brand-blue)]/15 px-4 py-3 text-sm text-slate-900 focus:border-[var(--brand-accent)] focus:outline-none"
                 />
               </div>
+              {bookingError ? (
+                <p className="text-sm text-red-600">{bookingError}</p>
+              ) : null}
+              {bookingSuccess ? (
+                <p className="text-sm text-emerald-600">{bookingSuccess}</p>
+              ) : null}
               <div className="flex flex-wrap items-center justify-between gap-3">
                 {bookingCard?.phone ? (
                   <a
@@ -484,9 +601,10 @@ const HomePage = () => {
                 ) : null}
                 <button
                   type="submit"
+                  disabled={bookingSubmitting}
                   className="inline-flex items-center justify-center rounded-full bg-[var(--brand-accent)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-[var(--brand-blue)]"
                 >
-                  Send Request
+                  {bookingSubmitting ? 'Sending...' : 'Send Request'}
                 </button>
               </div>
             </form>

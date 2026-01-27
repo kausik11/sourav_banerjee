@@ -166,7 +166,7 @@ const AppLayout = () => {
                 </a>
                 <div className="space-y-1 text-white/80">
                   <p>Call: +91 {bookingNumber}</p>
-                  <p>Email: care@drsouravclinic.com</p>
+                  <p>Email: asksouravbanerjee@gmail.com</p>
                 </div>
                 <div className="flex items-center gap-3 text-white/70">
                   <a
@@ -241,7 +241,7 @@ const AppLayout = () => {
       rel="noopener noreferrer"
       className="text-white hover:underline"
     >
-      Kausik
+      ❤️ Kausik
     </a>
           </p>
           <div className="flex flex-wrap items-center gap-4">
