@@ -241,7 +241,7 @@ const TipsPage = () => {
                 className="h-36 w-full rounded-xl object-cover"
               />
               <h3 className="mt-4 font-display text-lg text-[var(--brand-blue)]">{item.title}</h3>
-              <p className="mt-2 text-sm text-[var(--muted)]">{item.text}</p>
+              <p className="mt-2 text-sm text-[var(--muted)] line-clamp-2 md:line-clamp-6">{item.text}</p>
               <span className="mt-4 inline-flex text-xs uppercase tracking-[0.2em] text-[var(--brand-accent)]">
                 Read tip
               </span>

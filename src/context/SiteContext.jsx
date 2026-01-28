@@ -13,6 +13,8 @@ const emptyData = {
   feedbacks: [],
   faqs: [],
   gallery: [],
+  certificates: [],
+  videoGallery: [],
 }
 
 const stripHtml = (value) =>
@@ -66,6 +68,8 @@ export const SiteProvider = ({ children }) => {
           galleryData,
           testimonialsData,
           tipsData,
+          certificatesData,
+          videoGalleryData,
         ] = await Promise.all([
           fetchList('/api/services'),
           fetchList('/api/blogs'),
@@ -73,6 +77,8 @@ export const SiteProvider = ({ children }) => {
           fetchList('/api/gallery'),
           fetchList('/api/testimonials'),
           fetchList('/api/tips'),
+          fetchList('/api/certificates'),
+          fetchList('/api/video-gallery'),
         ])
 
         if (!isMounted) return
@@ -161,6 +167,25 @@ export const SiteProvider = ({ children }) => {
             text: stripHtml(item.text || ''),
             textHtml: item.text || '',
             image: item.imageUrl || '',
+          }))
+        }
+
+        if (certificatesData) {
+          next.certificates = certificatesData.map((item) => ({
+            id: item._id,
+            title: item.title || 'Certificate',
+            description: item.description || '',
+            year: item.year || '',
+            image: item.imageUrl || '',
+          }))
+        }
+
+        if (videoGalleryData) {
+          next.videoGallery = videoGalleryData.map((item) => ({
+            id: item._id,
+            title: item.title || 'Video',
+            description: item.description || '',
+            embedUrl: item.videoLink || '',
           }))
         }
 

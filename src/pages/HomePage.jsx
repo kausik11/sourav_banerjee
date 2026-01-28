@@ -15,25 +15,13 @@ import {
 import Typed from 'typed.js'
 // import doctorimage from "../../public/doctor_main.png"
 import doctorImage from "../assets/S_banerjee_main.jpeg"
-import cert1 from "../assets/certificate (1).jpeg"
-import cert2 from "../assets/certificate (2).jpeg"
-import cert3 from "../assets/certificate (3).jpeg"
-import cert4 from "../assets/certificate (4).jpeg"
-import cert5 from "../assets/certificate (5).jpeg"
-import cert6 from "../assets/certificate (6).jpeg"
-import cert7 from "../assets/certificate (7).jpeg"
-import cert8 from "../assets/certificate (8).jpeg"
-import cert9 from "../assets/certificate (9).jpeg"
-import cert10 from "../assets/certificate (10).jpeg"
-import cert11 from "../assets/certificate (12).jpeg"
-import cert12 from "../assets/certificate (13).jpeg"
 import homeConference from "../assets/home_conference.jpeg"
 import video4 from "../../public/video.mp4"
 
 
 
 const HomePage = () => {
-  const { services, testimonials, accolades, feedbacks } = useSite()
+  const { services, testimonials, accolades, feedbacks, certificates, videoGallery } = useSite()
   const impactRef = useRef(null)
   const [aboutOpenIndex, setAboutOpenIndex] = useState(0)
   const [impactCounts, setImpactCounts] = useState({
@@ -56,59 +44,49 @@ const HomePage = () => {
   const [bookingSubmitting, setBookingSubmitting] = useState(false)
   const [bookingError, setBookingError] = useState('')
   const [bookingSuccess, setBookingSuccess] = useState('')
-  const certificateImages = [
-    cert1,
-    cert2,
-    cert3,
-    cert4,
-    cert5,
-    cert6,
-    cert7,
-    cert8,
-    cert9,
-    cert10,
-    cert11,
-    cert12,
-  ];
-  const awardsSlides = certificateImages.map((image, index) => ({
-    image,
-    year: `20${24 - (index % 5)}`,
-    title: `Certificate of Excellence ${index + 1}`,
-    description:
-      'Recognized for outstanding pediatric care, clinical excellence, and patient-first service.',
-  }));
+  const sanitizeEmbedUrl = (value) => {
+    if (!value) return ''
+    return value.split('"')[0].trim()
+  }
+  const isEmbeddableVideo = (value) => {
+    if (!value) return false
+    return value.includes('youtube.com/embed') || value.includes('player.vimeo.com')
+  }
+  const awardsSlides = certificates.map((item) => ({
+    image: item.image,
+    year: item.year,
+    title: item.title,
+    description: item.description,
+  }))
   const [awardIndex, setAwardIndex] = useState(0);
-  const handlePrevAward = () =>
-    setAwardIndex((prev) => (prev - 1 + awardsSlides.length) % awardsSlides.length);
-  const handleNextAward = () =>
-    setAwardIndex((prev) => (prev + 1) % awardsSlides.length);
+  const awardsCount = awardsSlides.length
+  const handlePrevAward = () => {
+    if (!awardsCount) return
+    setAwardIndex((prev) => (prev - 1 + awardsCount) % awardsCount)
+  }
+  const handleNextAward = () => {
+    if (!awardsCount) return
+    setAwardIndex((prev) => (prev + 1) % awardsCount)
+  }
   const [feedbackIndex, setFeedbackIndex] = useState(0);
   const [chambers, setChambers] = useState([])
-  const videoSlides = [
-    {
-      id: 'doctube',
-      title: 'Doctor’s Message on Child Wellness',
-      label: 'Video Spotlight',
-      description:
-        'A short talk focused on everyday pediatric care, growth milestones, and parent guidance.',
-      embedUrl: 'https://www.youtube.com/embed/wdbU2jfkZsI?si=rrvaOOpPjodRIjaI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin',
-     
-    },
-    {
-      id: 'facebook',
-      title: 'Clinic Visit & Care Highlights',
-      label: 'Clinic Tour',
-      description:
-        'A quick look at the clinic experience and how we keep visits calm and child-friendly.',
-      embedUrl:
-        'https://doctube.com/v/bw1L3r',
-    },
-  ]
+  const videoSlides = videoGallery.map((item) => ({
+    id: item.id || item.title,
+    title: item.title,
+    description: item.description,
+    embedUrl: sanitizeEmbedUrl(item.embedUrl),
+    videoLink: item.embedUrl,
+  }))
   const [videoIndex, setVideoIndex] = useState(0)
-  const handlePrevVideo = () =>
-    setVideoIndex((prev) => (prev - 1 + videoSlides.length) % videoSlides.length)
-  const handleNextVideo = () =>
-    setVideoIndex((prev) => (prev + 1) % videoSlides.length)
+  const videoCount = videoSlides.length
+  const handlePrevVideo = () => {
+    if (!videoCount) return
+    setVideoIndex((prev) => (prev - 1 + videoCount) % videoCount)
+  }
+  const handleNextVideo = () => {
+    if (!videoCount) return
+    setVideoIndex((prev) => (prev + 1) % videoCount)
+  }
   const aboutItems = [
     {
       title: 'Short Bio',
@@ -338,6 +316,18 @@ const HomePage = () => {
       setFeedbackIndex(0)
     }
   }, [feedbackIndex, feedbacks.length])
+
+  useEffect(() => {
+    if (awardIndex >= awardsCount && awardsCount > 0) {
+      setAwardIndex(0)
+    }
+  }, [awardIndex, awardsCount])
+
+  useEffect(() => {
+    if (videoIndex >= videoCount && videoCount > 0) {
+      setVideoIndex(0)
+    }
+  }, [videoIndex, videoCount])
 
   return (
     <>
@@ -694,31 +684,23 @@ const HomePage = () => {
           align="center"
         />
         <div className="grid gap-6 md:grid-cols-3">
-          {(services?.length ? services : [
-            {
-              title: 'Newborn & Infant Care',
-              description: 'Growth tracking, feeding support, and early developmental guidance.',
-            },
-            {
-              title: 'Immunizations',
-              description: 'Complete vaccination schedules with gentle, child-friendly care.',
-            },
-            {
-              title: 'Nutrition & Wellness',
-              description: 'Personalized nutrition plans and lifestyle coaching for families.',
-            },
-          ]).map((service) => (
+          {services.map((service) => (
             <div
               key={service.title}
               className="service-card rounded-2xl border border-[var(--line)] bg-white/90 p-6"
             >
               <h3 className="font-display text-xl text-[var(--brand-blue)]">{service.title}</h3>
-              <p className="mt-3 text-sm text-[var(--muted)]">
+              <p className="mt-3 text-sm text-[var(--muted)] line-clamp-2 md:line-clamp-6">
                 {service.description}
               </p>
             </div>
           ))}
         </div>
+        {services.length === 0 ? (
+          <p className="mt-6 text-center text-sm text-[var(--muted)]">
+            Services will appear here once available.
+          </p>
+        ) : null}
       </section>
       {/* <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">
         <SectionHeader
@@ -927,75 +909,76 @@ const HomePage = () => {
           subtitle="Selected awards and milestones celebrating excellence in pediatric care."
           align="center"
         />
-        <div className="relative overflow-hidden rounded-3xl border border-[var(--line)] bg-white/80 shadow-soft">
-          <div
-            className="flex transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${awardIndex * 100}%)` }}
-          >
-            {awardsSlides.map((item) => (
-              <div
-                key={`${item.title}-${item.year}`}
-                className="min-w-full p-6 md:p-10"
-              >
-                <div className="grid gap-6 md:grid-cols-[1.1fr_1fr] md:items-center">
-                  <div className="relative overflow-hidden rounded-2xl">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="h-56 w-full object-contain md:h-72"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-base uppercase tracking-[0.3em] text-[var(--brand-accent)]">
-                      {item.year}
-                    </p>
-                    <h3 className="mt-3 font-display text-2xl text-[var(--brand-blue)]">{item.title}</h3>
-                    <p className="mt-3 text-sm text-[var(--muted)]">
-                      {item.description}
-                    </p>
-                    <p className="mt-4 text-sm text-[var(--muted)]">
-                      Every recognition marks the trust families place in the
-                      clinic, and the care team&apos;s commitment to clear
-                      guidance and follow-through.
-                    </p>
+        {awardsCount > 0 ? (
+          <div className="relative overflow-hidden rounded-3xl border border-[var(--line)] bg-white/80 shadow-soft">
+            <div
+              className="flex transition-transform duration-500 ease-out"
+              style={{ transform: `translateX(-${awardIndex * 100}%)` }}
+            >
+              {awardsSlides.map((item) => (
+                <div
+                  key={`${item.title}-${item.year}`}
+                  className="min-w-full p-6 md:p-10"
+                >
+                  <div className="grid gap-6 md:grid-cols-[1.1fr_1fr] md:items-center">
+                    <div className="relative overflow-hidden rounded-2xl">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="h-56 w-full object-contain md:h-72"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-base uppercase tracking-[0.3em] text-[var(--brand-accent)]">
+                        {item.year}
+                      </p>
+                      <h3 className="mt-3 font-display text-2xl text-[var(--brand-blue)]">{item.title}</h3>
+                      <p className="mt-3 text-sm text-[var(--muted)]">
+                        {item.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-          <div className="flex items-center justify-between px-6 pb-6 md:px-10">
-            <button
-              type="button"
-              onClick={handlePrevAward}
-              className="rounded-full border border-[var(--line)] px-4 py-2 text-xs uppercase tracking-[0.25em] text-[var(--brand-blue)] transition hover:bg-[rgba(24,80,160,0.08)]"
-            >
-              Prev
-            </button>
-            <div className="flex items-center gap-2">
-              {awardsSlides.map((_, index) => (
-                <button
-                  key={`award-dot-${index}`}
-                  type="button"
-                  onClick={() => setAwardIndex(index)}
-                  className={`h-2 w-2 rounded-full ${
-                    index === awardIndex
-                      ? 'bg-[var(--brand-accent)]'
-                      : 'bg-[var(--line)]'
-                  }`}
-                  aria-label={`Go to award ${index + 1}`}
-                />
               ))}
             </div>
-            <button
-              type="button"
-              onClick={handleNextAward}
-              className="rounded-full border border-[var(--line)] px-4 py-2 text-xs uppercase tracking-[0.25em] text-[var(--brand-blue)] transition hover:bg-[rgba(24,80,160,0.08)]"
-            >
-              Next
-            </button>
+            <div className="flex items-center justify-between px-6 pb-6 md:px-10">
+              <button
+                type="button"
+                onClick={handlePrevAward}
+                className="rounded-full border border-[var(--line)] px-4 py-2 text-xs uppercase tracking-[0.25em] text-[var(--brand-blue)] transition hover:bg-[rgba(24,80,160,0.08)]"
+              >
+                Prev
+              </button>
+              <div className="flex items-center gap-2">
+                {awardsSlides.map((_, index) => (
+                  <button
+                    key={`award-dot-${index}`}
+                    type="button"
+                    onClick={() => setAwardIndex(index)}
+                    className={`h-2 w-2 rounded-full ${
+                      index === awardIndex
+                        ? 'bg-[var(--brand-accent)]'
+                        : 'bg-[var(--line)]'
+                    }`}
+                    aria-label={`Go to award ${index + 1}`}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={handleNextAward}
+                className="rounded-full border border-[var(--line)] px-4 py-2 text-xs uppercase tracking-[0.25em] text-[var(--brand-blue)] transition hover:bg-[rgba(24,80,160,0.08)]"
+              >
+                Next
+              </button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="rounded-3xl border border-dashed border-[var(--line)] bg-white/70 p-8 text-center text-sm text-[var(--muted)]">
+            Awards will appear here once available.
+          </div>
+        )}
       </section>
       <section className="bg-white/80 py-16">
         <div className="mx-auto w-full max-w-6xl px-4 md:px-8">
@@ -1005,66 +988,85 @@ const HomePage = () => {
             subtitle="Short clips that explain care routines, clinic visits, and family-friendly guidance."
             align="center"
           />
-          <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-            <div>
-              <div className="relative overflow-hidden rounded-3xl border border-[var(--line)] bg-white shadow-soft">
-                <div className="relative pb-[56.25%]">
-                  <iframe
-                    key={videoSlides[videoIndex].id}
-                    src={videoSlides[videoIndex].embedUrl}
-                    title={videoSlides[videoIndex].title}
-                    className="absolute inset-0 h-full w-full"
-                    allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
+          {videoCount > 0 ? (
+            <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+              <div>
+                <div className="relative overflow-hidden rounded-3xl border border-[var(--line)] bg-white shadow-soft">
+                  {isEmbeddableVideo(videoSlides[videoIndex].embedUrl) ? (
+                    <div className="relative pb-[56.25%]">
+                      <iframe
+                        key={videoSlides[videoIndex].id}
+                        src={videoSlides[videoIndex].embedUrl}
+                        title={videoSlides[videoIndex].title}
+                        className="absolute inset-0 h-full w-full"
+                        allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex min-h-[280px] flex-col items-center justify-center gap-3 p-6 text-center">
+                      <p className="text-sm text-[var(--muted)]">
+                        This video provider doesn't support in-page playback.
+                      </p>
+                      <a
+                        href={videoSlides[videoIndex].videoLink}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center justify-center rounded-full bg-[var(--brand-accent)] px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white"
+                      >
+                        Watch Video
+                      </a>
+                    </div>
+                  )}
                 </div>
-              </div>
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
-                <div className="flex items-center gap-2">
-                  {videoSlides.map((slide, index) => (
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex items-center gap-2">
+                    {videoSlides.map((slide, index) => (
+                      <button
+                        key={slide.id}
+                        type="button"
+                        onClick={() => setVideoIndex(index)}
+                        aria-label={`Show ${slide.title}`}
+                        className={`h-2.5 w-2.5 rounded-full transition ${
+                          index === videoIndex
+                            ? 'bg-[var(--brand-accent)]'
+                            : 'bg-[var(--line)]'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
                     <button
-                      key={slide.id}
                       type="button"
-                      onClick={() => setVideoIndex(index)}
-                      aria-label={`Show ${slide.title}`}
-                      className={`h-2.5 w-2.5 rounded-full transition ${
-                        index === videoIndex
-                          ? 'bg-[var(--brand-accent)]'
-                          : 'bg-[var(--line)]'
-                      }`}
-                    />
-                  ))}
-                </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <button
-                    type="button"
-                    onClick={handlePrevVideo}
-                    className="rounded-full border border-[var(--line)] px-4 py-2 text-[var(--brand-blue)] transition hover:border-[var(--brand-blue)]"
-                  >
-                    Prev
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleNextVideo}
-                    className="rounded-full border border-[var(--line)] px-4 py-2 text-[var(--brand-blue)] transition hover:border-[var(--brand-blue)]"
-                  >
-                    Next
-                  </button>
+                      onClick={handlePrevVideo}
+                      className="rounded-full border border-[var(--line)] px-4 py-2 text-[var(--brand-blue)] transition hover:border-[var(--brand-blue)]"
+                    >
+                      Prev
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleNextVideo}
+                      className="rounded-full border border-[var(--line)] px-4 py-2 text-[var(--brand-blue)] transition hover:border-[var(--brand-blue)]"
+                    >
+                      Next
+                    </button>
+                  </div>
                 </div>
               </div>
+              <div className="rounded-3xl border border-[var(--line)] bg-white/90 p-6 shadow-soft">
+                <h3 className="mt-4 font-display text-2xl text-[var(--brand-blue)]">
+                  {videoSlides[videoIndex].title}
+                </h3>
+                <p className="mt-3 text-sm text-[var(--muted)]">
+                  {videoSlides[videoIndex].description}
+                </p>
+              </div>
             </div>
-            <div className="rounded-3xl border border-[var(--line)] bg-white/90 p-6 shadow-soft">
-              <p className="text-xs uppercase tracking-[0.3em] text-[var(--brand-accent)]">
-                {videoSlides[videoIndex].label}
-              </p>
-              <h3 className="mt-4 font-display text-2xl text-[var(--brand-blue)]">
-                {videoSlides[videoIndex].title}
-              </h3>
-              <p className="mt-3 text-sm text-[var(--muted)]">
-                {videoSlides[videoIndex].description}
-              </p>
+          ) : (
+            <div className="rounded-3xl border border-dashed border-[var(--line)] bg-white/70 p-8 text-center text-sm text-[var(--muted)]">
+              Videos will appear here once available.
             </div>
-          </div>
+          )}
         </div>
       </section>
       <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">

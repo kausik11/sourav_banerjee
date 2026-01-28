@@ -85,6 +85,7 @@ const filterChips = [
   'Events',
   'Wellness',
   'Nutrition',
+  "Certificates",
 ]
 
 const PAGE_SIZE = 6
@@ -134,8 +135,8 @@ const GalleryPage = () => {
               }
             }}
             className={`rounded-full border px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] ${
-              chip === activeTag
-                ? 'border-[var(--brand-blue)] bg-[rgba(24,80,160,0.12)] text-[var(--brand-blue)] shadow-soft'
+              chip == activeTag
+                ? 'border-[var(--brand-black)] bg-[var(--brand-accent)] text-[var(--paper)]'
                 : 'border-[var(--brand-accent)] text-[var(--brand-accent)]'
             }`}
           >

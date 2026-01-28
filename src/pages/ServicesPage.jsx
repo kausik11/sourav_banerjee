@@ -39,7 +39,7 @@ const ServicesPage = () => {
                   {service.title}
                 </h3>
 
-                <p className="mt-3 text-sm md:text-base text-[var(--muted)] leading-relaxed line-clamp-2 md:line-clamp-3">
+                <p className="mt-3 text-sm md:text-base text-[var(--muted)] leading-relaxed">
                   {service.description}
                 </p>
               </animated.div>

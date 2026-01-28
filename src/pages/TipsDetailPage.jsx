@@ -80,6 +80,29 @@ const TipsDetailPage = () => {
             <p className="mt-6 text-sm text-[var(--muted)] leading-relaxed">
               Small routines build big confidence. Try one new habit this week.
             </p>
+            <ul className="mt-5 space-y-3 text-sm text-[var(--muted)]">
+              <li>
+                <span className="font-semibold text-[var(--brand-blue)]">Maintain a consistent daily schedule.</span>{' '}<br/>
+                Regular times for sleeping, feeding, and play help children feel secure.
+              </li>
+              <li>
+                <span className="font-semibold text-[var(--brand-blue)]">Create predictable care rituals.</span>{' '}<br/>
+                A fixed bath time, bedtime story, or morning cuddle builds emotional comfort.
+              </li>
+              <li>
+                <span className="font-semibold text-[var(--brand-blue)]">Encourage self-care habits early.</span>{' '}<br/>
+                Handwashing, brushing teeth, or tidying toys boosts independence.
+              </li>
+              <li>
+                <span className="font-semibold text-[var(--brand-blue)]">Observe your child's cues.</span>{' '}<br/>
+                Responding to hunger, sleep, or comfort needs builds trust and confidence.
+              </li>
+              <li>
+                <span className="font-semibold text-[var(--brand-blue)]">Allow safe exploration.</span>{' '}<br/>
+                Let children try age-appropriate activities without rushing or fear.
+              </li>
+             
+            </ul>
           </div>
         </div>
       </section>
@@ -109,8 +132,8 @@ const TipsDetailPage = () => {
                     No image
                   </div>
                 )}
-                <h3 className="mt-4 font-display text-lg">{item.title}</h3>
-                <p className="mt-2 text-sm text-[var(--muted)]">{item.text}</p>
+                <h3 className="mt-4 font-display text-lg text-[var(--brand-blue)]">{item.title}</h3>
+                <p className="mt-2 text-sm text-[var(--muted)] line-clamp-2 md:line-clamp-6">{item.text}</p>
                 <span className="mt-4 inline-flex text-xs uppercase tracking-[0.2em] text-[var(--brand-accent)]">
                   Read tip
                 </span>
