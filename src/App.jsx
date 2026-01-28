@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaFacebookF, FaGoogle, FaInstagram, FaLinkedinIn } from 'react-icons/fa'
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom'
 import { SiteProvider, useSite } from './context/SiteContext'
 import { sampleDoctorCenters } from './data/doctorCenters'
+import { API_BASE } from './utils/api'
 import HomePage from './pages/HomePage'
 import ServicesPage from './pages/ServicesPage'
 import LocationsPage from './pages/LocationsPage'
@@ -30,6 +31,52 @@ const AppLayout = () => {
   const bookingNumber = '8906491957'
   const bookingTel = `tel:+91${bookingNumber}`
   const bookingWhatsapp = `https://wa.me/91${bookingNumber}?text=I%20want%20to%20book%20an%20appointment`
+  const [availabilityNotice, setAvailabilityNotice] = useState(null)
+  const [noticeOpen, setNoticeOpen] = useState(false)
+
+  useEffect(() => {
+    let isMounted = true
+    const controller = new AbortController()
+
+    const loadAvailability = async () => {
+      try {
+        const response = await fetch(`${API_BASE}/api/chambers/availability`, {
+          signal: controller.signal,
+        })
+        if (!response.ok) return
+        const data = await response.json()
+        if (!isMounted || !data || !data._id) return
+        setAvailabilityNotice(data)
+        setNoticeOpen(true)
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          setAvailabilityNotice(null)
+          setNoticeOpen(false)
+        }
+      }
+    }
+
+    loadAvailability()
+
+    return () => {
+      isMounted = false
+      controller.abort()
+    }
+  }, [])
+
+  const formatDateRange = (startDate, endDate) => {
+    if (!startDate && !endDate) return ''
+    const start = startDate ? new Date(startDate) : null
+    const end = endDate ? new Date(endDate) : null
+    const options = { year: 'numeric', month: 'short', day: 'numeric' }
+    if (start && end) {
+      return `${start.toLocaleDateString('en-US', options)} - ${end.toLocaleDateString('en-US', options)}`
+    }
+    if (start) {
+      return `From ${start.toLocaleDateString('en-US', options)}`
+    }
+    return `Until ${end.toLocaleDateString('en-US', options)}`
+  }
 
   if (loading) {
     return (
@@ -41,6 +88,55 @@ const AppLayout = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
+    {noticeOpen && availabilityNotice ? (
+      <div
+        className="modal-backdrop fixed inset-0 z-50 flex items-center justify-center bg-[rgba(10,17,30,0.75)] px-4 py-10"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Important notice"
+      >
+        <div className="modal-panel relative w-full max-w-xl overflow-hidden rounded-2xl bg-white shadow-[0_30px_80px_rgba(15,23,42,0.45)]">
+          <div className="flex items-start justify-between border-b border-[var(--line)] px-6 py-5">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-red-500">
+                Important Notice
+              </p>
+              <h3 className="mt-2 font-display text-xl text-[var(--brand-blue)]">
+                Chamber Availability Update
+              </h3>
+            </div>
+            <button
+              type="button"
+              onClick={() => setNoticeOpen(false)}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--brand-blue)]/20 text-[var(--brand-blue)] transition hover:bg-[var(--brand-blue)] hover:text-white"
+              aria-label="Close notice"
+            >
+              <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+                <path
+                  d="M6 6l12 12M18 6l-12 12"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <div className="space-y-3 px-6 py-5 text-sm text-[var(--muted)]">
+            {availabilityNotice.message ? (
+              <p className="text-base text-[var(--brand-blue)]">
+                {availabilityNotice.message}
+              </p>
+            ) : null}
+            {availabilityNotice.note ? (
+              <p>{availabilityNotice.note}</p>
+            ) : null}
+            <p className="text-xs uppercase tracking-[0.2em] text-red-500">
+              {formatDateRange(availabilityNotice.startDate, availabilityNotice.endDate)}
+            </p>
+          </div>
+        </div>
+      </div>
+    ) : null}
     <Navbar navItems={navItems} bookingNumber={bookingNumber} bookingTel={bookingTel} />
 
     {/* <div className="global-rings" aria-hidden="true">
