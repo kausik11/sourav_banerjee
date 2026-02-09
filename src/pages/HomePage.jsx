@@ -91,27 +91,27 @@ const HomePage = () => {
     {
       title: 'Short Bio',
       content:
-        'Known for calm, family-first care, Dr. Banerjee focuses on clear guidance, growth tracking, and preventive health.',
+        'Dr. Sourav Banerjee is a renowned pediatrician,He has vast knowledge & over 10 yrs experience in this field. He is a very dynamic person, calm & passionate to his profession. Moto Is Healthy Baby Happy Family',
     },
     {
       title: 'Academic Qualifications',
       content:
-        'MD, MRCPCH, Post CCT with specialized training in pediatric care and child wellness.',
+        "MBBS (R.G.KAR), M. D. (PED) (Medical College KOLKATA ), ex Senior Resident Medical College KOLKATA , ex WBHS, Certified course : IPPN(Australia ),PGPN (BOSTON )",
     },
     {
       title: 'Skill Certification',
       content:
-        'Certified in pediatric nutrition, developmental screening, and child-friendly clinical practice.',
+        'Certified in pediatric nutrition, developmental and behavioral screening, neonatal and pediatric emergency care, immunization practices, and child-friendly clinical management..',
     },
     {
       title: 'Membership',
       content:
-        'Member of leading pediatric associations with a commitment to evidence-based care.',
+        'Affiliated with leading pediatric organizations, reflecting a strong commitment to safe, ethical, and evidence-driven pediatric care',
     },
     {
       title: 'Previous Appointments In India',
       content:
-        'Clinical experience across India and abroad, bringing global best practices to local care.',
+        'Clinical experience across India, bringing national best practices to local care.',
     },
   ]
   const handlePrevFeedback = () =>
@@ -238,6 +238,12 @@ const HomePage = () => {
     delay: 200,
   })
 
+  const [feedbackSpring, feedbackApi] = useSpring(() => ({
+    from: { opacity: 0, transform: 'translate3d(0,12px,0)' },
+    to: { opacity: 1, transform: 'translate3d(0,0,0)' },
+    config: { tension: 210, friction: 22 },
+  }))
+
   useEffect(() => {
     if (!impactRef.current || hasAnimated) return
     if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
@@ -264,6 +270,14 @@ const HomePage = () => {
   }, [hasAnimated])
 
   useEffect(() => {
+    feedbackApi.start({
+      from: { opacity: 0, transform: 'translate3d(0,12px,0)' },
+      to: { opacity: 1, transform: 'translate3d(0,0,0)' },
+      reset: true,
+    })
+  }, [feedbackIndex, feedbackApi])
+
+  useEffect(() => {
     const controller = new AbortController()
     const loadChambers = async () => {
       try {
@@ -287,10 +301,9 @@ const HomePage = () => {
     if(!typedRef.current) return;
 
     const typed = new Typed(typedRef.current, {
-      strings: [  'Pediatrician.',
-      'Neonatologist.',
+      strings: [  'Expert Pediatrician.',
       'Child Health Specialist.',
-      'here to care.'],
+      'Pediatrician and Neonatologist.'],
       typeSpeed: 50,
       backSpeed: 30,
       backDelay: 1500,
@@ -307,7 +320,7 @@ const HomePage = () => {
     if (feedbacks.length <= 1) return
     const intervalId = setInterval(() => {
       setFeedbackIndex((prev) => (prev + 1) % feedbacks.length)
-    }, 3000)
+    }, 10000)
     return () => clearInterval(intervalId)
   }, [feedbacks.length])
 
@@ -1078,7 +1091,7 @@ const HomePage = () => {
         />
         {feedbacks.length > 0 ? (
           <>
-            <div className="grid gap-6 md:grid-cols-3">
+            <animated.div style={feedbackSpring} className="grid gap-6 md:grid-cols-3">
               {getVisibleFeedbacks().map((item, index) => (
                 <div
                   key={`${item.name}-${index}`}
@@ -1105,7 +1118,7 @@ const HomePage = () => {
                   <p className="mt-4 font-display text-lg text-[var(--brand-blue)]">{item.name}</p>
                 </div>
               ))}
-            </div>
+            </animated.div>
             <div className="mt-6 flex items-center justify-between">
               <button
                 type="button"

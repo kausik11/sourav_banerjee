@@ -165,7 +165,7 @@ const BlogDetailPage = () => {
               className="h-56 w-full rounded-xl object-cover"
             />
             <p className="mt-6 text-sm text-[var(--muted)] leading-relaxed">
-              Pediatric guidance curated by Dr. Jhon. Share this with caregivers
+              Pediatric guidance curated by Dr. Sourav Banerjee. Share this with caregivers
               who need clarity and reassurance.
             </p>
             <div className="mt-6 rounded-xl bg-[#fdf7f1] p-4 text-sm text-[var(--muted)]">

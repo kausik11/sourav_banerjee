@@ -266,7 +266,7 @@ const AppLayout = () => {
                 </div>
                 <div className="flex items-center gap-3 text-white/70">
                   <a
-                    href="https://www.facebook.com/"
+                    href="https://www.facebook.com/profile.php?id=100075969801296&rdid=JLMDbywAEdkkwBhi&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1CTQwdvWdD%2F#"
                     target="_blank"
                     rel="noreferrer"
                     aria-label="Facebook"
@@ -275,7 +275,7 @@ const AppLayout = () => {
                     <FaFacebookF className="h-4 w-4" />
                   </a>
                   <a
-                    href="https://workspace.google.com/"
+                    href="https://share.google/G6UJ207sDKM9ET7zb"
                     target="_blank"
                     rel="noreferrer"
                     aria-label="Google Workspace"
@@ -283,7 +283,7 @@ const AppLayout = () => {
                   >
                     <FaGoogle className="h-4 w-4" />
                   </a>
-                  <a
+                  {/* <a
                     href="https://www.linkedin.com/"
                     target="_blank"
                     rel="noreferrer"
@@ -291,8 +291,8 @@ const AppLayout = () => {
                     className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-white/80 transition hover:border-white hover:text-white"
                   >
                     <FaLinkedinIn className="h-4 w-4" />
-                  </a>
-                  <a
+                  </a> */}
+                  {/* <a
                     href="https://www.instagram.com/"
                     target="_blank"
                     rel="noreferrer"
@@ -300,7 +300,7 @@ const AppLayout = () => {
                     className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-white/80 transition hover:border-white hover:text-white"
                   >
                     <FaInstagram className="h-4 w-4" />
-                  </a>
+                  </a> */}
                 </div>
               </div>
     
