@@ -120,7 +120,7 @@ const LocationsPage = () => {
               {chamber.name}
             </h3>
             <p className="mt-3 text-sm text-[var(--muted)]">
-              {chamber.name}
+              {chamber.address}
             </p>
             <p className="mt-2 text-sm font-semibold text-[var(--brand-accent)]">
               {(chamber.timings || []).join(' | ')}
@@ -196,7 +196,7 @@ const LocationsPage = () => {
                 <option value="">Select chamber</option>
                 {chambers.map((chamber) => (
                   <option key={chamber._id} value={chamber.name}>
-                    {chamber.name}
+                    {chamber.name}{chamber.address ? ` - ${chamber.address}` : ""}
                   </option>
                 ))}
               </select>

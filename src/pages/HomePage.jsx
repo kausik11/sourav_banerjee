@@ -155,7 +155,7 @@ const HomePage = () => {
     setBookingOpen(true);
     setBookingForm((prev) => ({
       ...prev,
-      chamberName: card?.address || '',
+      chamberName: card?.chamberName || '',
     }))
     setBookingError('')
     setBookingSuccess('')
@@ -177,7 +177,7 @@ const HomePage = () => {
           fullName: bookingForm.fullName,
           phoneNumber: bookingForm.phoneNumber,
           email: bookingForm.email,
-          chamberName: bookingForm.chamberName || bookingCard?.address || '',
+          chamberName: bookingForm.chamberName || bookingCard?.chamberName || '',
           description: bookingForm.description,
         }),
       })
@@ -190,7 +190,7 @@ const HomePage = () => {
         fullName: '',
         phoneNumber: '',
         email: '',
-        chamberName: bookingCard?.address || '',
+        chamberName: bookingCard?.chamberName || '',
         description: '',
       })
       setTimeout(() => {
@@ -219,8 +219,9 @@ const HomePage = () => {
     ))
   }
   const addressCards = chambers.map((chamber) => ({
+    chamberName: chamber.name || '',
     label: 'OPD Address',
-    address: chamber.name || '',
+    address: chamber.address || '',
     hours: Array.isArray(chamber.timings)
       ? chamber.timings.join(' <br/> ')
       : '',
@@ -423,13 +424,16 @@ const HomePage = () => {
 
           <div className="relative z-10 mt-10 w-full md:mt-12 lg:mt-16">
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {addressCards.map((card, index) => (
+              {addressCards.map((card) => (
                 <div
-                  key={card.address}
+                  key={`${card.chamberName}-${card.address}`}
                   className="w-full rounded-2xl border border-white/20 bg-white/95 p-5 text-slate-900 shadow-xl backdrop-blur-lg"
                 >
                   <p className="text-xs uppercase tracking-[0.3em] text-slate-500 lg:text-slate-600">
                     {card.label}
+                  </p>
+                  <p className="mt-2 text-xs uppercase tracking-[0.18em] text-slate-500">
+                    {card.chamberName}
                   </p>
                   <p className="mt-2 font-display text-lg">{card.address}</p>
                   <p className="mt-2 text-sm text-slate-600">
@@ -566,6 +570,7 @@ const HomePage = () => {
                   {chambers.map((chamber) => (
                     <option key={chamber._id} value={chamber.name}>
                       {chamber.name}
+                      {chamber.address ? ` - ${chamber.address}` : ""}
                     </option>
                   ))}
                 </select>
@@ -672,7 +677,7 @@ const HomePage = () => {
                 Dr. Sourav Banerjee
               </p>
               <p className="mt-1 text-sm font-semibold text-[var(--brand-accent)]">
-                MD, MRCPCH, Post CCT
+                MD
               </p>
             </div>
           </div>
