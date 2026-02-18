@@ -432,7 +432,7 @@ const HomePage = () => {
                   <p className="text-xs uppercase tracking-[0.3em] text-slate-500 lg:text-slate-600">
                     {card.label}
                   </p>
-                  <p className="mt-2 text-xs uppercase tracking-[0.18em] text-slate-500">
+                  <p className="mt-2 text-sm font-bold uppercase tracking-[0.18em] text-[var(--brand-blue)]">
                     {card.chamberName}
                   </p>
                   <p className="mt-2 font-display text-lg">{card.address}</p>
