@@ -266,7 +266,7 @@ const AppLayout = () => {
                 </div>
                 <div className="flex items-center gap-3 text-white/70">
                   <a
-                    href="https://www.facebook.com/profile.php?id=100075969801296&rdid=JLMDbywAEdkkwBhi&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1CTQwdvWdD%2F#"
+                    href="https://www.facebook.com/profile.php?id=100075969801296&rdid=pXwDC4DSpwYPCpwc&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1CTQwdvWdD%2F#"
                     target="_blank"
                     rel="noreferrer"
                     aria-label="Facebook"
@@ -275,7 +275,7 @@ const AppLayout = () => {
                     <FaFacebookF className="h-4 w-4" />
                   </a>
                   <a
-                    href="https://share.google/G6UJ207sDKM9ET7zb"
+                    href="https://share.google/GQX4a6gJM6TekNdab"
                     target="_blank"
                     rel="noreferrer"
                     aria-label="Google Workspace"

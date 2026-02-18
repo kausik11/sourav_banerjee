@@ -129,9 +129,9 @@ const HomePage = () => {
     const duration = 2400
     const targets = {
       patients: 5000,
-      experience: 13,
+      experience: 10,
       awards: 25,
-      satisfaction: 98,
+      satisfaction: 95,
     }
 
     const tick = (now) => {
@@ -902,7 +902,7 @@ const HomePage = () => {
             <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--brand-accent)]/10 text-[var(--brand-accent)]">
               <FaAward className="text-xl" aria-hidden="true" />
             </div>
-            <p className="font-display text-2xl text-[var(--brand-blue)] font-semibold">{impactCounts.awards}</p>
+            <p className="font-display text-2xl text-[var(--brand-blue)] font-semibold">{impactCounts.awards}+</p>
             <p className="mt-2 text-xs uppercase tracking-[0.1em] text-[var(--muted)] font-semibold">
               Awards Received
             </p>
