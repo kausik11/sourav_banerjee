@@ -386,7 +386,7 @@ const HomePage = () => {
               <span className="text-[var(--brand-black)] drop-shadow" ref={typedRef}></span>
             </h1>
             <p className="mt-4 text-lg text-white/90 md:text-xl">
-              Dr. Jhon combines evidence-based pediatrics with compassionate
+              Dr. Sourav Banerjee combines evidence-based pediatrics with compassionate
               listening. From newborn care to teen wellness, every visit feels
               calm, clear, and reassuring.
             </p>
@@ -631,7 +631,7 @@ const HomePage = () => {
              <SectionHeader
           eyebrow="About Me"
           title="Delivering dedicated, individual care for better health"
-          subtitle="Our team of dedicated professionals is committed to providing exceptional care and support on your journey to parenthood
+          subtitle="Our team of dedicated professionals is committed to providing exceptional care and support on your Parenthood journey
 "
           align="center"
         />
@@ -871,7 +871,7 @@ const HomePage = () => {
       <section ref={impactRef} className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8">
         <SectionHeader
           eyebrow="Our Impact"
-          title="Making a Difference in Women's Healthcare"
+          title="Making a Difference in Children's Healthcare"
           subtitle="Our commitment to excellence has helped thousands of women achieve better reproductive and overall health."
           align="center"
         />

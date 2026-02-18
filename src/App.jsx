@@ -247,9 +247,9 @@ const AppLayout = () => {
                 <p className="leading-relaxed">
                   Dr. Sourav Banerjee Clinic
                   <br />
-                  214 Lakeview Avenue
+                  148 Jessore Road,Aditya Bhawan Nagerbazar,Satgachi,
                   <br />
-                  Kolkata, WB 700029
+                   Kolkata, WB 700074
                 </p>
                 <a
                   href="https://maps.google.com/?q=214+Lakeview+Avenue+Kolkata+WB+700029"

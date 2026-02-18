@@ -234,9 +234,11 @@ const LocationsPage = () => {
             Clinic Map
           </p>
           <h3 className="mt-3 font-display text-xl text-[var(--brand-blue)]">Central Location</h3>
-          <p className="mt-3 text-sm text-[var(--muted)]">
-            23 Harmony Lane, Lakeview Heights
-          </p>
+          <li className="mt-3 text-sm text-[var(--muted)]">
+            <ul>148 Jessore Road,Aditya Bhawan Nagerbazar,Satgachi</ul>
+            <ul>46, Lalji, Khub Lal Saha St, North Dumdum,WB 700028</ul>
+            <ul>Arina Market, Landmark -Indian Bank, Jessore Rd, Habra</ul>
+          </li>
           <img
             className="mt-6 h-56 w-full rounded-xl object-cover border border-[var(--brand-blue)]"
             src={contact}
@@ -246,8 +248,8 @@ const LocationsPage = () => {
             <p className="font-display text-lg text-[var(--brand-blue)]">
               Appointment Desk
             </p>
-            <p className="mt-2">+91 98765 43210</p>
-            <p className="mt-1">hello@drjhonclinic.com</p>
+            <p className="mt-2">+91 8906491957</p>
+            <p className="mt-1">asksouravbanerjee@gmail.com</p>
           </div>
         </div>
       </div>
