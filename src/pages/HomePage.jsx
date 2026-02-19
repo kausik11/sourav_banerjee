@@ -1177,6 +1177,7 @@ const HomePage = () => {
         centers={sampleDoctorCenters}
         heading="Get in Touch"
         subtitle="We're here to answer your questions and provide the care you need."
+        doctorPhone="8906491957"
       />
     </>
   )
